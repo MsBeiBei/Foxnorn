@@ -4,12 +4,18 @@
   "pnpmVersion": "8.7.5",
   "nodeSupportedVersionRange": "18.17.0",
   "projectFolderMinDepth": 2,
-  "projectFolderMaxDepth": 3,
+  "projectFolderMaxDepth": 2,
   "ensureConsistentVersions": true,
+  "repository": {
+    "url": "https://github.com/MsBeiBei/Fox.git",
+    "defaultBranch": "main",
+    "defaultRemote": "origin"
+  },
   "projects": [
     {
-      "packageName": "@fox/heft-storybook-plugin",
-      "projectFolder": "toolkit/storybook",
+      "packageName": "rush-sort-package-json",
+      "projectFolder": "rush-plugins/rush-sort-package-json",
+      "reviewCategory": "rush-plugins",
       "shouldPublish": true
     }
   ]

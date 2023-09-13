@@ -8,4 +8,4 @@ importers:
 
   .: {}
 
-  ../../toolkit/storybook: {}
+  ../../rush-plugins/rush-sort-package-json: {}
