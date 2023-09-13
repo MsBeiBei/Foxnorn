@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.105.0",
+  "pnpmVersion": "8.7.5",
+  "nodeSupportedVersionRange": "18.17.0",
+  "projectFolderMinDepth": 2,
+  "projectFolderMaxDepth": 3,
+  "ensureConsistentVersions": true,
+  "projects": [
+    {
+      "packageName": "@fox/heft-storybook-plugin",
+      "projectFolder": "toolkit/storybook",
+      "shouldPublish": true
+    }
+  ]
+}
