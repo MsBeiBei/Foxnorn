@@ -13,8 +13,8 @@
   },
   "projects": [
     {
-      "packageName": "rush-sort-package-json",
-      "projectFolder": "rush-plugins/rush-sort-package-json",
+      "packageName": "rush-sortpack",
+      "projectFolder": "rush-plugins/rush-sortpack",
       "reviewCategory": "rush-plugins",
       "shouldPublish": true
     }

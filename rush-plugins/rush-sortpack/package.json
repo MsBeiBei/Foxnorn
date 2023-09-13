@@ -1,0 +1,14 @@
+{
+  "name": "rush-sortpack",
+  "private": false,
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "~5.2.2",
+    "@types/node": "~20.6.0"
+  }
+}
