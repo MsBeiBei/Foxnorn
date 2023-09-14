@@ -8,6 +8,7 @@ async function bootstrap() {
         const rushConfig = getRushConfig();
         for (const project of rushConfig.projects) {
             const packageJsonFilePath = resolve(rushConfig.rushJsonFolder, project.projectFolder);
+            console.log(project.projectFolder);
             sortpack(packageJsonFilePath);
         }
     }
