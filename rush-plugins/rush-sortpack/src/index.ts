@@ -15,8 +15,6 @@ async function bootstrap(): Promise<void> {
         project.projectFolder
       );
 
-      console.log(project.projectFolder)
-
       sortpack(packageJsonFilePath);
     }
   } catch (e) {}

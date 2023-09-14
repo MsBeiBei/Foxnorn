@@ -9,6 +9,8 @@ export function getRushConfig(cwd: string = CWD): RushLib.RushConfiguration {
     return localConfig.get(cwd) as RushLib.RushConfiguration;
   }
 
+  console.log(cwd)
+
   const { RushConfiguration } = RushLib;
 
   if (!RushConfiguration) {

@@ -5,6 +5,7 @@ export function getRushConfig(cwd = CWD) {
     if (localConfig.has(cwd)) {
         return localConfig.get(cwd);
     }
+    console.log(cwd);
     const { RushConfiguration } = RushLib;
     if (!RushConfiguration) {
         throw new Error('load RushConfiguration from rush-sdk failed');
