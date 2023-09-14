@@ -13,7 +13,7 @@
   },
   "projects": [
     {
-      "packageName": "rush-sortpack",
+      "packageName": "@fox/rush-sortpack",
       "projectFolder": "rush-plugins/rush-sortpack",
       "reviewCategory": "rush-plugins",
       "shouldPublish": true

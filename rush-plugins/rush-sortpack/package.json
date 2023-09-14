@@ -1,12 +1,14 @@
 {
-  "name": "rush-sortpack",
-  "private": false,
-  "type": "module",
+  "name": "@fox/rush-sortpack",
   "version": "0.0.1",
+  "description": "Rush plugin for sort package.json file in the project",
   "license": "MIT",
-  "main": "lib/index.js",
-  "descriptions": "test",
-  "author": "ms_beibei",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Fox.git",
+    "directory": "rush-plugins/rush-sortpack"
+  },
   "scripts": {
     "build": "tsc"
   },
