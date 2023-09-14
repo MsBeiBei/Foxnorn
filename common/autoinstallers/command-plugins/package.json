@@ -1,0 +1,9 @@
+{
+  "name": "command-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@foxnorn/rush-sortpack":"../../../rush-plugins/rush-sortpack",
+    "typescript": "5.2.2"
+  }
+}

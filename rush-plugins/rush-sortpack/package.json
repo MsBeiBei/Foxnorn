@@ -1,20 +1,33 @@
 {
-  "name": "@fox/rush-sortpack",
-  "version": "0.0.1",
+  "name": "@foxnorn/rush-sortpack",
+  "version": "1.0.0",
   "private": false,
   "description": "Rush plugin for sort package.json file in the project",
-  "license": "MIT",
-  "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MsBeiBei/Fox.git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
     "directory": "rush-plugins/rush-sortpack"
   },
+  "license": "MIT",
+  "author": "foxnorn",
+  "type": "module",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "heft build --clean",
+    "build:watch": "heft build --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@rushstack/node-core-library": "~3.59.7",
+    "@rushstack/rush-sdk": "~5.106.0",
+    "sort-package-json": "~2.5.1"
   },
   "devDependencies": {
-    "typescript": "~5.2.2",
-    "@types/node": "~20.6.0"
+    "@foxnorn/tsconfig": "workspace:*",
+    "@microsoft/rush-lib": "~5.106.0",
+    "@rushstack/heft": "~0.58.2",
+    "@rushstack/heft-typescript-plugin": "~0.1.21",
+    "@types/node": "~20.6.0",
+    "typescript": "~5.2.2"
   }
 }

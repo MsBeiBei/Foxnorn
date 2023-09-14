@@ -1,0 +1,42 @@
+// DO NOT ADD COMMENTS IN THIS FILE.  They will be lost when the Rush tool resaves it.
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
+  "packages": [
+    {
+      "name": "@foxnorn/tsconfig",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@microsoft/rush-lib",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/heft",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/heft-node-rig",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/heft-typescript-plugin",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/node-core-library",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/rush-sdk",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "sort-package-json",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
+      "name": "typescript",
+      "allowedCategories": [ "internal", "rush-plugins" ]
+    }
+  ]
+}

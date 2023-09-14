@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@anadi/tsconfig-vue",
+  "extends": "./web.json",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": false,
+    "noEmit": true,
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxImportSource": "vue",
+    "declaration": false,
+    "declarationMap": false
+  },
+  "vueCompilerOptions": {
+    "target": 3
+  }
+}

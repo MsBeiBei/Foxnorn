@@ -6,16 +6,26 @@
   "projectFolderMinDepth": 2,
   "projectFolderMaxDepth": 2,
   "ensureConsistentVersions": true,
+  "approvedPackagesPolicy": {
+    "reviewCategories": ["rush-plugins", "internal"],
+    "ignoredNpmScopes": ["@types"]
+  },
   "repository": {
-    "url": "https://github.com/MsBeiBei/Fox.git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
     "defaultBranch": "main",
     "defaultRemote": "origin"
   },
   "projects": [
     {
-      "packageName": "@fox/rush-sortpack",
+      "packageName": "@foxnorn/rush-sortpack",
       "projectFolder": "rush-plugins/rush-sortpack",
       "reviewCategory": "rush-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/tsconfig",
+      "projectFolder": "internal/tsconfig",
+      "reviewCategory": "internal",
       "shouldPublish": true
     }
   ]

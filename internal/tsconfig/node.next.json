@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@anadi/tsconfig-node-next",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "types": ["node"]
+  }
+}
