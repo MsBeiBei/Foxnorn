@@ -31,6 +31,10 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "@rushstack/ts-command-line",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
       "name": "sort-package-json",
       "allowedCategories": [ "rush-plugins" ]
     },
