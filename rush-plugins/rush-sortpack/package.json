@@ -1,9 +1,12 @@
 {
   "name": "rush-sortpack",
   "private": false,
-  "version": "1.0.0",
+  "type": "module",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "lib/index.js",
+  "descriptions": "test",
+  "author": "ms_beibei",
   "scripts": {
     "build": "tsc"
   },
