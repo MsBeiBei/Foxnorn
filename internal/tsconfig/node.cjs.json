@@ -4,6 +4,8 @@
   "extends": "./base.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "types": ["node"]
+    "moduleResolution": "Node",
+    "types": ["node"],
+    "verbatimModuleSyntax": false
   }
 }

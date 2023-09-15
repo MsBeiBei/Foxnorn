@@ -17,8 +17,14 @@
   },
   "projects": [
     {
-      "packageName": "@foxnorn/rush-sortpack",
-      "projectFolder": "rush-plugins/rush-sortpack",
+      "packageName": "@foxnorn/rush-filter-plugin",
+      "projectFolder": "rush-plugins/rush-filter-plugin",
+      "reviewCategory": "rush-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/rush-sortpack-plugin",
+      "projectFolder": "rush-plugins/rush-sortpack-plugin",
       "reviewCategory": "rush-plugins",
       "shouldPublish": true
     },

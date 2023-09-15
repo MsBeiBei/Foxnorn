@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Configuration for cobuild lock with Redis configuration\n\nhttps://github.com/redis/node-redis/blob/master/docs/client-configuration.md",
+  "type": "object",
+  "additionalProperties": false
+}

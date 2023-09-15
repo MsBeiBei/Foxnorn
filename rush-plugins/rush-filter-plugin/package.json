@@ -1,0 +1,29 @@
+{
+  "name": "@foxnorn/rush-filter-plugin",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Rush plugin for picking packages by name or by relation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
+    "directory": "rush-plugins/rush-filter-plugin"
+  },
+  "license": "MIT",
+  "author": "foxnorn",
+  "main": "lib/index.js",
+  "types": "lib/index..d.ts",
+  "scripts": {
+    "build": "heft build --clean",
+    "build:watch": "heft build --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@foxnorn/tsconfig": "workspace:*",
+    "@microsoft/rush-lib": "~5.106.0",
+    "@rushstack/heft": "~0.58.2",
+    "@rushstack/heft-typescript-plugin": "~0.1.21",
+    "@types/node": "~20.6.0",
+    "typescript": "~5.2.2"
+  }
+}

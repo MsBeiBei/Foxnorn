@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@foxnorn/rush-sortpack":"../../../rush-plugins/rush-sortpack",
+    "@foxnorn/rush-sortpack-plugin": "../../../rush-plugins/rush-sortpack-plugin",
+    "@foxnorn/rush-filter-plugin": "../../../rush-plugins/rush-filter-plugin",
     "typescript": "5.2.2"
   }
 }

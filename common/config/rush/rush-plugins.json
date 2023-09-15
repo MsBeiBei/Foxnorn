@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-plugins.schema.json",
   "plugins": [
     {
-      "packageName": "@foxnorn/rush-sortpack",
-      "pluginName": "rush-sortpack",
+      "packageName": "@foxnorn/rush-sortpack-plugin",
+      "pluginName": "rush-sortpack-plugin",
       "autoinstallerName": "command-plugins"
     }
   ]

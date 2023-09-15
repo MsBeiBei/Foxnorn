@@ -15,7 +15,7 @@
       "argumentName": "FILTER",
       "longName": "--filter",
       "shortName": "-f",
-      "description": "Perform a production build, including minification and localization steps",
+      "description": "Filtering allows you to restrict commands to specific subsets of packages",
       "associatedCommands": ["sortpack"]
     }
   ]

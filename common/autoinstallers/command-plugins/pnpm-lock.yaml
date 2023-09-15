@@ -5,9 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@foxnorn/rush-sortpack':
-    specifier: ../../../rush-plugins/rush-sortpack
-    version: link:../../../rush-plugins/rush-sortpack
+  '@foxnorn/rush-filter-plugin':
+    specifier: ../../../rush-plugins/rush-filter-plugin
+    version: link:../../../rush-plugins/rush-filter-plugin
+  '@foxnorn/rush-sortpack-plugin':
+    specifier: ../../../rush-plugins/rush-sortpack-plugin
+    version: link:../../../rush-plugins/rush-sortpack-plugin
   typescript:
     specifier: 5.2.2
     version: 5.2.2
