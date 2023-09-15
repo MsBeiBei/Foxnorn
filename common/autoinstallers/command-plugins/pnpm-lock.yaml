@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@foxnorn/rush-filter-plugin':
-    specifier: ../../../rush-plugins/rush-filter-plugin
-    version: link:../../../rush-plugins/rush-filter-plugin
   '@foxnorn/rush-sortpack-plugin':
     specifier: ../../../rush-plugins/rush-sortpack-plugin
     version: link:../../../rush-plugins/rush-sortpack-plugin

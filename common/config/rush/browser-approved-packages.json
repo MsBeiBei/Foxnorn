@@ -4,7 +4,7 @@
   "packages": [
     {
       "name": "@foxnorn/tsconfig",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
     },
     {
       "name": "@microsoft/rush-lib",
@@ -12,7 +12,7 @@
     },
     {
       "name": "@rushstack/heft",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
     },
     {
       "name": "@rushstack/heft-node-rig",
@@ -20,11 +20,11 @@
     },
     {
       "name": "@rushstack/heft-typescript-plugin",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
     },
     {
       "name": "@rushstack/node-core-library",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
     },
     {
       "name": "@rushstack/rush-sdk",
@@ -40,7 +40,7 @@
     },
     {
       "name": "typescript",
-      "allowedCategories": [ "internal", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal", "rush-plugins" ]
     },
     {
       "name": "yargs",

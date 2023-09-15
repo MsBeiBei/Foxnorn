@@ -52,9 +52,9 @@ async function bootstrap(): Promise<void> {
       const packageJsonFilePath = getPackageJsonFilePath(project.projectFolder);
 
       sortpack(packageJsonFilePath);
-
-      terminal.writeLine(Colors.green(`Sort all package.json successfully`));
     }
+
+    terminal.writeLine(Colors.green(`Sort all package.json successfully`));
   } catch (e: any) {
     if (e.message) {
       terminal.writeErrorLine(e.message);

@@ -8,11 +8,51 @@ importers:
 
   .: {}
 
+  ../../heft-plugins/heft-storybook-plugin:
+    dependencies:
+      '@rushstack/node-core-library':
+        specifier: ~3.59.7
+        version: 3.59.7(@types/node@20.6.0)
+    devDependencies:
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@rushstack/heft':
+        specifier: ~0.58.2
+        version: 0.58.2(@types/node@20.6.0)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.1.21
+        version: 0.1.21(@rushstack/heft@0.58.2)(@types/node@20.6.0)
+      '@types/node':
+        specifier: ~20.6.0
+        version: 20.6.0
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
   ../../internal/tsconfig:
     dependencies:
       typescript:
         specifier: ~5.1.6
         version: 5.1.6
+
+  ../../rigs/heft-node-rig:
+    devDependencies:
+      '@rushstack/heft':
+        specifier: ~0.58.2
+        version: 0.58.2(@types/node@20.6.0)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.1.21
+        version: 0.1.21(@rushstack/heft@0.58.2)(@types/node@20.6.0)
+
+  ../../rigs/heft-web-rig:
+    devDependencies:
+      '@rushstack/heft':
+        specifier: ~0.58.2
+        version: 0.58.2(@types/node@20.6.0)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.1.21
+        version: 0.1.21(@rushstack/heft@0.58.2)(@types/node@20.6.0)
 
   ../../rush-plugins/rush-filter-plugin:
     devDependencies:

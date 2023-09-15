@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@foxnorn/rush-sortpack-plugin": "../../../rush-plugins/rush-sortpack-plugin",
-    "@foxnorn/rush-filter-plugin": "../../../rush-plugins/rush-filter-plugin",
     "typescript": "5.2.2"
   }
 }

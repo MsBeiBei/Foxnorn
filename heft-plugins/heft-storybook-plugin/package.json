@@ -1,0 +1,32 @@
+{
+  "name": "@foxnorn/heft-storybook-plugin",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Heft plugin for supporting UI development using Storybook V7",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
+    "directory": "heft-plugins/heft-storybook-plugin"
+  },
+  "license": "MIT",
+  "author": "foxnorn",
+  "type": "module",
+  "scripts": {
+    "build": "heft build --clean",
+    "build:watch": "heft build --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@rushstack/node-core-library": "~3.59.7"
+  },
+  "devDependencies": {
+    "@foxnorn/tsconfig": "workspace:*",
+    "@rushstack/heft": "~0.58.2",
+    "@rushstack/heft-typescript-plugin": "~0.1.21",
+    "@types/node": "~20.6.0",
+    "typescript": "~5.2.2"
+  },
+  "peerDependencies": {
+    "@rushstack/heft": "^0.59.0"
+  }
+}

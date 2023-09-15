@@ -7,7 +7,12 @@
   "projectFolderMaxDepth": 2,
   "ensureConsistentVersions": true,
   "approvedPackagesPolicy": {
-    "reviewCategories": ["rush-plugins", "internal"],
+    "reviewCategories": [
+      "rush-plugins",
+      "heft-plugins",
+      "libraries",
+      "internal"
+    ],
     "ignoredNpmScopes": ["@types"]
   },
   "repository": {
@@ -26,6 +31,24 @@
       "packageName": "@foxnorn/rush-sortpack-plugin",
       "projectFolder": "rush-plugins/rush-sortpack-plugin",
       "reviewCategory": "rush-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/heft-storybook-plugin",
+      "projectFolder": "heft-plugins/heft-storybook-plugin",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/heft-node-rig",
+      "projectFolder": "rigs/heft-node-rig",
+      "reviewCategory": "libraries",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/heft-web-rig",
+      "projectFolder": "rigs/heft-web-rig",
+      "reviewCategory": "libraries",
       "shouldPublish": true
     },
     {

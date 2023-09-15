@@ -1,0 +1,23 @@
+{
+  "name": "@foxnorn/heft-node-rig",
+  "version": "1.0.0",
+  "private": false,
+  "description": "A rig package for Node.js projects that build using Heft",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
+    "directory": "rush-plugins/heft-node-rig"
+  },
+  "license": "MIT",
+  "author": "foxnorn",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "",
+    "_phase:build": ""
+  },
+  "devDependencies": {
+    "@rushstack/heft": "~0.58.2",
+    "@rushstack/heft-typescript-plugin": "~0.1.21"
+  }
+}
