@@ -18,17 +18,16 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rushstack/node-core-library": "~3.59.7",
+    "@rushstack/node-core-library": "~3.60.0",
     "sort-package-json": "~2.5.1",
     "yargs": "~17.7.2"
   },
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
+    "@foxnorn/heft-node-rig": "workspace:*",
     "@microsoft/rush-lib": "~5.106.0",
-    "@rushstack/heft": "~0.58.2",
-    "@rushstack/heft-typescript-plugin": "~0.1.21",
-    "@types/node": "~20.6.0",
-    "@types/yargs": "~17.0.24",
-    "typescript": "~5.2.2"
+    "@rushstack/heft": "~0.59.0",
+    "@types/node": "~20.6.1",
+    "@types/yargs": "~17.0.24"
   }
 }

@@ -3,8 +3,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@foxnorn/heft-node-rig",
+      "allowedCategories": [ "rush-plugins" ]
+    },
+    {
       "name": "@foxnorn/tsconfig",
-      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
     },
     {
       "name": "@microsoft/rush-lib",
@@ -40,7 +44,7 @@
     },
     {
       "name": "typescript",
-      "allowedCategories": [ "heft-plugins", "internal", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal", "libraries", "rush-plugins" ]
     },
     {
       "name": "yargs",

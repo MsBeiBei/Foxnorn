@@ -9,7 +9,7 @@ dependencies:
     specifier: ../../../rush-plugins/rush-sortpack-plugin
     version: link:../../../rush-plugins/rush-sortpack-plugin
   typescript:
-    specifier: 5.2.2
+    specifier: ~5.2.2
     version: 5.2.2
 
 packages:

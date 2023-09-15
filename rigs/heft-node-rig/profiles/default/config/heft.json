@@ -3,11 +3,19 @@
 
   "phasesByName": {
     "build": {
-      "cleanFiles": [{ "sourcePath": "dist" }, { "sourcePath": "lib" }],
+      "cleanFiles": [{ "includeGlobs": ["dist", "lib"] }],
+
       "tasksByName": {
         "typescript": {
           "taskPlugin": {
             "pluginPackage": "@rushstack/heft-typescript-plugin"
+          }
+        },
+        "node-service": {
+          "taskDependencies": ["typescript"],
+          "taskPlugin": {
+            "pluginPackage": "@rushstack/heft",
+            "pluginName": "node-service-plugin"
           }
         }
       }

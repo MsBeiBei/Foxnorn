@@ -13,11 +13,17 @@
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
-    "build": "",
-    "_phase:build": ""
+    "_phase:build": "",
+    "build": ""
+  },
+  "dependencies": {
+    "typescript": "~5.2.2",
+    "@rushstack/heft-typescript-plugin": "~0.2.0"
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.58.2",
-    "@rushstack/heft-typescript-plugin": "~0.1.21"
+    "@rushstack/heft": "~0.59.0"
+  },
+  "peerDependencies": {
+    "@rushstack/heft": "~0.59.0"
   }
 }
