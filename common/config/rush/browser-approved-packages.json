@@ -41,6 +41,10 @@
     {
       "name": "typescript",
       "allowedCategories": [ "internal", "rush-plugins" ]
+    },
+    {
+      "name": "yargs",
+      "allowedCategories": [ "rush-plugins" ]
     }
   ]
 }
