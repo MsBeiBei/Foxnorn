@@ -8,6 +8,37 @@ importers:
 
   .: {}
 
+  ../../heft-plugins/heft-checkup-plugin:
+    dependencies:
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
+    devDependencies:
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@microsoft/rush-lib':
+        specifier: ~5.106.0
+        version: 5.106.0(@types/node@20.6.1)
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.2.0
+        version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      '@types/yargs':
+        specifier: ~17.0.24
+        version: 17.0.24
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
   ../../heft-plugins/heft-storybook-plugin:
     dependencies:
       '@rushstack/node-core-library':
@@ -41,6 +72,9 @@ importers:
 
   ../../rigs/heft-node-rig:
     dependencies:
+      '@foxnorn/heft-checkup-plugin':
+        specifier: workspace:*
+        version: link:../../heft-plugins/heft-checkup-plugin
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.2.0
         version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
@@ -572,7 +606,7 @@ packages:
     engines: {node: '>=10.16'}
     dependencies:
       '@pnpm/types': 6.4.0
-      fast-glob: 3.2.12
+      fast-glob: 3.3.1
       is-subdir: 1.2.0
     dev: true
 
@@ -1474,7 +1508,7 @@ packages:
       debug: 4.3.4
       deps-regex: 0.1.4
       findup-sync: 5.0.0
-      ignore: 5.1.9
+      ignore: 5.2.4
       is-core-module: 2.13.0
       js-yaml: 3.14.1
       json5: 2.2.3
@@ -1882,7 +1916,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.12
+      fast-glob: 3.3.1
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0

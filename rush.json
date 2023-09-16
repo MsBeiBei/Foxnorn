@@ -40,6 +40,25 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@foxnorn/heft-typescript-plugin",
+      "projectFolder": "heft-plugins/heft-typescript-plugin",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/heft-vite-plugin",
+      "projectFolder": "heft-plugins/heft-vite-plugin",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/heft-checkup-plugin",
+      "projectFolder": "heft-plugins/heft-checkup-plugin",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": true,
+      "cyclicDependencyProjects": ["@foxnorn/heft-node-rig"]
+    },
+    {
       "packageName": "@foxnorn/heft-node-rig",
       "projectFolder": "rigs/heft-node-rig",
       "reviewCategory": "libraries",

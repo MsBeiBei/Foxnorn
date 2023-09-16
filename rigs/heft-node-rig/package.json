@@ -17,8 +17,9 @@
     "build": ""
   },
   "dependencies": {
-    "typescript": "~5.2.2",
-    "@rushstack/heft-typescript-plugin": "~0.2.0"
+    "@foxnorn/heft-checkup-plugin": "workspace:*",
+    "@rushstack/heft-typescript-plugin": "~0.2.0",
+    "typescript": "~5.2.2"
   },
   "devDependencies": {
     "@rushstack/heft": "~0.59.0"

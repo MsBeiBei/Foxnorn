@@ -23,8 +23,8 @@
     "yargs": "~17.7.2"
   },
   "devDependencies": {
-    "@foxnorn/tsconfig": "workspace:*",
     "@foxnorn/heft-node-rig": "workspace:*",
+    "@foxnorn/tsconfig": "workspace:*",
     "@microsoft/rush-lib": "~5.106.0",
     "@rushstack/heft": "~0.59.0",
     "@types/node": "~20.6.1",

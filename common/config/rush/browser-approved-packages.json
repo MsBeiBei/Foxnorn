@@ -3,8 +3,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@foxnorn/heft-checkup-plugin",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
       "name": "@foxnorn/heft-node-rig",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
     },
     {
       "name": "@foxnorn/tsconfig",
@@ -12,7 +16,7 @@
     },
     {
       "name": "@microsoft/rush-lib",
-      "allowedCategories": [ "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
     },
     {
       "name": "@rushstack/heft",
