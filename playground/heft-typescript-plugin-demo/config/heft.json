@@ -3,11 +3,12 @@
 
   "phasesByName": {
     "build": {
-      "cleanFiles": [{ "sourcePath": "dist" }, { "sourcePath": "lib" }],
+      "cleanFiles": [{ "includeGlobs": ["dist", "lib", "lib-commonjs"] }],
+
       "tasksByName": {
         "typescript": {
           "taskPlugin": {
-            "pluginPackage": "@rushstack/heft-typescript-plugin"
+            "pluginPackage": "@foxnorn/heft-typescript-plugin"
           }
         }
       }

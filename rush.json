@@ -11,7 +11,8 @@
       "rush-plugins",
       "heft-plugins",
       "libraries",
-      "internal"
+      "internal",
+      "playground"
     ],
     "ignoredNpmScopes": ["@types"]
   },
@@ -34,6 +35,12 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@foxnorn/heft-lib",
+      "projectFolder": "heft-plugins/heft-lib",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@foxnorn/heft-storybook-plugin",
       "projectFolder": "heft-plugins/heft-storybook-plugin",
       "reviewCategory": "heft-plugins",
@@ -43,7 +50,8 @@
       "packageName": "@foxnorn/heft-typescript-plugin",
       "projectFolder": "heft-plugins/heft-typescript-plugin",
       "reviewCategory": "heft-plugins",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "cyclicDependencyProjects": ["@foxnorn/heft-node-rig"]
     },
     {
       "packageName": "@foxnorn/heft-vite-plugin",
@@ -57,6 +65,12 @@
       "reviewCategory": "heft-plugins",
       "shouldPublish": true,
       "cyclicDependencyProjects": ["@foxnorn/heft-node-rig"]
+    },
+    {
+      "packageName": "heft-typescript-plugin-demo",
+      "projectFolder": "playground/heft-typescript-plugin-demo",
+      "reviewCategory": "playground",
+      "shouldPublish": false
     },
     {
       "packageName": "@foxnorn/heft-node-rig",

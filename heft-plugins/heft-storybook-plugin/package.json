@@ -20,7 +20,9 @@
     "@rushstack/node-core-library": "~3.60.0"
   },
   "devDependencies": {
+    "@foxnorn/heft-node-rig": "workspace:*",
     "@foxnorn/tsconfig": "workspace:*",
+    "@microsoft/rush-lib": "~5.106.0",
     "@rushstack/heft": "~0.59.0",
     "@rushstack/heft-typescript-plugin": "~0.2.0",
     "@types/node": "~20.6.1",

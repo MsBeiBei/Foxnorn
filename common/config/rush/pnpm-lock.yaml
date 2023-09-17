@@ -39,8 +39,14 @@ importers:
         specifier: ~5.2.2
         version: 5.2.2
 
-  ../../heft-plugins/heft-storybook-plugin:
+  ../../heft-plugins/heft-lib:
     dependencies:
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@rushstack/heft-config-file':
+        specifier: ~0.14.0
+        version: 0.14.0(@types/node@20.6.1)
       '@rushstack/node-core-library':
         specifier: ~3.60.0
         version: 3.60.0(@types/node@20.6.1)
@@ -48,6 +54,102 @@ importers:
       '@foxnorn/tsconfig':
         specifier: workspace:*
         version: link:../../internal/tsconfig
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      tslib:
+        specifier: ~2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
+  ../../heft-plugins/heft-storybook-plugin:
+    dependencies:
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
+    devDependencies:
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@microsoft/rush-lib':
+        specifier: ~5.106.0
+        version: 5.106.0(@types/node@20.6.1)
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.2.0
+        version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      '@types/yargs':
+        specifier: ~17.0.24
+        version: 17.0.24
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
+  ../../heft-plugins/heft-typescript-plugin:
+    dependencies:
+      '@foxnorn/heft-lib':
+        specifier: workspace:*
+        version: link:../heft-lib
+      '@rushstack/heft-config-file':
+        specifier: ~0.14.0
+        version: 0.14.0(@types/node@20.6.1)
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
+    devDependencies:
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@microsoft/rush-lib':
+        specifier: ~5.106.0
+        version: 5.106.0(@types/node@20.6.1)
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.2.0
+        version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      '@types/yargs':
+        specifier: ~17.0.24
+        version: 17.0.24
+      tslib:
+        specifier: ~2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
+  ../../heft-plugins/heft-vite-plugin:
+    dependencies:
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
+    devDependencies:
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@microsoft/rush-lib':
+        specifier: ~5.106.0
+        version: 5.106.0(@types/node@20.6.1)
       '@rushstack/heft':
         specifier: ~0.59.0
         version: 0.59.0(@types/node@20.6.1)
@@ -70,11 +172,51 @@ importers:
         specifier: ~5.1.6
         version: 5.1.6
 
+  ../../playground/heft-typescript-plugin-demo:
+    dependencies:
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
+    devDependencies:
+      '@foxnorn/heft-checkup-plugin':
+        specifier: workspace:*
+        version: link:../../heft-plugins/heft-checkup-plugin
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/heft-typescript-plugin':
+        specifier: workspace:*
+        version: link:../../heft-plugins/heft-typescript-plugin
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@microsoft/rush-lib':
+        specifier: ~5.106.0
+        version: 5.106.0(@types/node@20.6.1)
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@rushstack/heft-typescript-plugin':
+        specifier: ~0.2.0
+        version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      '@types/yargs':
+        specifier: ~17.0.24
+        version: 17.0.24
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
   ../../rigs/heft-node-rig:
     dependencies:
       '@foxnorn/heft-checkup-plugin':
         specifier: workspace:*
         version: link:../../heft-plugins/heft-checkup-plugin
+      '@foxnorn/heft-typescript-plugin':
+        specifier: workspace:*
+        version: link:../../heft-plugins/heft-typescript-plugin
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.2.0
         version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)

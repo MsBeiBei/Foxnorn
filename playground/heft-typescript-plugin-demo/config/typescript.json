@@ -1,0 +1,33 @@
+/**
+ * Configures the TypeScript plugin for Heft.  This plugin also manages linting.
+ */
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json",
+
+  "additionalModuleKindsToEmit": [
+    {
+      "moduleKind": "amd",
+
+      "outFolderName": "lib/amd"
+    },
+    {
+      "moduleKind": "commonjs",
+
+      "outFolderName": "lib/cjs"
+    },
+    {
+      "moduleKind": "esnext",
+
+      "outFolderName": "lib/esm"
+    }
+  ],
+
+  "emitCjsExtensionForCommonJS": false,
+
+  "emitMjsExtensionForESModule": false,
+
+  "buildProjectReferences": false,
+  "useTranspilerWorker": false,
+
+  "staticAssetsToCopy": {}
+}

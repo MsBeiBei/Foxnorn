@@ -3,8 +3,8 @@
 
   "taskPlugins": [
     {
-      "pluginName": "checkup-plugin",
-      "entryPoint": "lib/CheckupPlugin"
+      "pluginName": "typescript-plugin",
+      "entryPoint": "lib/TypeScriptPlugin"
     }
   ]
 }

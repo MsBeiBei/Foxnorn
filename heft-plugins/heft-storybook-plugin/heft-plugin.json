@@ -3,8 +3,8 @@
 
   "taskPlugins": [
     {
-      "pluginName": "vite-plugin",
-      "entryPoint": "lib/VitePlugin"
+      "pluginName": "storybook-plugin",
+      "entryPoint": "lib/StorybookPlugin"
     }
   ]
 }

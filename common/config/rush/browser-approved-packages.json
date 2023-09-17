@@ -4,23 +4,39 @@
   "packages": [
     {
       "name": "@foxnorn/heft-checkup-plugin",
-      "allowedCategories": [ "libraries" ]
+      "allowedCategories": [ "libraries", "playground" ]
+    },
+    {
+      "name": "@foxnorn/heft-lib",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
+      "name": "@foxnorn/heft-misc",
+      "allowedCategories": [ "heft-plugins" ]
     },
     {
       "name": "@foxnorn/heft-node-rig",
-      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "playground", "rush-plugins" ]
+    },
+    {
+      "name": "@foxnorn/heft-typescript-plugin",
+      "allowedCategories": [ "libraries", "playground" ]
     },
     {
       "name": "@foxnorn/tsconfig",
-      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "playground", "rush-plugins" ]
     },
     {
       "name": "@microsoft/rush-lib",
-      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "playground", "rush-plugins" ]
     },
     {
       "name": "@rushstack/heft",
-      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "playground", "rush-plugins" ]
+    },
+    {
+      "name": "@rushstack/heft-config-file",
+      "allowedCategories": [ "heft-plugins" ]
     },
     {
       "name": "@rushstack/heft-node-rig",
@@ -28,11 +44,11 @@
     },
     {
       "name": "@rushstack/heft-typescript-plugin",
-      "allowedCategories": [ "heft-plugins", "libraries", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "libraries", "playground", "rush-plugins" ]
     },
     {
       "name": "@rushstack/node-core-library",
-      "allowedCategories": [ "heft-plugins", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "playground", "rush-plugins" ]
     },
     {
       "name": "@rushstack/rush-sdk",
@@ -47,8 +63,12 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "tslib",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
       "name": "typescript",
-      "allowedCategories": [ "heft-plugins", "internal", "libraries", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
     },
     {
       "name": "yargs",
