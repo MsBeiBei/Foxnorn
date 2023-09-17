@@ -59,6 +59,10 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "semver",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
       "name": "sort-package-json",
       "allowedCategories": [ "rush-plugins" ]
     },

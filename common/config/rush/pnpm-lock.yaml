@@ -106,6 +106,9 @@ importers:
       '@rushstack/node-core-library':
         specifier: ~3.60.0
         version: 3.60.0(@types/node@20.6.1)
+      semver:
+        specifier: ~7.5.4
+        version: 7.5.4
     devDependencies:
       '@foxnorn/heft-node-rig':
         specifier: workspace:*
@@ -125,6 +128,9 @@ importers:
       '@types/node':
         specifier: ~20.6.1
         version: 20.6.1
+      '@types/semver':
+        specifier: ~7.5.2
+        version: 7.5.2
       '@types/yargs':
         specifier: ~17.0.24
         version: 17.0.24
@@ -1077,6 +1083,10 @@ packages:
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+    dev: true
+
+  /@types/semver@7.5.2:
+    resolution: {integrity: sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==}
     dev: true
 
   /@types/tapable@1.0.6:

@@ -1,0 +1,59 @@
+{
+  "options": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "allowArbitraryExtensions": false,
+    "module": 1,
+    "moduleResolution": 2,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["lib.esnext.d.ts"],
+    "target": 99,
+    "skipLibCheck": true,
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "stripInternal": true,
+    "preserveWatchOutput": true,
+    "inlineSources": false,
+    "types": ["node"],
+    "baseUrl": "D:/Foxnorn/playground/heft-typescript-plugin-demo",
+    "outDir": "D:/Foxnorn/playground/heft-typescript-plugin-demo/lib",
+    "configFilePath": "D:/Foxnorn/playground/heft-typescript-plugin-demo/tsconfig.json"
+  },
+  "fileNames": [],
+  "typeAcquisition": { "enable": false, "include": [], "exclude": [] },
+  "raw": {
+    "extends": "@foxnorn/tsconfig/node.cjs.json",
+    "compilerOptions": { "baseUrl": ".", "outDir": "lib" },
+    "compileOnSave": false
+  },
+  "errors": [
+    {
+      "messageText": "No inputs were found in config file 'D:/Foxnorn/playground/heft-typescript-plugin-demo/tsconfig.json'. Specified 'include' paths were '[\"**/*\"]' and 'exclude' paths were '[\"lib\"]'.",
+      "category": 1,
+      "code": 18003
+    }
+  ],
+  "wildcardDirectories": {
+    "D:/Foxnorn/playground/heft-typescript-plugin-demo": 1
+  },
+  "compileOnSave": false
+}

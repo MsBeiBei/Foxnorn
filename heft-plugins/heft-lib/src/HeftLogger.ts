@@ -2,6 +2,7 @@ import { format } from "util";
 import { type ITerminal } from "@rushstack/node-core-library";
 
 export interface ILogger {
+  terminal: ITerminal;
   log(message: any, ...param: any[]): void;
   error(message: any, ...param: any[]): void;
   debug(message: any, ...param: any[]): void;

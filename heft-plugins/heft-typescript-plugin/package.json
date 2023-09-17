@@ -22,7 +22,8 @@
   "dependencies": {
     "@rushstack/node-core-library": "~3.60.0",
     "@foxnorn/heft-lib": "workspace:*",
-    "@rushstack/heft-config-file": "~0.14.0"
+    "@rushstack/heft-config-file": "~0.14.0",
+    "semver": "~7.5.4"
   },
   "devDependencies": {
     "@foxnorn/heft-node-rig": "workspace:*",
@@ -33,7 +34,8 @@
     "@types/node": "~20.6.1",
     "@types/yargs": "~17.0.24",
     "typescript": "~5.2.2",
-    "tslib": "~2.6.2"
+    "tslib": "~2.6.2",
+    "@types/semver": "~7.5.2"
   },
   "peerDependencies": {
     "@rushstack/heft": "~0.59.0"
