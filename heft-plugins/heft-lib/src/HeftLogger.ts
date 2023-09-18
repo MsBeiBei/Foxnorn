@@ -2,7 +2,7 @@ import { format } from "util";
 import { type ITerminal } from "@rushstack/node-core-library";
 
 export interface ILogger {
-  terminal: ITerminal;
+  terminal: Readonly<ITerminal>;
   log(message: any, ...param: any[]): void;
   error(message: any, ...param: any[]): void;
   debug(message: any, ...param: any[]): void;
@@ -10,7 +10,7 @@ export interface ILogger {
 }
 
 export class HeftLogger implements ILogger {
-  constructor(public terminal: ITerminal) {}
+  constructor(public readonly terminal: ITerminal) {}
 
   public log(message?: any, ...param: any[]): void {
     this.terminal.writeLine(format(message, ...param));

@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@rushstack/heft": "~0.59.0",
-    "@rushstack/node-core-library": "~3.60.0",
-    "@rushstack/heft-config-file": "~0.14.0"
+    "@rushstack/node-core-library": "~3.60.0"
   }
 }
