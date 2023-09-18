@@ -17,7 +17,9 @@ export abstract class HeftPlugin implements IHeftTaskPlugin {
     this.logger = new HeftLogger(taskSession.logger.terminal);
 
     if (this.run) {
-      this.run(taskSession, heftConfiguration);
+      taskSession.hooks.run.tapPromise(this.PLUGIN_NAME, async () => {
+        await this.run!(taskSession, heftConfiguration);
+      });
     }
   }
 
