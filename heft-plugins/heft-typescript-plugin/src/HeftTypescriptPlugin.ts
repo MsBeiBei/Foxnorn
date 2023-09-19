@@ -1,7 +1,10 @@
 import { resolve } from "path";
 import type { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
-import { ConfigurationFile } from "@rushstack/heft-config-file";
-import { Path, type ITerminal } from "@rushstack/node-core-library";
+import {
+  ConfigurationFile,
+  PathResolutionMethod,
+} from "@rushstack/heft-config-file";
+import { Path, FileSystem, type ITerminal } from "@rushstack/node-core-library";
 import { HeftPlugin } from "@foxnorn/heft-lib";
 
 export interface IConfigurationFile {
@@ -73,7 +76,44 @@ export abstract class HeftTypescriptPlugin extends HeftPlugin {
     // The folder location where build is located
     const buildFolderPath: string = heftConfiguration.buildFolderPath;
 
+    const tsconfigFilePath = HeftTypescriptPlugin.getTsconfigFilePath(
+      heftConfiguration,
+      configurationFile
+    );
 
-    
+    terminal.writeVerboseLine(`Looking for tsconfig at ${tsconfigFilePath}`);
+    const tsconfigExists: boolean = await FileSystem.existsAsync(
+      tsconfigFilePath
+    );
+
+    if (!tsconfigExists) return;
+
+    // The folder where the schema is stored
+    const schemaFolderPath: string = resolve(
+      __dirname,
+      `schemas/typescript.schema.json`
+    );
+
+    const partialTsconfigFileLoader = new ConfigurationFile<TConfigurationFile>(
+      {
+        projectRelativeFilePath: configurationFile?.project ?? "tsconfig.json",
+        jsonSchemaPath: schemaFolderPath,
+        jsonPathMetadata: {
+          "$.compilerOptions.outDir": {
+            pathResolutionMethod:
+              PathResolutionMethod.resolvePathRelativeToConfigurationFile,
+          },
+        },
+      }
+    );
+
+    const partialTsconfigFilePromise =
+      partialTsconfigFileLoader.loadConfigurationFileForProjectAsync(
+        terminal,
+        buildFolderPath,
+        heftConfiguration.rigConfig
+      );
+
+    return await partialTsconfigFilePromise;
   }
 }

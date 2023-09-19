@@ -1,4 +1,4 @@
-import type { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
+import { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
 import { HeftTypescriptPlugin } from "./HeftTypescriptPlugin";
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
 
@@ -15,11 +15,13 @@ export default class TypeScriptPlugin extends HeftTypescriptPlugin {
         heftConfiguration
       );
 
-    const path = HeftTypescriptPlugin.getTsconfigFilePath(
+
+    const ts = await HeftTypescriptPlugin.loadPartialTsconfigFileAsync(
+      taskSession,
       heftConfiguration,
       typeScriptConfiguration
     );
 
-    this.logger.log(path);
+    this.logger.log(ts);
   }
 }
