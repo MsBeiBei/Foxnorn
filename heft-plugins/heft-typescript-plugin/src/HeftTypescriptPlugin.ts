@@ -3,6 +3,7 @@ import type { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
 import {
   ConfigurationFile,
   PathResolutionMethod,
+  InheritanceType,
 } from "@rushstack/heft-config-file";
 import { Path, FileSystem, type ITerminal } from "@rushstack/node-core-library";
 import { HeftPlugin } from "@foxnorn/heft-lib";
@@ -14,6 +15,14 @@ export interface IConfigurationFile {
    * The default value is "./tsconfig.json"
    */
   project?: string;
+}
+
+export interface IPartialTsconfigCompilerOptions {
+  outDir?: string;
+}
+
+export interface IPartialTsconfig {
+  compilerOptions?: IPartialTsconfigCompilerOptions;
 }
 
 export abstract class HeftTypescriptPlugin extends HeftPlugin {
@@ -70,7 +79,7 @@ export abstract class HeftTypescriptPlugin extends HeftPlugin {
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration,
     configurationFile?: TConfigurationFile
-  ) {
+  ): Promise<IPartialTsconfig | undefined> {
     const terminal: ITerminal = taskSession.logger.terminal;
 
     // The folder location where build is located
@@ -91,21 +100,24 @@ export abstract class HeftTypescriptPlugin extends HeftPlugin {
     // The folder where the schema is stored
     const schemaFolderPath: string = resolve(
       __dirname,
-      `schemas/typescript.schema.json`
+      `schemas/tsconfig.schema.json`
     );
 
-    const partialTsconfigFileLoader = new ConfigurationFile<TConfigurationFile>(
-      {
-        projectRelativeFilePath: configurationFile?.project ?? "tsconfig.json",
-        jsonSchemaPath: schemaFolderPath,
-        jsonPathMetadata: {
-          "$.compilerOptions.outDir": {
-            pathResolutionMethod:
-              PathResolutionMethod.resolvePathRelativeToConfigurationFile,
-          },
+    const partialTsconfigFileLoader = new ConfigurationFile<IPartialTsconfig>({
+      projectRelativeFilePath: configurationFile?.project ?? "tsconfig.json",
+      jsonSchemaPath: schemaFolderPath,
+      propertyInheritance: {
+        compilerOptions: {
+          inheritanceType: InheritanceType.merge,
         },
-      }
-    );
+      },
+      jsonPathMetadata: {
+        "$.compilerOptions.outDir": {
+          pathResolutionMethod:
+            PathResolutionMethod.resolvePathRelativeToConfigurationFile,
+        },
+      },
+    });
 
     const partialTsconfigFilePromise =
       partialTsconfigFileLoader.loadConfigurationFileForProjectAsync(
