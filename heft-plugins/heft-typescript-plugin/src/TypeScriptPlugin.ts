@@ -1,4 +1,4 @@
-import { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
+import { HeftConfiguration, type IHeftTaskSession } from "@rushstack/heft";
 import { HeftTypescriptPlugin } from "./HeftTypescriptPlugin";
 import { TypeScriptBuilder } from "./TypeScriptBuilder";
 
@@ -16,7 +16,6 @@ export default class TypeScriptPlugin extends HeftTypescriptPlugin {
         taskSession,
         heftConfiguration
       );
-
 
     new TypeScriptBuilder({
       scopedLogger: this.logger.scopedLogger,

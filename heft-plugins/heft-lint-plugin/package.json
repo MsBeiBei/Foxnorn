@@ -1,12 +1,12 @@
 {
-  "name": "@foxnorn/heft-vite-plugin",
+  "name": "@foxnorn/heft-lint-plugin",
   "version": "1.0.0",
   "private": false,
   "description": "Heft plugin for checkup your project",
   "repository": {
     "type": "git",
     "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "directory": "heft-plugins/heft-vite-plugin"
+    "directory": "heft-plugins/heft-lint-plugin"
   },
   "license": "MIT",
   "author": "foxnorn",

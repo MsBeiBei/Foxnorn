@@ -140,6 +140,9 @@ importers:
 
   ../../heft-plugins/heft-vite-plugin:
     dependencies:
+      '@foxnorn/heft-lib':
+        specifier: workspace:*
+        version: link:../heft-lib
       '@rushstack/node-core-library':
         specifier: ~3.60.0
         version: 3.60.0(@types/node@20.6.1)
