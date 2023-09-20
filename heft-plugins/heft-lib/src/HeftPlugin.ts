@@ -10,11 +10,11 @@ export abstract class HeftPlugin implements IHeftTaskPlugin {
 
   protected logger!: HeftLogger;
 
-  apply(
+  public apply(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
   ): void {
-    this.logger = new HeftLogger(taskSession.logger.terminal);
+    this.logger = new HeftLogger(taskSession.logger);
 
     if (this.run) {
       taskSession.hooks.run.tapPromise(this.PLUGIN_NAME, async () => {
@@ -23,7 +23,7 @@ export abstract class HeftPlugin implements IHeftTaskPlugin {
     }
   }
 
-  run?(
+  public run?(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
   ): Promise<void>;

@@ -1,5 +1,7 @@
 import { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
 import { HeftTypescriptPlugin } from "./HeftTypescriptPlugin";
+import { TypeScriptBuilder } from "./TypeScriptBuilder";
+
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
 
 export default class TypeScriptPlugin extends HeftTypescriptPlugin {
@@ -9,19 +11,16 @@ export default class TypeScriptPlugin extends HeftTypescriptPlugin {
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
   ) {
-    const typeScriptConfiguration =
-      await HeftTypescriptPlugin.loadConfigurationFileAsync(
+    const typeScriptPackagePath =
+      await HeftTypescriptPlugin.getTypeScriptPackagePath(
         taskSession,
         heftConfiguration
       );
 
 
-    const ts = await HeftTypescriptPlugin.loadPartialTsconfigFileAsync(
-      taskSession,
-      heftConfiguration,
-      typeScriptConfiguration
-    );
-
-    this.logger.log(ts);
+    new TypeScriptBuilder({
+      scopedLogger: this.logger.scopedLogger,
+      typeScriptPackagePath,
+    });
   }
 }

@@ -73,6 +73,18 @@ export abstract class HeftTypescriptPlugin extends HeftPlugin {
     );
   }
 
+  static async getTypeScriptPackagePath(
+    taskSession: IHeftTaskSession,
+    heftConfiguration: HeftConfiguration
+  ): Promise<string> {
+    const terminal: ITerminal = taskSession.logger.terminal;
+
+    return await heftConfiguration.rigPackageResolver.resolvePackageAsync(
+      "typescript",
+      terminal
+    );
+  }
+
   static async loadPartialTsconfigFileAsync<
     TConfigurationFile extends IConfigurationFile
   >(
