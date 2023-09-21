@@ -1,50 +1,41 @@
 <script>
 import { tableProps } from "../props";
+import FTableColgroup from "../Colgroup/index.vue";
+
+const FTableHeader = () => import("../Header/index.vue");
+const FTableGroup = () => import("../Group/index.vue");
+const FTableFilter = () => import("../Filter/index.vue");
 
 export default {
   name: "FTable",
   props: tableProps,
   components: {
-    FRowGroup: () => import("../RowGroup/index.vue"),
-    FHeader: () => import("../Header/index.vue"),
-    FFilter: () => import("../Filter/index.vue"),
+    FTableColgroup,
   },
-  render() {
-    const renderRowGroup = () => {
-      const { showRowGroup } = this.$props;
+  render(h) {
+    const { showHeader, showGroup } = this.$props;
 
-      if (showRowGroup) {
-        return <FRowGroup />;
-      }
-    };
+    return h(
+      "div",
+      {
+        class: ["f-table"],
+      },
+      [
+        showGroup && h(FTableGroup),
 
-    const renderHeader = () => {
-      const { showHeader } = this.$props;
-
-      if (showHeader) {
-        return <FHeader />;
-      }
-    };
-
-    const renderFilter = () => {
-      const { showFilter } = this.$props;
-
-      if (showFilter) {
-        return <FFilter />;
-      }
-    };
-
-    return (
-      <div class="f-table">
-        {renderRowGroup()}
-        {renderHeader()}
-        {renderFilter()}
-      </div>
+        h(
+          "table",
+          {
+            class: ["f-table__wrapper"],
+          },
+          [h(FTableColgroup), showHeader && h(FTableHeader)]
+        ),
+      ]
     );
   },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import "../styles/index.scss";
 </style>

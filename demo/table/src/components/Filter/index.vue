@@ -1,8 +1,8 @@
 <script>
 export default {
-  name: "FFilter",
+  name: "FTableFilter",
   render() {
-    return <div class="f-filter"></div>;
+    return <div class="f-table-filter"></div>;
   },
 };
 </script>

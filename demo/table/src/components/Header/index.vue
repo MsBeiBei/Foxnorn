@@ -2,10 +2,11 @@
 import { headerProps } from "../props";
 
 export default {
-  name: "FHeader",
+  name: "FTableHeader",
   props: headerProps,
+
   render() {
-    return <thead class="f-header"></thead>;
+    return <thead class="f-table-header"></thead>;
   },
 };
 </script>

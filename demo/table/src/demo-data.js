@@ -4,10 +4,8 @@
  *      ------------------------------------------
  *      col1    |   col2    |   col3                | 
  *              |           |   col3-1  |   col3-2  |      
- * 
- *      
- * 
- *           
+ *              |           |           |  col3-2-1 |  
+ *              
  */
 
 export const columns = [
@@ -35,6 +33,14 @@ export const columns = [
                 field: 'col3-2',
                 key: 'col3-2',
                 title: 'col3-2',
+                children: [
+                    {
+                        field: 'col3-2-1',
+                        key: 'col3-2-1',
+                        title: 'col3-2-1',
+                    },
+                   
+                ]
             }
         ]
     }

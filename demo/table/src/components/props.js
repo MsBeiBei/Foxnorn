@@ -1,5 +1,5 @@
 export const tableProps = {
-    showRowGroup: {
+    showGroup: {
         type: Boolean,
         default: true
     },
@@ -12,6 +12,10 @@ export const tableProps = {
         default: true
     },
     showToolbar: {
+        type: Boolean,
+        default: true
+    },
+    showFooter: {
         type: Boolean,
         default: true
     },
