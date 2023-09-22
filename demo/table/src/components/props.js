@@ -19,10 +19,16 @@ export const tableProps = {
         type: Boolean,
         default: true
     },
-    sourceData: {
+    columns: {
         type: Array,
         default: () => ([])
-    }
+    },
+    rows: {
+        type: Array,
+        default: () => ([])
+    },
+    width: Number,
+    height: Number
 }
 
 export const headerProps = {
@@ -30,4 +36,27 @@ export const headerProps = {
         type: Array,
         default: () => ([])
     }
+}
+
+export const rowProps = {
+    row: {
+        type: Object,
+        default: () => ({})
+    },
+    rowId: {
+        type: String,
+        default: ''
+    }
+}
+
+export const cellProps = {
+    column: {
+        type: Object,
+        default: () => ({})
+    },
+    row: {
+        type: Object,
+        default: () => ({})
+    },
+    level: Number
 }
