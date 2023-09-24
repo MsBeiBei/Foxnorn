@@ -1,5 +1,4 @@
 <script>
-import FGridScroller from "./Scroller.vue";
 import { baseProps, gridProps } from "./props";
 
 const props = {
@@ -24,7 +23,6 @@ export default {
 
     return (
       <div class="f-grid" role="grid" style={styled}>
-        <FGridScroller>12312</FGridScroller>
       </div>
     );
   },
