@@ -1,4 +1,5 @@
 <script>
+import FGridScroller from "./Scroller.vue";
 import { baseProps, gridProps } from "./props";
 
 const props = {
@@ -10,7 +11,7 @@ const convertToPx = (value) =>
   typeof value === "number" ? parseInt(value).toFixed(2) + "px" : "100%";
 
 export default {
-  name: "FDataGrid",
+  name: "FGrid",
   props,
   render(h) {
     const width = convertToPx(this.width);
@@ -21,13 +22,17 @@ export default {
       height,
     };
 
-    return <div class="f-data-grid" role="grid" style={styled}></div>;
+    return (
+      <div class="f-grid" role="grid" style={styled}>
+        <FGridScroller>12312</FGridScroller>
+      </div>
+    );
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.f-data-grid {
+.f-grid {
   border: 1px solid red;
 }
 </style>

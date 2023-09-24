@@ -2,7 +2,7 @@
   <div class="demo">
     <h6>Example 1</h6>
     <div class="demo-1">
-      <FDataGrid/>
+      <FGrid/>
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
 export default {
   name: "App",
   components: {
-    FDataGrid:()=>import("./components/DataGrid")
+    FGrid:()=>import("./components/Grid")
   },
   created() {},
 };
