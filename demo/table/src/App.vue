@@ -2,24 +2,18 @@
   <div class="demo">
     <h6>Example 1</h6>
     <div class="demo-1">
-      <FGrid class="13123"/>
+      <FDataGrid/>
     </div>
   </div>
 </template>
 
 <script>
-import FGrid from "./components/Grid.vue";
-import { Table } from "./components/table.jsx";
-import { columns } from "./demo-data";
-
 export default {
   name: "App",
   components: {
-    FGrid,
+    FDataGrid:()=>import("./components/DataGrid")
   },
-  created() {
-    Table.convertColumns(columns);
-  },
+  created() {},
 };
 </script>
 
