@@ -1,0 +1,1 @@
+export const estimateCell = [100, 50]
