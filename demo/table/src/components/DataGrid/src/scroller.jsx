@@ -17,12 +17,14 @@ export default {
             height
         }
 
+        const attrs = {
+            tabIndex: -2,
+        }
+
 
         return h('div', {
             class: "f-scroll-panel",
-            attrs: {
-                tabIndex: -2,
-            },
+            attrs,
             style: styled
         })
     }
