@@ -26,11 +26,22 @@ export default {
 
     },
     methods: {
-        calculateVirtualWidth() {
+        setupScrollPanel() {
 
         },
-        calculateVirtualHeight() {
+        updateVirtualWidth() {
+            const { virtualModel } = this.$props
 
+            if (virtualModel === 'none' || virtualModel === 'vertical') {
+
+            }
+        },
+        updateVirtualHeight(nrows) {
+            const { virtualModel } = this.$props
+
+            if (virtualModel === 'none' || virtualModel === 'horizontal') {
+
+            }
         },
     },
     render() {
