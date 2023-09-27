@@ -5,10 +5,8 @@ export default {
             tableRect: null
         }
     },
-    methods: {
-        internalDraw() {
 
-        },
+    methods: {
         setTableRect() {
             const tableWrapper = this.$el
             if (!tableWrapper) return
@@ -22,6 +20,8 @@ export default {
         updateVirtualPanelHeight() {
 
         },
+        updateVirtualPanelWidth() {
 
+        }
     }
 }
