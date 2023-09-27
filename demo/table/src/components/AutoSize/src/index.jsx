@@ -28,7 +28,7 @@ export default {
         }
     },
     render() {
-        const { width, height } = this
+        const { width, height } = this.$data
 
         const getSlot = () => {
             if (this.$scopedSlots.default) {

@@ -1,18 +1,20 @@
-import './style/index.scss';
+import "./style/index.scss"
 
-import FScrollPanel from './scroller'
-import FTable from './table'
-import FAutoSize from '@/components/AutoSize'
-
+import Layout from './mixins/layout'
+import Virtual from './mixins/virtual'
 
 export const props = {
-    sourceData: {
+    columns: {
         type: Array,
         default: () => ([])
     },
-    virtualModel: {
+    data: {
+        type: Array,
+        default: () => ([])
+    },
+    virtualMode: {
         type: String,
-        default: 'none',
+        default: 'both',
         validator(value) {
             return ['both', 'none', 'vertical', 'horizontal'].includes(value)
         }
@@ -21,38 +23,20 @@ export const props = {
 
 export default {
     name: 'FDataGrid',
-    props,
-    computed: {
-
-    },
-    methods: {
-        setupScrollPanel() {
-
-        },
-        updateVirtualWidth() {
-            const { virtualModel } = this.$props
-
-            if (virtualModel === 'none' || virtualModel === 'vertical') {
-
-            }
-        },
-        updateVirtualHeight(nrows) {
-            const { virtualModel } = this.$props
-
-            if (virtualModel === 'none' || virtualModel === 'horizontal') {
-
-            }
-        },
+    mixins: [
+        Layout,
+        Virtual
+    ],
+    provide() {
+        return {
+            root: this
+        }
     },
     render() {
         return (
-            <FAutoSize class="f-data-grid" tabIndex={0} role="grid">
-                <FScrollPanel />
-
-                <div class="f-data-grid__clip">
-                    <FTable />
-                </div>
-            </FAutoSize>
+            <div class="f-data-grid">
+                <div class="f-virtual-panel"></div>
+            </div>
         )
     }
 }
