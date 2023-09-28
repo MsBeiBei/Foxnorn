@@ -2,17 +2,17 @@
   <div class="demo">
     <h6>Example 1</h6>
     <div class="demo-1">
-      <FDataGrid  />
+      <FTable />
     </div>
   </div>
 </template>
 
 <script>
-import FDataGrid from "@/components/DataGrid";
+import FTable from "@/components/Table";
 export default {
   name: "App",
   components: {
-    FDataGrid,
+    FTable,
   },
   data() {
     return {
