@@ -1,27 +1,10 @@
-
 export default {
     data() {
         return {
-            tableRect: null
+            render_row_index: 0,
+            render_row_end_index: 0,
+            render_col_index: 0,
+            render_col_end_index: 0
         }
     },
-
-    methods: {
-        setTableRect() {
-            const tableWrapper = this.$el
-            if (!tableWrapper) return
-
-            const { virtualMode } = this.$props
-            this.tableRect = {
-                width: virtualMode === "none" || virtualMode === "vertical" ? Infinity : tableWrapper.clientWidth,
-                height: virtualMode === "none" || virtualMode === "horizontal" ? Infinity : tableWrapper.clientHeight,
-            }
-        },
-        updateVirtualPanelHeight() {
-
-        },
-        updateVirtualPanelWidth() {
-
-        }
-    }
 }

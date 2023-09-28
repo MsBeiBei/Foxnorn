@@ -1,37 +1,36 @@
 import "./style/index.scss"
 
-import Layout from './mixins/layout'
-import Virtual from './mixins/virtual'
-
 export const props = {
-    columns: {
+    column_headers: {
         type: Array,
         default: () => ([])
     },
-    data: {
+    row_headers: {
         type: Array,
         default: () => ([])
     },
-    virtualMode: {
+    source_data: {
+        type: Array,
+        default: () => ([])
+    },
+    virtual_mode: {
         type: String,
         default: 'both',
         validator(value) {
             return ['both', 'none', 'vertical', 'horizontal'].includes(value)
         }
-    }
+    },
 }
 
 export default {
     name: 'FDataGrid',
-    mixins: [
-        Layout,
-        Virtual
-    ],
+    mixins: [],
     provide() {
         return {
             root: this
         }
     },
+    props,
     render() {
         return (
             <div class="f-data-grid">

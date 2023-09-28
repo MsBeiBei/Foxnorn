@@ -12,10 +12,12 @@ export default {
     },
     mounted() {
         const observer = new ResizeObserver(() => {
-            const rect = this.$el.getBoundingClientRect()
+            const el = this.$el
 
-            this.width = rect.width
-            this.height = rect.height
+            if (!el) return
+
+            this.width = el.clientWidth
+            this.height = el.clientHeight
         })
         observer.observe(this.$el)
 
