@@ -15,13 +15,7 @@ export default {
     FTable,
   },
   data() {
-    return {
-      source_data: [],
-
-      column_headers: [],
-
-      row_headers: [],
-    };
+    return {};
   },
 };
 </script>

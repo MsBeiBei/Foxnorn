@@ -1,7 +1,7 @@
-import "./style/index.scss"
+import '../style/index.scss';
 
 export const props = {
-    column_headers: {
+    col_headers: {
         type: Array,
         default: () => ([])
     },
@@ -23,19 +23,20 @@ export const props = {
 }
 
 export default {
-    name: 'FDataGrid',
-    mixins: [],
-    provide() {
-        return {
-            root: this
-        }
-    },
+    name: 'FTable',
     props,
     render() {
-        return (
-            <div class="f-data-grid">
-                <div class="f-virtual-panel"></div>
-            </div>
-        )
+        const renderCell = () => {
+         
+            
+
+            return ['a'].map(i => {
+                const el = <div>213</div>
+                console.log(el.elm)
+                return el
+            })
+        }
+
+        return <div class="f-table">{renderCell()}</div>
     }
 }
