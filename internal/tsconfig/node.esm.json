@@ -3,6 +3,7 @@
   "display": "@anadi/tsconfig-node-esm",
   "extends": "./base.json",
   "compilerOptions": {
+    "module": "ESNext",
     "types": ["node"]
   }
 }

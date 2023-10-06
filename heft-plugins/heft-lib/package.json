@@ -8,9 +8,9 @@
     "directory": "heft-plugins/heft-lib"
   },
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "foxnorn",
-  "type": "commonjs",
   "scripts": {
     "build": "tsc"
   },

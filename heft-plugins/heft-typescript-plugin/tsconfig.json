@@ -1,5 +1,5 @@
 {
-  "extends": "@foxnorn/tsconfig/node.cjs.json",
+  "extends": "@foxnorn/tsconfig/node.next.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib"

@@ -97,15 +97,6 @@ importers:
       '@foxnorn/heft-lib':
         specifier: workspace:*
         version: link:../heft-lib
-      '@rushstack/heft-config-file':
-        specifier: ~0.14.0
-        version: 0.14.0(@types/node@20.6.1)
-      '@rushstack/node-core-library':
-        specifier: ~3.60.0
-        version: 3.60.0(@types/node@20.6.1)
-      semver:
-        specifier: ~7.5.4
-        version: 7.5.4
     devDependencies:
       '@foxnorn/heft-node-rig':
         specifier: workspace:*
@@ -113,27 +104,12 @@ importers:
       '@foxnorn/tsconfig':
         specifier: workspace:*
         version: link:../../internal/tsconfig
-      '@microsoft/rush-lib':
-        specifier: ~5.106.0
-        version: 5.106.0(@types/node@20.6.1)
       '@rushstack/heft':
         specifier: ~0.59.0
         version: 0.59.0(@types/node@20.6.1)
-      '@rushstack/heft-typescript-plugin':
-        specifier: ~0.2.0
-        version: 0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1)
       '@types/node':
         specifier: ~20.6.1
         version: 20.6.1
-      '@types/semver':
-        specifier: ~7.5.2
-        version: 7.5.2
-      '@types/yargs':
-        specifier: ~17.0.24
-        version: 17.0.24
-      tslib:
-        specifier: ~2.6.2
-        version: 2.6.2
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
@@ -1083,10 +1059,6 @@ packages:
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-    dev: true
-
-  /@types/semver@7.5.2:
-    resolution: {integrity: sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==}
     dev: true
 
   /@types/tapable@1.0.6:

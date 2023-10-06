@@ -10,7 +10,6 @@
   },
   "license": "MIT",
   "author": "foxnorn",
-  "type": "commonjs",
   "types": "dist/heft-typescript-plugin.d.ts",
   "scripts": {
     "_phase:build": "heft run --only build -- --clean",
@@ -22,6 +21,13 @@
     "@foxnorn/heft-lib": "workspace:*"
   },
   "devDependencies": {
-    "@foxnorn/tsconfig": "workspace:*"
+    "@foxnorn/tsconfig": "workspace:*",
+    "@foxnorn/heft-node-rig": "workspace:*",
+    "@rushstack/heft": "~0.59.0",
+    "typescript": "~5.2.2",
+    "@types/node": "~20.6.1"
+  },
+  "peerDependencies": {
+    "@rushstack/heft": "~0.59.0"
   }
 }

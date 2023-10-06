@@ -13,7 +13,7 @@
     "noUnusedParameters": true,
     "strict": true,
     "allowArbitraryExtensions": false,
-    "module": "ESNext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "importHelpers": true,
