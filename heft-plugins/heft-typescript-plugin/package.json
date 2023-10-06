@@ -19,24 +19,9 @@
     "start": "heft test --clean --watch"
   },
   "dependencies": {
-    "@rushstack/node-core-library": "~3.60.0",
-    "@foxnorn/heft-lib": "workspace:*",
-    "@rushstack/heft-config-file": "~0.14.0",
-    "semver": "~7.5.4"
+    "@foxnorn/heft-lib": "workspace:*"
   },
   "devDependencies": {
-    "@foxnorn/heft-node-rig": "workspace:*",
-    "@foxnorn/tsconfig": "workspace:*",
-    "@microsoft/rush-lib": "~5.106.0",
-    "@rushstack/heft": "~0.59.0",
-    "@rushstack/heft-typescript-plugin": "~0.2.0",
-    "@types/node": "~20.6.1",
-    "@types/yargs": "~17.0.24",
-    "typescript": "~5.2.2",
-    "tslib": "~2.6.2",
-    "@types/semver": "~7.5.2"
-  },
-  "peerDependencies": {
-    "@rushstack/heft": "~0.59.0"
+    "@foxnorn/tsconfig": "workspace:*"
   }
 }
