@@ -18,7 +18,9 @@
     "start": "heft test --clean --watch"
   },
   "dependencies": {
-    "@foxnorn/heft-lib": "workspace:*"
+    "@foxnorn/heft-lib": "workspace:*",
+    "@rushstack/node-core-library": "~3.60.0",
+    "@rushstack/heft-config-file": "~0.14.2"
   },
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",

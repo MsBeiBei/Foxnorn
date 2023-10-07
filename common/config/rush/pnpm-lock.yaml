@@ -97,6 +97,12 @@ importers:
       '@foxnorn/heft-lib':
         specifier: workspace:*
         version: link:../heft-lib
+      '@rushstack/heft-config-file':
+        specifier: ~0.14.2
+        version: 0.14.2(@types/node@20.6.1)
+      '@rushstack/node-core-library':
+        specifier: ~3.60.0
+        version: 3.60.0(@types/node@20.6.1)
     devDependencies:
       '@foxnorn/heft-node-rig':
         specifier: workspace:*
@@ -816,6 +822,17 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
 
+  /@rushstack/heft-config-file@0.14.2(@types/node@20.6.1):
+    resolution: {integrity: sha512-X29DqXN6dyvkZm4hIewFkCCub1lxY8LPsyWSYqkuZ1E5f70ibKBp8P+nf2QzjQ7XcJzqDuq5fWrvPzi5N6M5lg==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      '@rushstack/node-core-library': 3.61.0(@types/node@20.6.1)
+      '@rushstack/rig-package': 0.5.1
+      jsonpath-plus: 4.0.0
+    transitivePeerDependencies:
+      - '@types/node'
+    dev: false
+
   /@rushstack/heft-typescript-plugin@0.2.0(@rushstack/heft@0.59.0)(@types/node@20.6.1):
     resolution: {integrity: sha512-uipJ5z7Otetlx2vt4zbN1GTQqu+T0tvGTyOQ8Vpm0DVs1b20iesy1Mf++U9u3qSGRBgNCWkfxquuzGfKZpkOkQ==}
     peerDependencies:
@@ -886,6 +903,24 @@ packages:
       semver: 7.5.4
       z-schema: 5.0.5
 
+  /@rushstack/node-core-library@3.61.0(@types/node@20.6.1):
+    resolution: {integrity: sha512-tdOjdErme+/YOu4gPed3sFS72GhtWCgNV9oDsHDnoLY5oDfwjKUc9Z+JOZZ37uAxcm/OCahDHfuu2ugqrfWAVQ==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+    dependencies:
+      '@types/node': 20.6.1
+      colors: 1.2.5
+      fs-extra: 7.0.1
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.5
+      semver: 7.5.4
+      z-schema: 5.0.5
+    dev: false
+
   /@rushstack/package-deps-hash@4.0.44(@types/node@20.6.1):
     resolution: {integrity: sha512-3TicOuPpDOyl1wWvkaFwYvMgvC2tiqBIZkNbYuSntYCu4i5dh1wUC07Rfnm/K7s3/gNJgZCvOLIxetvUqfv0hg==}
     dependencies:
@@ -921,6 +956,13 @@ packages:
     dependencies:
       resolve: 1.22.5
       strip-json-comments: 3.1.1
+
+  /@rushstack/rig-package@0.5.1:
+    resolution: {integrity: sha512-pXRYSe29TjRw7rqxD4WS3HN/sRSbfr+tJs4a9uuaSIBAITbUggygdhuG0VrO0EO+QqH91GhYMN4S6KRtOEmGVA==}
+    dependencies:
+      resolve: 1.22.5
+      strip-json-comments: 3.1.1
+    dev: false
 
   /@rushstack/rush-amazon-s3-build-cache-plugin@5.106.0(@types/node@20.6.1):
     resolution: {integrity: sha512-WvYsnPfCgNb4g4vzyX+AzxZe40BThLhaFx8VO7zz758auxq3VcKmSO5vjOlc1VI9rB+Ualf5qyNrtsXyVEcAZQ==}

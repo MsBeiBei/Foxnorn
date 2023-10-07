@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "TypeScript Build Configuration",
+  "description": "Defines optional options for TypeScript build.",
+  "type": "object",
+
+  "additionalProperties": false,
+
+  "properties": {}
+}

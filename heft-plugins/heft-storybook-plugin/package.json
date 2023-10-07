@@ -10,7 +10,6 @@
   },
   "license": "MIT",
   "author": "foxnorn",
-  "type": "module",
   "scripts": {
     "build": "heft build --clean",
     "build:watch": "heft build --watch",
