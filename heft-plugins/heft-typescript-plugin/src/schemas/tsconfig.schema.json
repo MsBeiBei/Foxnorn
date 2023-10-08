@@ -1,5 +1,27 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "TypeScript Build Configuration",
-  "description": "Defines optional options for TypeScript build."
+  "description": "Schema that matches anything",
+  "oneOf": [
+    {
+      "type": "array"
+    },
+    {
+      "type": "boolean"
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "type": "null"
+    },
+    {
+      "type": "number"
+    },
+    {
+      "type": "object"
+    },
+    {
+      "type": "string"
+    }
+  ]
 }
