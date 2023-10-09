@@ -7,6 +7,8 @@ import { HeftPlugin } from "@foxnorn/heft-lib";
 
 export interface ITypeScriptConfigurationFile {
   project?: string;
+
+  buildProjectReferences?: boolean;
 }
 
 export interface ITsconfigFile {
