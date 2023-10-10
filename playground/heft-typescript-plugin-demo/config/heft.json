@@ -6,7 +6,7 @@
       "tasksByName": {
         "typescript": {
           "taskPlugin": {
-            "pluginPackage": "@foxnorn/heft-typescript-plugin"
+            "pluginPackage": "@rushstack/heft-typescript-plugin"
           }
         }
       }

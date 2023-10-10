@@ -54,11 +54,17 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
       taskSession,
       heftConfiguration
     );
+    const tsconfigFilePath = await this.getTsconfigFilePath(
+      heftConfiguration,
+      typeScriptConfigurationFile
+    );
 
     const typeScriptBuilderConfiguration: ITypeScriptBuilderConfiguration = {
       buildFolderPath: heftConfiguration.buildFolderPath,
       tempFolderPath: taskSession.tempFolderPath,
       typeScriptToolPath,
+
+      tsconfigFilePath,
 
       buildProjectReferences:
         typeScriptConfigurationFile?.buildProjectReferences,

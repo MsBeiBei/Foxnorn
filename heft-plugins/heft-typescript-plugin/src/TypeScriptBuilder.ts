@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 import type TTypescript from "typescript";
 import { parse, type SemVer } from "semver";
 import type { HeftLogger } from "@foxnorn/heft-lib";
@@ -18,6 +18,8 @@ export interface ITypeScriptBuilderConfiguration
   tempFolderPath: string;
 
   typeScriptToolPath: string;
+
+  tsconfigFilePath: string;
 
   heftLogger: HeftLogger;
 }
@@ -142,6 +144,52 @@ export class TypeScriptBuilder {
   public async runBuildAsync(tool: any) {
     const { ts } = tool;
 
-    console.log((ts as any).performance.getDuration("I/O Read"));
+    const tsconfig = this._loadTsconfig(ts);
+
+    let compilerHost = ts.createCompilerHost(tsconfig.options, undefined);
+
+    let innerProgram = ts.createProgram({
+      rootNames: tsconfig.fileNames,
+      options: tsconfig.options,
+      projectReferences: tsconfig.projectReferences,
+      host: compilerHost,
+      oldProgram: undefined,
+      configFileParsingDiagnostics:
+        ts.getConfigFileParsingDiagnostics(tsconfig),
+    });
+
+    console.log(innerProgram.getCompilerOptions());
+
+    innerProgram.emit(
+      undefined,
+      ts.sys.writeFile,
+      undefined,
+      undefined,
+      undefined
+    );
+  }
+
+  private _loadTsconfig(ts: any): any {
+    const parsedConfigFile: any = ts.readConfigFile(
+      this._configuration.tsconfigFilePath,
+      ts.sys.readFile
+    );
+    const currentFolder: string = dirname(this._configuration.tsconfigFilePath);
+
+    const tsconfig: TTypescript.ParsedCommandLine =
+      ts.parseJsonConfigFileContent(
+        parsedConfigFile.config,
+        {
+          fileExists: ts.sys.fileExists,
+          readFile: ts.sys.readFile,
+          readDirectory: ts.sys.readDirectory,
+          useCaseSensitiveFileNames: true,
+        },
+        currentFolder,
+        undefined,
+        this._configuration.tsconfigFilePath
+      );
+
+    return tsconfig;
   }
 }

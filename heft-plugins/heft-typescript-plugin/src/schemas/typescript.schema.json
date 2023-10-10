@@ -7,6 +7,16 @@
   "additionalProperties": false,
 
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
 
+    "extends": {
+      "type": "string"
+    },
+
+    "additionalModuleKindsToEmit": {
+      "type": "array"
+    }
   }
 }
