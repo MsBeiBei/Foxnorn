@@ -1,7 +1,7 @@
 import type { ExtendedTypeScript } from "../types/typescript";
 
 /**
- * Adds a performance measurement with the specified name.
+ * Gets the number of times the start mark was encountered and the total duration of all measurement for measure name.
  *
  * @param ts The TypeScript compiler
  * @param measureName The name of the performance measurement.
