@@ -1,4 +1,4 @@
-import {type IRushPlugin} from "@microsoft/rush-lib";
+import { type IRushPlugin } from "@microsoft/rush-lib";
 
 export class RushFilterPlugin implements IRushPlugin {
   public constructor() {
