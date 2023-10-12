@@ -2,6 +2,7 @@
   "name": "@foxnorn/heft-vite-plugin",
   "version": "1.0.0",
   "private": false,
+  "type": "module",
   "description": "Heft plugin for checkup your project",
   "repository": {
     "type": "git",

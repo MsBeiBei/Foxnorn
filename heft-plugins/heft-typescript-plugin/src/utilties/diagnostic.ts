@@ -1,5 +1,5 @@
 import type TTypeScript from "typescript";
-import type { ExtendedTypeScript } from "../types/typescript";
+import type { ExtendedTypeScript } from "../types/typescript.d.ts";
 import { FileError } from "@rushstack/node-core-library";
 
 export function printDiagnosticMessage(

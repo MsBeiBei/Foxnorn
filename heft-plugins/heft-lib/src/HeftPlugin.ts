@@ -2,9 +2,8 @@ import type {
   IHeftTaskPlugin,
   IHeftTaskSession,
   HeftConfiguration,
-  IHeftTaskRunIncrementalHookOptions,
 } from "@rushstack/heft";
-import { HeftLogger } from "./HeftLogger";
+import { HeftLogger } from "./HeftLogger.js";
 
 export abstract class HeftPlugin implements IHeftTaskPlugin {
   abstract readonly PLUGIN_NAME: string;
@@ -22,31 +21,10 @@ export abstract class HeftPlugin implements IHeftTaskPlugin {
         await this.run!(taskSession, heftConfiguration);
       });
     }
-
-    if (this.runIncremental) {
-      taskSession.hooks.runIncremental.tapPromise(
-        this.PLUGIN_NAME,
-        async (
-          taskRunIncrementalHookOptions: IHeftTaskRunIncrementalHookOptions
-        ) => {
-          await this.runIncremental!(
-            taskSession,
-            heftConfiguration,
-            taskRunIncrementalHookOptions
-          );
-        }
-      );
-    }
   }
 
   public run?(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
-  ): Promise<void>;
-
-  public runIncremental?(
-    session: IHeftTaskSession,
-    configuration: HeftConfiguration,
-    watchOptions: IHeftTaskRunIncrementalHookOptions
   ): Promise<void>;
 }

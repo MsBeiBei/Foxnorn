@@ -1,4 +1,4 @@
-import { HeftVitePlugin } from "./HeftVitePlugin";
+import { HeftVitePlugin } from "./HeftVitePlugin.js";
 
 export const PLUGIN_NAME: "vite-plugin" = "vite-plugin";
 

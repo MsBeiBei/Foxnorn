@@ -3,11 +3,11 @@ import {
   HeftTypeScriptPlugin,
   type ITypeScriptConfigurationFile,
   type ITsconfigFile,
-} from "./HeftTypeScriptPlugin";
+} from "./HeftTypeScriptPlugin.js";
 import {
   TypeScriptBuilder,
   type ITypeScriptBuilderConfiguration,
-} from "./TypeScriptBuilder";
+} from "./TypeScriptBuilder.js";
 
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
 

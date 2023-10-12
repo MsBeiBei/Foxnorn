@@ -1,4 +1,4 @@
-import type { ExtendedTypeScript } from "../types/typescript";
+import type { ExtendedTypeScript } from "../types/typescript.d.ts";
 
 /**
  * Gets the number of times the start mark was encountered and the total duration of all measurement for measure name.
