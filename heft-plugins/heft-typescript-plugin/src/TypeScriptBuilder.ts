@@ -1,9 +1,9 @@
 import { resolve, dirname } from "path";
 import type TTypescript from "typescript";
 import { parse, type SemVer } from "semver";
-import type { HeftLogger } from "@foxnorn/heft-lib";
+import  { HeftLogger } from "@foxnorn/heft-lib";
 import { JsonFile, type IPackageJson } from "@rushstack/node-core-library";
-import type { ITypeScriptConfigurationFile } from "./HeftTypeScriptPlugin";
+import type { ITypeScriptConfigurationFile } from "./HeftTypeScriptPlugin.js";
 
 const OLDEST_SUPPORTED_TS_MAJOR_VERSION: number = 2;
 const OLDEST_SUPPORTED_TS_MINOR_VERSION: number = 9;
@@ -158,8 +158,6 @@ export class TypeScriptBuilder {
         ts.getConfigFileParsingDiagnostics(tsconfig),
     });
 
-    console.log(innerProgram.getCompilerOptions());
-
     innerProgram.emit(
       undefined,
       ts.sys.writeFile,
@@ -192,5 +190,4 @@ export class TypeScriptBuilder {
 
     return tsconfig;
   }
-
 }

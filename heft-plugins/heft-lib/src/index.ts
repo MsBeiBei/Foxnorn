@@ -1,2 +1,2 @@
-export * from "./HeftLogger";
-export * from "./HeftPlugin";
+export * from "./HeftLogger.js";
+export * from "./HeftPlugin.js";

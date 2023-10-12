@@ -1,15 +1,3 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json",
-  "additionalModuleKindsToEmit": [
-    {
-      "moduleKind": "commonjs",
-
-      "outFolderName": "commonjs"
-    },
-    {
-      "moduleKind": "amd",
-
-      "outFolderName": "amd"
-    }
-  ]
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json"
 }
