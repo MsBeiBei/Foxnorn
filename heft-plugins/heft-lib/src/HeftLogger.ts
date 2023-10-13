@@ -1,11 +1,7 @@
 import { format } from "util";
-import type { IScopedLogger } from "@rushstack/heft";
 import { type ITerminal } from "@rushstack/node-core-library";
 
 export interface IHeftLogger {
-  scopedLogger: Readonly<IScopedLogger>;
-  terminal: Readonly<ITerminal>;
-
   log(message: any, ...param: any[]): void;
   error(message: any, ...param: any[]): void;
   debug(message: any, ...param: any[]): void;
@@ -13,13 +9,7 @@ export interface IHeftLogger {
 }
 
 export class HeftLogger implements IHeftLogger {
-  public readonly scopedLogger: IScopedLogger;
-  public readonly terminal: ITerminal;
-
-  public constructor(scopedLogger: IScopedLogger) {
-    this.scopedLogger = scopedLogger;
-    this.terminal = scopedLogger.terminal;
-  }
+  constructor(public readonly terminal: ITerminal) {}
 
   public log(message?: any, ...param: any[]): void {
     this.terminal.writeLine(format(message, ...param));
