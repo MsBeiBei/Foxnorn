@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 settings:
-  autoInstallPeers: true
+  autoInstallPeers: false
   excludeLinksFromLockfile: false
 
 importers:
@@ -20,6 +20,9 @@ importers:
       '@foxnorn/tsconfig':
         specifier: workspace:*
         version: link:../../internal/tsconfig
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
       tslib:
         specifier: ~2.6.2
         version: 2.6.2
@@ -58,18 +61,7 @@ importers:
         specifier: ~5.2.2
         version: 5.2.2
 
-  ../../internal/tsconfig:
-    dependencies:
-      typescript:
-        specifier: ~5.2.2
-        version: 5.2.2
-    devDependencies:
-      '@types/node':
-        specifier: ~20.6.1
-        version: 20.6.1
-      tslib:
-        specifier: ~2.6.2
-        version: 2.6.2
+  ../../internal/tsconfig: {}
 
   ../../playground/heft-typescript-plugin-demo:
     dependencies:

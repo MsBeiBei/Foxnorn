@@ -7,14 +7,14 @@
     "url": "https://github.com/MsBeiBei/Foxnorn.git",
     "directory": "heft-plugins/heft-lib"
   },
+  "type": "commonjs",
   "main": "src/index.ts",
-  "license": "MIT",
-  "author": "foxnorn",
   "scripts": {
     "build": ""
   },
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
+    "@types/node": "~20.6.1",
     "tslib": "~2.6.2"
   },
   "dependencies": {

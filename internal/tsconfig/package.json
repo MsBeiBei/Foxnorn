@@ -8,7 +8,6 @@
     "directory": "internal/tsconfig"
   },
   "license": "MIT",
-  "type": "module",
   "main": "tsconfig.json",
   "files": [
     "base.json",
@@ -26,8 +25,5 @@
   "peerDependencies": {
     "typescript": "~5.2.2"
   },
-  "tsconfig": "tsconfig.json",
-  "devDependencies": {
-    "@types/node": "~20.6.1"
-  }
+  "tsconfig": "tsconfig.json"
 }
