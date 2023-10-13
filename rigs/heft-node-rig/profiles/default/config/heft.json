@@ -1,28 +1,47 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/heft.schema.json",
-
   "phasesByName": {
     "pre-compile": {
       "cleanFiles": [
-        { "sourcePath": "src", "includeGlobs": ["**/*.generated.ts"] }
+        {
+          "sourcePath": "src",
+          "includeGlobs": [
+            "**/*.generated.ts"
+          ]
+        }
       ],
-      "tasksByName": {
-      
-      }
+      "tasksByName": {}
     },
-
     "compile": {
-      "phaseDependencies": ["pre-compile"],
-      "cleanFiles": [{ "sourcePath": "temp" }, { "sourcePath": "lib" }]
+      "phaseDependencies": [
+        "pre-compile"
+      ],
+      "cleanFiles": [
+        {
+          "sourcePath": "temp"
+        },
+        {
+          "sourcePath": "lib"
+        }
+      ]
     },
-
     "post-compile": {
-      "phaseDependencies": ["compile"]
+      "phaseDependencies": [
+        "compile"
+      ]
     },
-
     "build": {
-      "cleanFiles": [{ "includeGlobs": ["dist", "lib"] }],
-      "phaseDependencies": ["post-compile"],
+      "cleanFiles": [
+        {
+          "includeGlobs": [
+            "dist",
+            "lib"
+          ]
+        }
+      ],
+      "phaseDependencies": [
+        "post-compile"
+      ],
       "tasksByName": {
         "typescript": {
           "taskPlugin": {
@@ -30,7 +49,9 @@
           }
         },
         "node-service": {
-          "taskDependencies": ["typescript"],
+          "taskDependencies": [
+            "typescript"
+          ],
           "taskPlugin": {
             "pluginPackage": "@rushstack/heft",
             "pluginName": "node-service-plugin"

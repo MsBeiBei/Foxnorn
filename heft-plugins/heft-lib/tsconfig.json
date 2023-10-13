@@ -1,3 +1,8 @@
 {
-  "extends": "@foxnorn/tsconfig/node.next.json"
+  "extends": "@foxnorn/tsconfig/node.next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "lib",
+    "declarationDir": "types"
+  }
 }

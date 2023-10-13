@@ -8,9 +8,10 @@
     "directory": "heft-plugins/heft-lib"
   },
   "type": "commonjs",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": ""
+    "build": "tsc"
   },
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
