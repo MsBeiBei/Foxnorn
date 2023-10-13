@@ -3,7 +3,6 @@
   "display": "@anadi/tsconfig-node-next",
   "extends": "./base.json",
   "compilerOptions": {
-    "module": "NodeNext",
     "types": ["node"],
     "verbatimModuleSyntax": false
   }

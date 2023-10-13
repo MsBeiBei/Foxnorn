@@ -12,7 +12,6 @@
     "@rushstack/node-core-library": "~3.60.0"
   },
   "devDependencies": {
-    "@foxnorn/heft-checkup-plugin": "workspace:*",
     "@rushstack/heft-typescript-plugin": "~0.2.0",
     "@foxnorn/heft-node-rig": "workspace:*",
     "@foxnorn/heft-typescript-plugin": "workspace:*",

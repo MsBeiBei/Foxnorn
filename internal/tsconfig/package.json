@@ -26,5 +26,8 @@
   "peerDependencies": {
     "typescript": "~5.2.2"
   },
-  "tsconfig": "tsconfig.json"
+  "tsconfig": "tsconfig.json",
+  "devDependencies": {
+    "@types/node": "~20.6.1"
+  }
 }

@@ -3,10 +3,6 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
-      "name": "@foxnorn/heft-checkup-plugin",
-      "allowedCategories": [ "libraries", "playground" ]
-    },
-    {
       "name": "@foxnorn/heft-lib",
       "allowedCategories": [ "heft-plugins" ]
     },
@@ -68,7 +64,7 @@
     },
     {
       "name": "tslib",
-      "allowedCategories": [ "heft-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal" ]
     },
     {
       "name": "typescript",

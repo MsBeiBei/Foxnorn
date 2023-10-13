@@ -7,13 +7,7 @@
         { "sourcePath": "src", "includeGlobs": ["**/*.generated.ts"] }
       ],
       "tasksByName": {
-        "checkup": {
-          "taskPlugin": {
-            "pluginName": "checkup-plugin",
-            "pluginPackage": "@foxnorn/heft-checkup-plugin",
-            "options": {}
-          }
-        }
+      
       }
     },
 

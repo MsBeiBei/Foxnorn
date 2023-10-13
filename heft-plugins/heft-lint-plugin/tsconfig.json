@@ -1,7 +1,0 @@
-{
-  "extends": "@foxnorn/tsconfig/node.cjs.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "lib"
-  }
-}

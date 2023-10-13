@@ -3,7 +3,7 @@ import type {
   IHeftTaskSession,
   HeftConfiguration,
 } from "@rushstack/heft";
-import { HeftLogger } from "./HeftLogger.js";
+import { HeftLogger } from "./HeftLogger";
 
 export abstract class HeftPlugin implements IHeftTaskPlugin {
   abstract readonly PLUGIN_NAME: string;
