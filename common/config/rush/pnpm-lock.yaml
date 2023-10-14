@@ -16,6 +16,9 @@ importers:
       '@rushstack/node-core-library':
         specifier: ~3.60.0
         version: 3.60.0(@types/node@20.6.1)
+      semver:
+        specifier: ~7.5.4
+        version: 7.5.4
     devDependencies:
       '@foxnorn/tsconfig':
         specifier: workspace:*
@@ -23,6 +26,9 @@ importers:
       '@types/node':
         specifier: ~20.6.1
         version: 20.6.1
+      '@types/semver':
+        specifier: ~7.5.3
+        version: 7.5.3
       tslib:
         specifier: ~2.6.2
         version: 2.6.2

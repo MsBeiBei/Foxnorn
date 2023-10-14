@@ -16,10 +16,12 @@
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
     "@types/node": "~20.6.1",
-    "tslib": "~2.6.2"
+    "tslib": "~2.6.2",
+    "@types/semver": "~7.5.3"
   },
   "dependencies": {
     "@rushstack/heft": "~0.59.0",
-    "@rushstack/node-core-library": "~3.60.0"
+    "@rushstack/node-core-library": "~3.60.0",
+    "semver": "~7.5.4"
   }
 }
