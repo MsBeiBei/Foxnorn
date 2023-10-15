@@ -1,6 +1,5 @@
 import { HeftLogger } from "@foxnorn/heft-lib";
 import { type ITypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
-import { TypeScriptCore } from "./TypeScriptCore";
 
 export interface ITypeScriptBuilderConfiguration
   extends ITypeScriptConfigurationJson {

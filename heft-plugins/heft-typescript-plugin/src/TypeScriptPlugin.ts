@@ -15,12 +15,7 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
   ) {
-    const builder: TypeScriptBuilder | undefined =
-      await this.getTypeScriptBuilderAsync(taskSession, heftConfiguration);
-
-    if (builder) {
-      await builder.compile();
-    }
+    await this.getTypeScriptBuilderAsync(taskSession, heftConfiguration);
   }
 
   private async getTypeScriptBuilderAsync(
