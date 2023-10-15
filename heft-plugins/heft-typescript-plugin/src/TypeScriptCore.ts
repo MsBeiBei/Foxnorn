@@ -1,4 +1,3 @@
-import { join } from "path";
 import type TTypeScript from "typescript";
 
 export interface Performance {
@@ -45,7 +44,9 @@ export class TypeScriptCore {
     return host;
   }
 
-  private measureTsPerformance<T extends object | void>(
+  public loadTsconfigFile() {}
+
+  public measureTsPerformance<T extends object | void>(
     measureName: string,
     fn: () => T
   ): T & {
@@ -66,5 +67,5 @@ export class TypeScriptCore {
     };
   }
 
-  private printTsDiagnostics() {}
+  public printTsDiagnostics() {}
 }

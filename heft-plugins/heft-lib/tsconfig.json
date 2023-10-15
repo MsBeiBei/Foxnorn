@@ -3,6 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib",
-    "declarationDir": "types"
+    "declarationDir": "lib/types"
   }
 }

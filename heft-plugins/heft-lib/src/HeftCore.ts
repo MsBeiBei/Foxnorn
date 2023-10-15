@@ -3,11 +3,6 @@ import { parse, type SemVer } from "semver";
 import { JsonFile, type IPackageJson } from "@rushstack/node-core-library";
 
 export class HeftCore {
-  /**
-   * Load package.json file
-   *
-   * @param packagePath The path to the Package tool.
-   */
   static async loadPackageJsonAsync(
     packagePath: string
   ): Promise<IPackageJson> {
@@ -20,12 +15,7 @@ export class HeftCore {
     return packageJson;
   }
 
-  /**
-   * Return the parsed version as a SemVer object, or null if it's not valid.
-   *
-   * @param packageJson package.json's object
-   */
-  static parseVersion(packageJson: IPackageJson): SemVer | null {
+  static parsePackageJsonVersion(packageJson: IPackageJson): SemVer | null {
     const parsedVersion: SemVer | null = parse(packageJson.version);
 
     return parsedVersion;

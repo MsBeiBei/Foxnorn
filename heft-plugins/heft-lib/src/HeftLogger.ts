@@ -1,5 +1,6 @@
 import { format } from "util";
-import { type ITerminal } from "@rushstack/node-core-library";
+import type { IHeftTaskSession, IScopedLogger } from "@rushstack/heft";
+import type { ITerminal } from "@rushstack/node-core-library";
 
 export interface IHeftLogger {
   log(message: any, ...param: any[]): void;
@@ -9,7 +10,14 @@ export interface IHeftLogger {
 }
 
 export class HeftLogger implements IHeftLogger {
-  constructor(public readonly terminal: ITerminal) {}
+  public get terminal(): ITerminal {
+    return this.taskSession.logger.terminal;
+  }
+  public get logger(): IScopedLogger {
+    return this.taskSession.logger;
+  }
+
+  constructor(public readonly taskSession: IHeftTaskSession) {}
 
   public log(message?: any, ...param: any[]): void {
     this.terminal.writeLine(format(message, ...param));
