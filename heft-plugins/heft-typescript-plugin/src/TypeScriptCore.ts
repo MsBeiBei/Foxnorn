@@ -1,3 +1,4 @@
+import { dirname } from "path";
 import type TTypeScript from "typescript";
 
 export interface Performance {
@@ -27,24 +28,55 @@ export type ExtendedTypeScript = typeof TTypeScript & {
 };
 
 export class TypeScriptCore {
-  constructor(public readonly ts: ExtendedTypeScript) {}
+  private tsconfig: TTypeScript.ParsedCommandLine;
+  private host: TTypeScript.CompilerHost | undefined;
+
+  constructor(
+    public readonly ts: ExtendedTypeScript,
+    public readonly project: string,
+    public readonly typeScriptVersion?: string
+  ) {
+    this.tsconfig = this.loadTsconfigFile();
+    this.host = this.createCompilerHost(this.tsconfig);
+  }
+
+  public compileFiles() {}
 
   public createCompilerHost(
-    command: TTypeScript.ParsedCommandLine,
+    tsconfig: TTypeScript.ParsedCommandLine,
     system?: TTypeScript.System
   ): TTypeScript.CompilerHost | undefined {
     let host: TTypeScript.CompilerHost | undefined;
 
-    if (command.options.incremental) {
-      host = this.ts.createIncrementalCompilerHost(command.options, system);
+    if (tsconfig.options.incremental) {
+      host = this.ts.createIncrementalCompilerHost(tsconfig.options, system);
     } else {
-      host = this.ts.createCompilerHost(command.options);
+      host = this.ts.createCompilerHost(tsconfig.options);
     }
 
     return host;
   }
 
-  public loadTsconfigFile() {}
+  private loadTsconfigFile(): TTypeScript.ParsedCommandLine {
+    const readResult = this.ts.readConfigFile(
+      this.project,
+      this.ts.sys.readFile
+    );
+
+    const config = this.ts.parseJsonConfigFileContent(
+      readResult.config,
+      {
+        fileExists: this.ts.sys.fileExists,
+        readFile: this.ts.sys.readFile,
+        readDirectory: this.ts.sys.readDirectory,
+        useCaseSensitiveFileNames: true,
+      },
+      dirname(this.project),
+      undefined,
+      this.project
+    );
+    return config;
+  }
 
   public measureTsPerformance<T extends object | void>(
     measureName: string,
