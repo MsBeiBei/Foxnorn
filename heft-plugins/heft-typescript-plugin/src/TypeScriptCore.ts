@@ -2,30 +2,26 @@ import { dirname } from "path";
 import type TTypeScript from "typescript";
 
 export interface Performance {
-  /**
-   * https://github.com/microsoft/TypeScript/blob/5f597e69b2e3b48d788cb548df40bcb703c8adb1/src/compiler/performance.ts#L55-L61
-   */
   mark(name: string): void;
-
-  /**
-   * https://github.com/microsoft/TypeScript/blob/5f597e69b2e3b48d788cb548df40bcb703c8adb1/src/compiler/performance.ts#L72-L78
-   */
   measure(name: string, startMark?: string, endMark?: string): void;
-
-  /**
-   * https://github.com/microsoft/TypeScript/blob/5f597e69b2e3b48d788cb548df40bcb703c8adb1/src/compiler/performance.ts#L55-L61
-   */
   getDuration(measureName: string): number;
-
-  /**
-   * https://github.com/microsoft/TypeScript/blob/5f597e69b2e3b48d788cb548df40bcb703c8adb1/src/compiler/performance.ts#L85-L87
-   */
   getCount(measureName: string): number;
 }
 
 export type ExtendedTypeScript = typeof TTypeScript & {
   performance: Performance;
+  getEmitModuleKind: (
+    compilerOptions: TTypeScript.CompilerOptions
+  ) => TTypeScript.ModuleKind;
 };
+
+export class EmitModuleKind {
+  constructor(
+    public readonly module: TTypeScript.ModuleKind,
+    public readonly outDir: string,
+    public readonly extension: string
+  ) {}
+}
 
 export class TypeScriptCore {
   private tsconfig: TTypeScript.ParsedCommandLine;
@@ -42,7 +38,7 @@ export class TypeScriptCore {
 
   public compileFiles() {}
 
-  public createCompilerHost(
+  private createCompilerHost(
     tsconfig: TTypeScript.ParsedCommandLine,
     system?: TTypeScript.System
   ): TTypeScript.CompilerHost | undefined {
@@ -99,5 +95,19 @@ export class TypeScriptCore {
     };
   }
 
-  public printTsDiagnostics() {}
+  private getExtension(
+    ts: ExtendedTypeScript,
+    compilerOptions: TTypeScript.CompilerOptions
+  ) {
+    const moduleKind = ts.getEmitModuleKind(compilerOptions);
+
+    if (moduleKind === ts.ModuleKind.CommonJS) {
+      return ".cjs";
+    }
+    if (moduleKind >= ts.ModuleKind.ES2015) {
+      return ".mjs";
+    }
+
+    return ".js";
+  }
 }
