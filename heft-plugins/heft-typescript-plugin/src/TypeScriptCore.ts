@@ -10,9 +10,6 @@ export interface Performance {
 
 export type ExtendedTypeScript = typeof TTypeScript & {
   performance: Performance;
-  getEmitModuleKind: (
-    compilerOptions: TTypeScript.CompilerOptions
-  ) => TTypeScript.ModuleKind;
 };
 
 export class EmitModuleKind {
@@ -24,38 +21,46 @@ export class EmitModuleKind {
 }
 
 export class TypeScriptCore {
-  private tsconfig: TTypeScript.ParsedCommandLine;
-  private host: TTypeScript.CompilerHost | undefined;
-
   constructor(
     public readonly ts: ExtendedTypeScript,
-    public readonly project: string,
-    public readonly typeScriptVersion?: string
-  ) {
-    this.tsconfig = this.loadTsconfigFile();
-    this.host = this.createCompilerHost(this.tsconfig);
-  }
+    public readonly configFileName: string
+  ) {}
 
-  public compileFiles() {}
+  public compile() {
+    const tsconfig: TTypeScript.ParsedCommandLine = this.loadTsconfigFile();
+    const host: TTypeScript.CompilerHost = this.createCompilerHost(tsconfig);
 
-  private createCompilerHost(
-    tsconfig: TTypeScript.ParsedCommandLine,
-    system?: TTypeScript.System
-  ): TTypeScript.CompilerHost | undefined {
-    let host: TTypeScript.CompilerHost | undefined;
+    let builderProgram: TTypeScript.BuilderProgram | undefined = undefined;
+    let innerProgram: TTypeScript.Program;
 
     if (tsconfig.options.incremental) {
-      host = this.ts.createIncrementalCompilerHost(tsconfig.options, system);
+      const oldProgram:
+        | TTypeScript.EmitAndSemanticDiagnosticsBuilderProgram
+        | undefined = this.ts.readBuilderProgram(tsconfig.options, host);
+      builderProgram = this.ts.createEmitAndSemanticDiagnosticsBuilderProgram(
+        tsconfig.fileNames,
+        tsconfig.options,
+        host,
+        oldProgram,
+        this.ts.getConfigFileParsingDiagnostics(tsconfig),
+        tsconfig.projectReferences
+      );
+      innerProgram = builderProgram.getProgram();
     } else {
-      host = this.ts.createCompilerHost(tsconfig.options);
+      innerProgram = this.ts.createProgram({
+        rootNames: tsconfig.fileNames,
+        options: tsconfig.options,
+        projectReferences: tsconfig.projectReferences,
+        host,
+        oldProgram: undefined,
+        configFileParsingDiagnostics: this.ts.getConfigFileParsingDiagnostics(tsconfig)
+      });
     }
-
-    return host;
   }
 
   private loadTsconfigFile(): TTypeScript.ParsedCommandLine {
     const readResult = this.ts.readConfigFile(
-      this.project,
+      this.configFileName,
       this.ts.sys.readFile
     );
 
@@ -67,47 +72,26 @@ export class TypeScriptCore {
         readDirectory: this.ts.sys.readDirectory,
         useCaseSensitiveFileNames: true,
       },
-      dirname(this.project),
+      dirname(this.configFileName),
       undefined,
-      this.project
+      this.configFileName
     );
+
     return config;
   }
 
-  public measureTsPerformance<T extends object | void>(
-    measureName: string,
-    fn: () => T
-  ): T & {
-    duration: number;
-    count: number;
-  } {
-    const startMarkName = `before${measureName}`;
-    this.ts.performance.mark(startMarkName);
-    const result: T = fn();
-    const endMarkName = `before${measureName}`;
-    this.ts.performance.mark(endMarkName);
-    this.ts.performance.measure(measureName, startMarkName, endMarkName);
+  private createCompilerHost(
+    tsconfig: TTypeScript.ParsedCommandLine,
+    system?: TTypeScript.System
+  ): TTypeScript.CompilerHost {
+    let host: TTypeScript.CompilerHost;
 
-    return {
-      ...result,
-      duration: this.ts.performance.getDuration(measureName),
-      count: this.ts.performance.getCount(startMarkName),
-    };
-  }
-
-  private getExtension(
-    ts: ExtendedTypeScript,
-    compilerOptions: TTypeScript.CompilerOptions
-  ) {
-    const moduleKind = ts.getEmitModuleKind(compilerOptions);
-
-    if (moduleKind === ts.ModuleKind.CommonJS) {
-      return ".cjs";
-    }
-    if (moduleKind >= ts.ModuleKind.ES2015) {
-      return ".mjs";
+    if (tsconfig.options.incremental) {
+      host = this.ts.createIncrementalCompilerHost(tsconfig.options, system);
+    } else {
+      host = this.ts.createCompilerHost(tsconfig.options);
     }
 
-    return ".js";
+    return host;
   }
 }
