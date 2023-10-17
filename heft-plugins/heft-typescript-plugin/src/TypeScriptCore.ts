@@ -12,50 +12,101 @@ export type ExtendedTypeScript = typeof TTypeScript & {
   performance: Performance;
 };
 
-export class EmitModuleKind {
-  constructor(
-    public readonly module: TTypeScript.ModuleKind,
-    public readonly outDir: string,
-    public readonly extension: string
-  ) {}
+export interface ProgramOptions<T extends TTypeScript.BuilderProgram> {
+  rootNames: readonly string[];
+  options: TTypeScript.CompilerOptions;
+  host?: TTypeScript.CompilerHost;
+  configFileParsingDiagnostics?: readonly TTypeScript.Diagnostic[];
+  projectReferences?: readonly TTypeScript.ProjectReference[];
+  createProgram?: TTypeScript.CreateProgram<T>;
 }
 
+const INNER_EMIT_SYMBOL: unique symbol = Symbol("emit");
+
 export class TypeScriptCore {
+  private readonly tsconfig: TTypeScript.ParsedCommandLine;
+
   constructor(
-    public readonly ts: ExtendedTypeScript,
-    public readonly configFileName: string
-  ) {}
+    private readonly ts: ExtendedTypeScript,
+    private readonly configFileName: string
+  ) {
+    this.tsconfig = this.loadTsconfigFile();
+  }
 
   public compile() {
-    const tsconfig: TTypeScript.ParsedCommandLine = this.loadTsconfigFile();
-    const host: TTypeScript.CompilerHost = this.createCompilerHost(tsconfig);
+    const host: TTypeScript.CompilerHost = this.ts.createCompilerHost(
+      this.tsconfig.options
+    );
 
-    let builderProgram: TTypeScript.BuilderProgram | undefined = undefined;
-    let innerProgram: TTypeScript.Program;
+    const p: any = this.createProgram({
+      rootNames: this.tsconfig.fileNames,
+      options: this.tsconfig.options,
+      projectReferences: this.tsconfig.projectReferences,
+      host,
+      configFileParsingDiagnostics: this.ts.getConfigFileParsingDiagnostics(
+        this.tsconfig
+      ),
+    });
 
-    if (tsconfig.options.incremental) {
-      const oldProgram:
-        | TTypeScript.EmitAndSemanticDiagnosticsBuilderProgram
-        | undefined = this.ts.readBuilderProgram(tsconfig.options, host);
-      builderProgram = this.ts.createEmitAndSemanticDiagnosticsBuilderProgram(
-        tsconfig.fileNames,
-        tsconfig.options,
-        host,
-        oldProgram,
-        this.ts.getConfigFileParsingDiagnostics(tsconfig),
-        tsconfig.projectReferences
-      );
-      innerProgram = builderProgram.getProgram();
-    } else {
-      innerProgram = this.ts.createProgram({
-        rootNames: tsconfig.fileNames,
-        options: tsconfig.options,
-        projectReferences: tsconfig.projectReferences,
-        host,
-        oldProgram: undefined,
-        configFileParsingDiagnostics: this.ts.getConfigFileParsingDiagnostics(tsconfig)
-      });
-    }
+    this.ts.createProgram(
+      this.tsconfig.fileNames,
+      this.tsconfig.options,
+      host,
+      un,
+      configFileParsingDiagnostics,
+      projectReferences
+    )
+
+    p.emit(undefined, this.ts.sys.writeFile, undefined, true, undefined);
+  }
+
+  private createProgram<
+    T extends TTypeScript.BuilderProgram = TTypeScript.EmitAndSemanticDiagnosticsBuilderProgram
+  >({
+    rootNames,
+    options,
+    configFileParsingDiagnostics,
+    projectReferences,
+    host,
+    createProgram,
+  }: ProgramOptions<T>) {
+    host = host || this.ts.createIncrementalCompilerHost(options);
+
+    createProgram =
+      createProgram ||
+      (this.ts
+        .createEmitAndSemanticDiagnosticsBuilderProgram as any as TTypeScript.CreateProgram<T>);
+
+    const oldProgram = this.ts.readBuilderProgram(options, host) as any as T;
+
+    const program: T & {
+      [INNER_EMIT_SYMBOL]?: TTypeScript.Program["emit"];
+    } = createProgram(
+      rootNames,
+      options,
+      host,
+      oldProgram,
+      configFileParsingDiagnostics,
+      projectReferences
+    );
+
+    program.emit = (
+      targetSourceFile?: TTypeScript.SourceFile,
+      writeFile?: TTypeScript.WriteFileCallback,
+      cancellationToken?: TTypeScript.CancellationToken,
+      emitOnlyDtsFiles?: boolean,
+      customTransformers?: TTypeScript.CustomTransformers
+    ): TTypeScript.EmitResult | any => {
+      if (emitOnlyDtsFiles) {
+        return program[INNER_EMIT_SYMBOL]!(
+          targetSourceFile,
+          writeFile,
+          cancellationToken,
+          emitOnlyDtsFiles,
+          customTransformers
+        );
+      }
+    };
   }
 
   private loadTsconfigFile(): TTypeScript.ParsedCommandLine {
@@ -78,20 +129,5 @@ export class TypeScriptCore {
     );
 
     return config;
-  }
-
-  private createCompilerHost(
-    tsconfig: TTypeScript.ParsedCommandLine,
-    system?: TTypeScript.System
-  ): TTypeScript.CompilerHost {
-    let host: TTypeScript.CompilerHost;
-
-    if (tsconfig.options.incremental) {
-      host = this.ts.createIncrementalCompilerHost(tsconfig.options, system);
-    } else {
-      host = this.ts.createCompilerHost(tsconfig.options);
-    }
-
-    return host;
   }
 }
