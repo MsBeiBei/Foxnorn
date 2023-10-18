@@ -75,7 +75,6 @@ export class TypeScriptBuilder {
       };
     });
 
-    new TypeScriptCore(ts, tsconfig).compile();
 
     ts.performance.disable();
     ts.performance.enable();
