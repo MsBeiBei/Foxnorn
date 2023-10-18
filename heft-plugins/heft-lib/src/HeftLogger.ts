@@ -28,7 +28,7 @@ export class HeftLogger implements IHeftLogger {
   }
 
   public warn(message?: any, ...param: any[]): void {
-    this.terminal.writeWarningLine(format(message, ...param));
+    this.terminal.writeVerboseLine(format(message, ...param));
   }
 
   public debug(message?: any, ...param: any[]): void {
