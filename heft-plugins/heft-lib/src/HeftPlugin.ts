@@ -3,12 +3,15 @@ import type {
   IHeftTaskSession,
   HeftConfiguration,
 } from "@rushstack/heft";
-import { HeftLogger } from "./HeftLogger";
 
-export abstract class HeftPlugin implements IHeftTaskPlugin {
+export abstract class HeftPlugin<TState, TOptions = void>
+  implements IHeftTaskPlugin<TOptions>
+{
+  protected declare readonly state: Readonly<
+    TState & { pluginOptions: TOptions }
+  >;
+
   abstract readonly PLUGIN_NAME: string;
-
-  public heftLogger!: HeftLogger;
 
   public run?(
     taskSession: IHeftTaskSession,
@@ -17,12 +20,15 @@ export abstract class HeftPlugin implements IHeftTaskPlugin {
 
   public apply(
     taskSession: IHeftTaskSession,
-    heftConfiguration: HeftConfiguration
+    heftConfiguration: HeftConfiguration,
+    pluginOptions: TOptions
   ): void {
-    this.heftLogger = new HeftLogger(taskSession);
-
     if (this.run) {
       taskSession.hooks.run.tapPromise(this.PLUGIN_NAME, async () => {
+        if (!this.state) {
+          Object.assign(this, { state: { pluginOptions } });
+        }
+
         await this.run!(taskSession, heftConfiguration);
       });
     }
