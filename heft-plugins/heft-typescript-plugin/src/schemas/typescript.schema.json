@@ -1,9 +1,34 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "TypeScript Build Configuration",
-    "description": "Defines optional options for TypeScript build.",
+    "title": "Heft TypeScript Plugin Options Configuration",
+    "description": "This schema describes the \"options\" field that can be specified in heft.json when loading \"@foxnorn/heft-typescript-plugin\".",
     "type": "object",
     "additionalProperties": false,
+    "definitions": {
+        "outputOptions": {
+            "type": "object",
+            "properties": {
+                "dir": {
+                    "type": "string",
+                    "pattern": "[^\\\\\\/]"
+                },
+                "format": {
+                    "type": "string",
+                    "enum": [
+                        "commonjs",
+                        "amd",
+                        "umd",
+                        "system",
+                        "esnext"
+                    ]
+                }
+            },
+            "required": [
+                "outDir",
+                "module"
+            ]
+        }
+    },
     "properties": {
         "$schema": {
             "description": "Part of the JSON Schema standard, this optional keyword declares the URL of the schema that the file conforms to. Editors may download the schema and use it to perform syntax highlighting.",
@@ -14,8 +39,26 @@
             "type": "string"
         },
         "project": {
-            "description": "Specifies the tsconfig.json file that will be used for compilation. Equivalent to the \"project\" argument for the 'tsc' and 'tslint' command line tools. The default value is \"./tsconfig.json\".",
+            "description": "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the \"project\" argument for the 'tsc' and 'tslint' command line tools. The default value is \"./tsconfig.json\".",
             "type": "string"
         },
+        "output": {
+            "description": "If provided, emit these module kinds in addition to the modules specified in the tsconfig. Note that this option only applies to the main tsconfig.json configuration.",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/outputOptions"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/outputOptions"
+                    }
+                }
+            ]
+        },
+        "copyPublicDir": {
+            "description": "By default, Heft TypeScript Plugin will copy files from the publicDir into the outDir on build. Set to \"false\" to disable this.",
+            "type": "boolean"
+        }
     }
 }

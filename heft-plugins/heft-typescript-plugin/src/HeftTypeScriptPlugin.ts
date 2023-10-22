@@ -1,13 +1,31 @@
 import { resolve } from "path";
-import type { IHeftTaskSession, HeftConfiguration } from "@rushstack/heft";
 import { ConfigurationFile } from "@rushstack/heft-config-file";
 import { FileSystem, Path, type ITerminal } from "@rushstack/node-core-library";
-import { HeftPlugin } from "@foxnorn/heft-lib";
+import type {
+  IHeftTaskPlugin,
+  IHeftTaskSession,
+  HeftConfiguration,
+} from "@rushstack/heft";
 
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
 
+export type IModuleFormat = "commonjs" | "amd" | "umd" | "system" | "esnext";
+
+export interface IOutputOptions {
+  dir: string;
+  format: IModuleFormat;
+  extension?: string;
+}
+
 export interface ITypeScriptConfigurationJson {
+  /**
+   * Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the "project" argument for the 'tsc' and 'tslint' command line tools.
+   * 
+   * The default value is "./tsconfig.json".
+   */
   project?: string;
+  output?: IOutputOptions | IOutputOptions[];
+  copyPublicDir?: boolean;
 }
 
 let typeScriptConfigurationFilePromiseCache: Map<
@@ -28,8 +46,14 @@ let tsconfigFilePromiseCache: Map<
 
 let tsconfigFileLoader: ConfigurationFile<ITsconfigJson> | undefined;
 
-export class HeftTypeScriptPlugin extends HeftPlugin {
-  override PLUGIN_NAME: string = PLUGIN_NAME;
+export abstract class HeftTypeScriptPlugin<TOptions = void>
+  implements IHeftTaskPlugin<TOptions>
+{
+  public abstract apply(
+    taskSession: IHeftTaskSession,
+    heftConfiguration: HeftConfiguration,
+    pluginOptions?: TOptions
+  ): void;
 
   protected async loadTypeScriptConfigurationFileAsync(
     taskSession: IHeftTaskSession,

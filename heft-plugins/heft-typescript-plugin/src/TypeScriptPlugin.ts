@@ -10,13 +10,24 @@ import {
   type ITypeScriptBuilderConfiguration,
 } from "./TypeScriptBuilder";
 
+export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
+
 export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
-  override async run(
+  public apply(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
-  ) {}
+  ): void {
+    taskSession.hooks.run.tapPromise(PLUGIN_NAME, async () => {
+      const builder: TypeScriptBuilder | undefined =
+        await this._getTypeScriptBuilderAsync(taskSession, heftConfiguration);
+        
+      if (builder) {
+        await builder.invokeAsync();
+      }
+    });
+  }
 
-  private async getTypeScriptBuilderAsync(
+  private async _getTypeScriptBuilderAsync(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
   ): Promise<TypeScriptBuilder | undefined> {
@@ -47,12 +58,13 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
       );
 
     const typeScriptBuilderConfiguration: ITypeScriptBuilderConfiguration = {
-      buildFolderPath: heftConfiguration.buildFolderPath,
       typeScriptToolPath: typeScriptToolPath,
       tsconfigPath: this.getTsconfigFilePath(
         heftConfiguration,
         typeScriptConfigurationJson
       ),
+      buildFolderPath: heftConfiguration.buildFolderPath,
+      scopedLogger: taskSession.logger,
     };
 
     return new TypeScriptBuilder(typeScriptBuilderConfiguration);
