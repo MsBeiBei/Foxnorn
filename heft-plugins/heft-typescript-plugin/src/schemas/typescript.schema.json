@@ -4,6 +4,33 @@
     "description": "This schema describes the \"options\" field that can be specified in heft.json when loading \"@foxnorn/heft-typescript-plugin\".",
     "type": "object",
     "additionalProperties": false,
+    "definitions": {
+        "outputOptions": {
+            "type": "object",
+            "properties": {
+                "dir": {
+                    "description": "Override \"outDir\" field in tsconfig.json",
+                    "type": "string",
+                    "pattern": "[^\\\\\\/]"
+                },
+                "format": {
+                    "description": "Override \"module\" field in tsconfig.json",
+                    "type": "string",
+                    "enum": [
+                        "commonjs",
+                        "amd",
+                        "umd",
+                        "system",
+                        "esnext"
+                    ]
+                }
+            },
+            "required": [
+                "dir",
+                "format"
+            ]
+        }
+    },
     "properties": {
         "$schema": {
             "description": "Part of the JSON Schema standard, this optional keyword declares the URL of the schema that the file conforms to. Editors may download the schema and use it to perform syntax highlighting.",
@@ -17,46 +44,58 @@
             "description": "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the \"project\" argument for the 'tsc' and 'tslint' command line tools. The default value is \"./tsconfig.json\".",
             "type": "string"
         },
-        "outputs": {
+        "output": {
             "description": "If provided, emit these module kinds in addition to the modules specified in the tsconfig. Note that this option only applies to the main tsconfig.json configuration.",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "dir": {
-                        "description": "Override \"outDir\" field in tsconfig.json",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/outputOptions"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/outputOptions"
+                    }
+                }
+            ]
+        },
+        "buildProjectReferences": {
+            "description": "If true, enable behavior analogous to the \"tsc --build\" command. Will build projects referenced by the main project. Note that this will effectively enable \"noEmitOnError\".",
+            "type": "boolean"
+        },
+        "useTranspilerWorker": {
+            "description": "If true, and the tsconfig has \"isolatedModules\": true, then transpilation will happen in parallel in a worker thread.",
+            "type": "boolean"
+        },
+        "copyStaticAssets": {
+            "description": "Configures additional file types that should be copied into the TypeScript compiler's emit folders, for example so that these files can be resolved by import statements.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fileExtensions": {
+                    "type": "array",
+                    "description": "File extensions that should be copied from the source folder to the destination folder(s)",
+                    "items": {
                         "type": "string",
-                        "pattern": "[^\\\\\\/]"
-                    },
-                    "format": {
-                        "description": "Override \"module\" field in tsconfig.json",
-                        "type": "string",
-                        "enum": [
-                            "commonjs",
-                            "amd",
-                            "umd",
-                            "system",
-                            "esnext"
-                        ]
+                        "pattern": "^\\.[A-z0-9-_.]*[A-z0-9-_]+$"
                     }
                 },
-                "required": [
-                    "dir",
-                    "format"
-                ]
+                "excludeGlobs": {
+                    "type": "array",
+                    "description": "Globs that should be explicitly excluded. This takes precedence over globs listed in \"includeGlobs\" and files that match the file extensions provided in \"fileExtensions\".",
+                    "items": {
+                        "type": "string",
+                        "pattern": "[^\\\\]"
+                    }
+                },
+                "includeGlobs": {
+                    "type": "array",
+                    "description": "Globs that should be explicitly included.",
+                    "items": {
+                        "type": "string",
+                        "pattern": "[^\\\\]"
+                    }
+                }
             }
-        },
-        "emptyOutDir": {
-            "description": "",
-            "type": "boolean"
-        },
-        "assetsDir": {
-            "description": "Specify the directory under .build.outDir to nest the generated assets",
-            "type": "string"
-        },
-        "copyPublicDir": {
-            "description": "By default, Heft TypeScript Plugin will copy files from the publicDir into the outDir on build. Set to \"false\" to disable this.",
-            "type": "boolean"
         }
     }
 }

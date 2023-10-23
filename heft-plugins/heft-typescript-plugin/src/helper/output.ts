@@ -10,10 +10,15 @@ export type IModuleFormat =
   | "esm"
   | "systemjs";
 
-export interface IOutputOptions<T = IModuleFormat> {
+export interface IOutputOptions {
   dir: string;
-  format: T;
+  format: IModuleFormat;
   extension?: string;
+}
+
+export interface IEmitOutputOptions extends IOutputOptions {
+  outDir: string;
+  module: TTypescript.ModuleKind;
 }
 
 const JS_EXTENSION_REGEX: RegExp = /\.js(\.map)?$/;
@@ -49,7 +54,7 @@ export function getOverrideWriteFile(
 export function getOutputEmit(
   ts: ExtendedTypeScript,
   program: TTypescript.Program,
-  outputs: IOutputOptions<TTypescript.ModuleKind>[]
+  outputs: IEmitOutputOptions[]
 ): TTypescript.Program["emit"] {
   const originalEmit = program.emit;
   const ordinalGetCompilerOptions = program.getCompilerOptions;
@@ -148,21 +153,10 @@ export function getFileExtension(
   }
 }
 
-export function normalizeOutputOptions<
-  O extends boolean,
-  T extends IModuleFormat = IModuleFormat,
-  K extends TTypescript.ModuleKind = TTypescript.ModuleKind
->(
-  ts: ExtendedTypeScript,
-  outputs: IOutputOptions<O extends true ? K : T>,
-  isOriginal: O
-): IOutputOptions<K>;
-
 export function normalizeOutputOptions(
   ts: ExtendedTypeScript,
-  outputs: IOutputOptions,
-  isOriginal: boolean
-): IOutputOptions<TTypescript.ModuleKind> {
+  outputs: IOutputOptions
+): IEmitOutputOptions {
   if ((outputs.format && !outputs.dir) || (!outputs.format && outputs.dir)) {
     throw new Error(
       "If either the module or the outDir option is provided in the tsconfig compilerOptions, both must be provided."
@@ -176,17 +170,14 @@ export function normalizeOutputOptions(
     );
   }
 
-  if (isOriginal) {
-    return outputs as unknown as IOutputOptions<TTypescript.ModuleKind>;
-  }
-
   const moduleKind = getModuleKind(ts, outputs.format);
   const extension = outputs.extension ?? getFileExtension(ts, moduleKind);
 
   return {
-    dir: outputs.dir,
-    format: moduleKind,
+    ...outputs,
     extension,
+    outDir: outputs.dir,
+    module: moduleKind,
   };
 }
 
@@ -194,24 +185,10 @@ export function getOutputOptions(
   ts: ExtendedTypeScript,
   tsconfig: TTypescript.ParsedCommandLine,
   outputs?: IOutputOptions | IOutputOptions[]
-): IOutputOptions<TTypescript.ModuleKind>[] {
-  if (isPlainObject<IOutputOptions>(outputs)) {
-    return [normalizeOutputOptions(ts, outputs, false)];
-  }
+) {
+  const moduleKindsToEmit = [];
 
   if (isArray<IOutputOptions>(outputs) && outputs.length) {
-    return outputs.map((output) => normalizeOutputOptions(ts, output, false));
+    return outputs.map((output) => normalizeOutputOptions(ts, output));
   }
-
-  return [
-    normalizeOutputOptions(
-      ts,
-      {
-        dir: tsconfig.options.outDir!,
-        format: tsconfig.options.module!,
-        extension: getFileExtension(ts, tsconfig.options.module!),
-      },
-      true
-    ),
-  ];
 }

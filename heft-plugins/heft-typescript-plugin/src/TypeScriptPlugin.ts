@@ -65,7 +65,7 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
       ),
       buildFolderPath: heftConfiguration.buildFolderPath,
       scopedLogger: taskSession.logger,
-      output: typeScriptConfigurationJson?.output,
+      outputs: typeScriptConfigurationJson?.outputs,
     };
 
     return new TypeScriptBuilder(typeScriptBuilderConfiguration);

@@ -8,7 +8,11 @@ import type {
 } from "@rushstack/heft";
 import type { IOutputOptions } from "./helper/output";
 
-export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
+export interface IStaticAssetsCopyConfiguration {
+  fileExtensions: string[];
+  excludeGlobs: string[];
+  includeGlobs: string[];
+}
 
 export interface ITypeScriptConfigurationJson {
   /**
@@ -17,13 +21,29 @@ export interface ITypeScriptConfigurationJson {
    * The default value is "./tsconfig.json".
    */
   project?: string;
-  output?: IOutputOptions | IOutputOptions[];
-  copyPublicDir?: boolean;
+
+  /**
+   * If provided, emit these module kinds in addition to the modules specified in the tsconfig.
+   * Note that this option only applies to the main tsconfig.json configuration.
+   */
+  outputs?: IOutputOptions[] | undefined;
+
   /**
    * If true, enable behavior analogous to the "tsc --build" command. Will build projects referenced by the main project in dependency order.
    * Note that this will effectively enable \"noEmitOnError\".
    */
   buildProjectReferences?: boolean;
+
+  /**
+   * If true, and the tsconfig has \"isolatedModules\": true, then transpilation will happen in parallel in a worker thread.
+   */
+  useTranspilerWorker?: boolean;
+
+  /**
+   * Configures additional file types that should be copied into the TypeScript compiler's emit folders,
+   * for example so that these files can be resolved by import statements.
+   */
+  copyStaticAssets?: IStaticAssetsCopyConfiguration;
 }
 
 let typeScriptConfigurationFilePromiseCache: Map<
