@@ -1,0 +1,29 @@
+{
+  "name": "@foxnorn/heft-vite-plugin",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Heft plugin for Vite",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
+    "directory": "heft-plugins/heft-vite-plugin"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "_phase:build": "heft run --only build -- --clean",
+    "_phase:test": "heft run --only test -- --clean",
+    "build": "heft build --clean",
+    "start": "heft test --clean --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@foxnorn/tsconfig": "workspace:*",
+    "@foxnorn/heft-node-rig": "workspace:*",
+    "@rushstack/heft": "~0.59.0",
+    "typescript": "~5.2.2",
+    "@types/node": "~20.6.1"
+  },
+  "peerDependencies": {
+    "@rushstack/heft": "~0.59.0"
+  }
+}

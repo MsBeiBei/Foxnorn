@@ -46,6 +46,15 @@
       ]
     },
     {
+      "packageName": "@foxnorn/heft-vite-plugin",
+      "projectFolder": "heft-plugins/heft-vite-plugin",
+      "reviewCategory": "heft-plugins",
+      "shouldPublish": true,
+      "cyclicDependencyProjects": [
+        "@foxnorn/heft-node-rig"
+      ]
+    },
+    {
       "packageName": "heft-typescript-plugin-demo",
       "projectFolder": "playground/heft-typescript-plugin-demo",
       "reviewCategory": "playground",

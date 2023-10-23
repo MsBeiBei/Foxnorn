@@ -8,31 +8,6 @@ importers:
 
   .: {}
 
-  ../../heft-plugins/heft-lib:
-    dependencies:
-      '@rushstack/heft':
-        specifier: ~0.59.0
-        version: 0.59.0(@types/node@20.6.1)
-      '@rushstack/node-core-library':
-        specifier: ~3.60.0
-        version: 3.60.0(@types/node@20.6.1)
-      semver:
-        specifier: ~7.5.4
-        version: 7.5.4
-    devDependencies:
-      '@foxnorn/tsconfig':
-        specifier: workspace:*
-        version: link:../../internal/tsconfig
-      '@types/node':
-        specifier: ~20.6.1
-        version: 20.6.1
-      '@types/semver':
-        specifier: ~7.5.3
-        version: 7.5.3
-      tslib:
-        specifier: ~2.6.2
-        version: 2.6.2
-
   ../../heft-plugins/heft-typescript-plugin:
     dependencies:
       '@rushstack/heft-config-file':
@@ -60,6 +35,24 @@ importers:
       '@types/semver':
         specifier: ~7.5.3
         version: 7.5.3
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
+  ../../heft-plugins/heft-vite-plugin:
+    devDependencies:
+      '@foxnorn/heft-node-rig':
+        specifier: workspace:*
+        version: link:../../rigs/heft-node-rig
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@rushstack/heft':
+        specifier: ~0.59.0
+        version: 0.59.0(@types/node@20.6.1)
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
       typescript:
         specifier: ~5.2.2
         version: 5.2.2

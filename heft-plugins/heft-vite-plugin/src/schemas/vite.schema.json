@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Heft Vite Plugin Options Configuration",
+    "description": "This schema describes the \"options\" field that can be specified in heft.json when loading \"@foxnorn/heft-vite-plugin\".",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "description": "Part of the JSON Schema standard, this optional keyword declares the URL of the schema that the file conforms to. Editors may download the schema and use it to perform syntax highlighting.",
+            "type": "string"
+        },
+        "extends": {
+            "description": "Optionally specifies another JSON config file that this file extends from.  This provides a way for standard settings to be shared across multiple projects.",
+            "type": "string"
+        },
+        "project": {
+            "description": "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the \"project\" argument for the 'tsc' and 'tslint' command line tools. The default value is \"./tsconfig.json\".",
+            "type": "string"
+        }
+    }
+}
