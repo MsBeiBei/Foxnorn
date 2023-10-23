@@ -6,26 +6,24 @@ import type {
   IHeftTaskSession,
   HeftConfiguration,
 } from "@rushstack/heft";
+import type { IOutputOptions } from "./helper/output";
 
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
-
-export type IModuleFormat = "commonjs" | "amd" | "umd" | "system" | "esnext";
-
-export interface IOutputOptions {
-  dir: string;
-  format: IModuleFormat;
-  extension?: string;
-}
 
 export interface ITypeScriptConfigurationJson {
   /**
    * Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the "project" argument for the 'tsc' and 'tslint' command line tools.
-   * 
+   *
    * The default value is "./tsconfig.json".
    */
   project?: string;
   output?: IOutputOptions | IOutputOptions[];
   copyPublicDir?: boolean;
+  /**
+   * If true, enable behavior analogous to the "tsc --build" command. Will build projects referenced by the main project in dependency order.
+   * Note that this will effectively enable \"noEmitOnError\".
+   */
+  buildProjectReferences?: boolean;
 }
 
 let typeScriptConfigurationFilePromiseCache: Map<

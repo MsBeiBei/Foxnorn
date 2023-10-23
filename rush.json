@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.109.1",
+  "rushVersion": "5.109.2",
   "pnpmVersion": "8.9.2",
   "nodeSupportedVersionRange": "18.17.0",
   "projectFolderMinDepth": 2,
@@ -35,12 +35,6 @@
       "projectFolder": "rush-plugins/rush-sortpack-plugin",
       "reviewCategory": "rush-plugins",
       "shouldPublish": true
-    },
-    {
-      "packageName": "@foxnorn/heft-lib",
-      "projectFolder": "heft-plugins/heft-lib",
-      "reviewCategory": "heft-plugins",
-      "shouldPublish": false
     },
     {
       "packageName": "@foxnorn/heft-typescript-plugin",

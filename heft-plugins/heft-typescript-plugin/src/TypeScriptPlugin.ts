@@ -20,7 +20,7 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
     taskSession.hooks.run.tapPromise(PLUGIN_NAME, async () => {
       const builder: TypeScriptBuilder | undefined =
         await this._getTypeScriptBuilderAsync(taskSession, heftConfiguration);
-        
+
       if (builder) {
         await builder.invokeAsync();
       }
@@ -65,6 +65,7 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
       ),
       buildFolderPath: heftConfiguration.buildFolderPath,
       scopedLogger: taskSession.logger,
+      output: typeScriptConfigurationJson?.output,
     };
 
     return new TypeScriptBuilder(typeScriptBuilderConfiguration);

@@ -35,9 +35,6 @@ importers:
 
   ../../heft-plugins/heft-typescript-plugin:
     dependencies:
-      '@foxnorn/heft-lib':
-        specifier: workspace:*
-        version: link:../heft-lib
       '@rushstack/heft-config-file':
         specifier: ~0.14.2
         version: 0.14.2(@types/node@20.6.1)

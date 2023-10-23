@@ -1,5 +1,6 @@
 import type TTypescript from "typescript";
 import type { ExtendedTypeScript } from "../types/typescript";
+import { isPlainObject, isArray } from "./is";
 
 export type InternalModuleFormat = "amd" | "cjs" | "es" | "system" | "umd";
 
@@ -9,16 +10,10 @@ export type IModuleFormat =
   | "esm"
   | "systemjs";
 
-export interface IOutputOptions {
+export interface IOutputOptions<T = IModuleFormat> {
   dir: string;
-  format: IModuleFormat;
+  format: T;
   extension?: string;
-}
-
-export interface IModuleKindReason {
-  outDir: string;
-  module: TTypescript.ModuleKind;
-  extension: string;
 }
 
 const JS_EXTENSION_REGEX: RegExp = /\.js(\.map)?$/;
@@ -51,10 +46,10 @@ export function getOverrideWriteFile(
   };
 }
 
-export function writeOutputFile(
+export function getOutputEmit(
   ts: ExtendedTypeScript,
   program: TTypescript.Program,
-  outputs: IOutputOptions[]
+  outputs: IOutputOptions<TTypescript.ModuleKind>[]
 ): TTypescript.Program["emit"] {
   const originalEmit = program.emit;
   const ordinalGetCompilerOptions = program.getCompilerOptions;
@@ -79,11 +74,11 @@ export function writeOutputFile(
     const diagnostics: TTypescript.Diagnostic[] = [];
     let emitSkipped: boolean = false;
 
-    for (const library of outputs) {
+    for (const output of outputs) {
       const kindCompilerOptions: TTypescript.CompilerOptions = {
         ...ordinalGetCompilerOptions(),
-        module: library.module,
-        outDir: library.outDir,
+        module: output.format,
+        outDir: output.dir,
         declaration: false,
         declarationMap: false,
       };
@@ -91,7 +86,7 @@ export function writeOutputFile(
       program.getCompilerOptions = () => kindCompilerOptions;
       const emitResult: TTypescript.EmitResult = originalEmit(
         targetSourceFile,
-        writeFile && getOverrideWriteFile(writeFile, library.extension),
+        writeFile && getOverrideWriteFile(writeFile, output.extension),
         cancellationToken,
         emitOnlyDtsFiles,
         customTransformers
@@ -140,7 +135,7 @@ export function getModuleKind(
   }
 }
 
-export function getExtension(
+export function getFileExtension(
   ts: ExtendedTypeScript,
   moduleKind: TTypescript.ModuleKind
 ) {
@@ -153,16 +148,44 @@ export function getExtension(
   }
 }
 
+export function normalizeOutputOptions<
+  O extends boolean,
+  T extends IModuleFormat = IModuleFormat,
+  K extends TTypescript.ModuleKind = TTypescript.ModuleKind
+>(
+  ts: ExtendedTypeScript,
+  outputs: IOutputOptions<O extends true ? K : T>,
+  isOriginal: O
+): IOutputOptions<K>;
+
 export function normalizeOutputOptions(
   ts: ExtendedTypeScript,
-  output: IOutputOptions
-): IModuleKindReason {
-  const moduleKind = getModuleKind(ts, output.format);
-  const extension = output.extension ?? getExtension(ts, moduleKind);
+  outputs: IOutputOptions,
+  isOriginal: boolean
+): IOutputOptions<TTypescript.ModuleKind> {
+  if ((outputs.format && !outputs.dir) || (!outputs.format && outputs.dir)) {
+    throw new Error(
+      "If either the module or the outDir option is provided in the tsconfig compilerOptions, both must be provided."
+    );
+  }
+
+  if (!outputs.format) {
+    throw new Error(
+      "If the module tsconfig compilerOption is not provided, the builder must be provided with the " +
+        "additionalModuleKindsToEmit configuration option."
+    );
+  }
+
+  if (isOriginal) {
+    return outputs as unknown as IOutputOptions<TTypescript.ModuleKind>;
+  }
+
+  const moduleKind = getModuleKind(ts, outputs.format);
+  const extension = outputs.extension ?? getFileExtension(ts, moduleKind);
 
   return {
-    outDir: "",
-    module: moduleKind,
+    dir: outputs.dir,
+    format: moduleKind,
     extension,
   };
 }
@@ -170,23 +193,25 @@ export function normalizeOutputOptions(
 export function getOutputOptions(
   ts: ExtendedTypeScript,
   tsconfig: TTypescript.ParsedCommandLine,
-  outputs: IOutputOptions | IOutputOptions[]
-): IModuleKindReason[] {
-  if (outputs && typeof outputs === "object") {
-    return [normalizeOutputOptions(ts, outputs as IOutputOptions)];
+  outputs?: IOutputOptions | IOutputOptions[]
+): IOutputOptions<TTypescript.ModuleKind>[] {
+  if (isPlainObject<IOutputOptions>(outputs)) {
+    return [normalizeOutputOptions(ts, outputs, false)];
   }
 
-  if (Array.isArray(outputs)) {
-    return (outputs as IOutputOptions[]).map((output) =>
-      normalizeOutputOptions(ts, output)
-    );
+  if (isArray<IOutputOptions>(outputs) && outputs.length) {
+    return outputs.map((output) => normalizeOutputOptions(ts, output, false));
   }
 
   return [
-    {
-      outDir: tsconfig.options.outDir!,
-      module: tsconfig.options.module!,
-      extension: getExtension(ts, tsconfig.options.module!),
-    },
+    normalizeOutputOptions(
+      ts,
+      {
+        dir: tsconfig.options.outDir!,
+        format: tsconfig.options.module!,
+        extension: getFileExtension(ts, tsconfig.options.module!),
+      },
+      true
+    ),
   ];
 }

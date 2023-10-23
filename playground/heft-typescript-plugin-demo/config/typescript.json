@@ -1,3 +1,7 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/typescript.schema.json"
+  "$schema": "../../../heft-plugins/heft-typescript-plugin/lib/schemas/typescript.schema.json",
+  "output": {
+    "dir": "esm",
+    "format": "commonjs"
+  }
 }
