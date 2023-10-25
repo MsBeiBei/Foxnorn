@@ -30,19 +30,6 @@
                 "format"
             ]
         },
-        "ruleOptions": {
-            "oneOf": [
-                {
-                    "type": "string"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            ]
-        }
     },
     "properties": {
         "$schema": {
@@ -82,10 +69,18 @@
             "additionalProperties": false,
             "properties": {
                 "exclude": {
-                    "$ref": "#/definitions/ruleOptions"
+                    "description": "Files that should be explicitly excluded. This takes precedence over matching files in \"include\".",
+                    "type": [
+                        "string",
+                        "array"
+                    ]
                 },
                 "include": {
-                    "$ref": "#/definitions/ruleOptions"
+                    "description": "Limit files to certain files.",
+                    "type": [
+                        "string",
+                        "array"
+                    ]
                 }
             }
         }
