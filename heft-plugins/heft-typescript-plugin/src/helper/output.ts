@@ -12,14 +12,15 @@ export type IModuleFormat =
 
 export interface IOutputOptions {
   dir: string;
-  format: IModuleFormat;
+  format?: IModuleFormat;
+  module?: TTypescript.ModuleKind;
   extension?: string;
 }
 
-export interface IEmitOutputOptions extends IOutputOptions {
-  outDir: string;
+export type IEmitOutputOptions = IOutputOptions & {
+  extension: string;
   module: TTypescript.ModuleKind;
-}
+};
 
 const JS_EXTENSION_REGEX: RegExp = /\.js(\.map)?$/;
 
@@ -82,7 +83,7 @@ export function getOutputEmit(
     for (const output of outputs) {
       const kindCompilerOptions: TTypescript.CompilerOptions = {
         ...ordinalGetCompilerOptions(),
-        module: output.format,
+        module: output.module,
         outDir: output.dir,
         declaration: false,
         declarationMap: false,
@@ -135,7 +136,7 @@ export function getModuleKind(
       return ts.ModuleKind.UMD;
     }
     default: {
-      throw new Error(`"${format}" is not a valid module kind name.`);
+      throw new Error(`"${format}" is not a valid format name.`);
     }
   }
 }
@@ -155,28 +156,34 @@ export function getFileExtension(
 
 export function normalizeOutputOptions(
   ts: ExtendedTypeScript,
-  outputs: IOutputOptions
+  output: IOutputOptions
 ): IEmitOutputOptions {
-  if ((outputs.format && !outputs.dir) || (!outputs.format && outputs.dir)) {
+  if ((output.format && !output.dir) || (!output.format && output.dir)) {
     throw new Error(
-      "If either the module or the outDir option is provided in the tsconfig compilerOptions, both must be provided."
+      "If either the format or the dir option is provided in the output configuration option, both must be provided."
     );
   }
 
-  if (!outputs.format) {
+  if (!output.format) {
     throw new Error(
-      "If the module tsconfig compilerOption is not provided, the builder must be provided with the " +
-        "additionalModuleKindsToEmit configuration option."
+      "The format option must be provided with the output configuration option."
     );
   }
 
-  const moduleKind = getModuleKind(ts, outputs.format);
-  const extension = outputs.extension ?? getFileExtension(ts, moduleKind);
+  let moduleKind = output.module as TTypescript.ModuleKind;
+
+  if (!moduleKind && output.format) {
+    moduleKind = getModuleKind(ts, output.format);
+  }
+
+  const extension = output.extension ?? getFileExtension(ts, moduleKind);
+
+  const { dir, format } = output;
 
   return {
-    ...outputs,
+    dir,
+    format,
     extension,
-    outDir: outputs.dir,
     module: moduleKind,
   };
 }
@@ -184,11 +191,47 @@ export function normalizeOutputOptions(
 export function getOutputOptions(
   ts: ExtendedTypeScript,
   tsconfig: TTypescript.ParsedCommandLine,
-  outputs?: IOutputOptions | IOutputOptions[]
-) {
-  const moduleKindsToEmit = [];
+  outputs: IOutputOptions
+): IEmitOutputOptions[];
 
+export function getOutputOptions(
+  ts: ExtendedTypeScript,
+  tsconfig: TTypescript.ParsedCommandLine,
+  outputs: IOutputOptions[]
+): IEmitOutputOptions[];
+
+export function getOutputOptions(
+  ts: ExtendedTypeScript,
+  tsconfig: TTypescript.ParsedCommandLine,
+  outputs?: unknown
+) {
   if (isArray<IOutputOptions>(outputs) && outputs.length) {
     return outputs.map((output) => normalizeOutputOptions(ts, output));
   }
+
+  if (isPlainObject<IOutputOptions>(outputs)) {
+    return [normalizeOutputOptions(ts, outputs)];
+  }
+
+  if (
+    (tsconfig.options.module && !tsconfig.options.outDir) ||
+    (!tsconfig.options.module && tsconfig.options.outDir)
+  ) {
+    throw new Error(
+      "If either the module or the outDir option is provided in the tsconfig compilerOptions, both must be provided."
+    );
+  }
+
+  if (!tsconfig.options.module) {
+    throw new Error(
+      "If the module tsconfig compilerOption is not provided, the builder must be provided with the output configuration option."
+    );
+  }
+
+  return [
+    normalizeOutputOptions(ts, {
+      dir: tsconfig.options.outDir,
+      module: tsconfig.options.module,
+    } as IOutputOptions),
+  ];
 }

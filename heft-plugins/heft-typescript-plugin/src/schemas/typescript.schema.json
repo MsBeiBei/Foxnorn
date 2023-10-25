@@ -29,7 +29,7 @@
                 "dir",
                 "format"
             ]
-        },
+        }
     },
     "properties": {
         "$schema": {
@@ -45,7 +45,7 @@
             "type": "string"
         },
         "output": {
-            "description": "If provided, emit these module kinds in addition to the modules specified in the tsconfig. Note that this option only applies to the main tsconfig.json configuration.",
+            "description": "Specify the format of the emitted file. If not provided, the module kind configured in tsconfig will be emitted by default. Note that this option only applies to the main tsconfig.json configuration.",
             "oneOf": [
                 {
                     "$ref": "#/definitions/outputOptions"
@@ -58,13 +58,8 @@
                 }
             ]
         },
-        "buildProjectReferences": {
-            "type": "boolean"
-        },
-        "useTranspilerWorker": {
-            "type": "boolean"
-        },
         "copyStaticAssets": {
+            "description": "Configures additional file types that should be copied into the TypeScript compiler's emit folders, for example so that these files can be resolved by import statements.",
             "type": "object",
             "additionalProperties": false,
             "properties": {
