@@ -9,7 +9,7 @@ import {
 } from "@rushstack/node-core-library";
 import type { PerformanceMeasure } from "./types/performance";
 import type { ExtendedTypeScript } from "./types/typescript";
-import { getOutputEmit, getOutputOptions } from "./helper/output";
+import { getEmitForOutput, getOutputOptions } from "./helper/output";
 import type { ITypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
 
 export interface ITypeScriptBuilderConfiguration
@@ -58,12 +58,6 @@ export interface ITypeScriptTool {
   reportDiagnostic: TTypescript.DiagnosticReporter;
 }
 
-const OLDEST_SUPPORTED_TS_MAJOR_VERSION: number = 2;
-const OLDEST_SUPPORTED_TS_MINOR_VERSION: number = 9;
-
-const NEWEST_SUPPORTED_TS_MAJOR_VERSION: number = 5;
-const NEWEST_SUPPORTED_TS_MINOR_VERSION: number = 3;
-
 export class TypeScriptBuilder {
   private readonly _configuration: ITypeScriptBuilderConfiguration;
   private readonly _typescriptLogger: IScopedLogger;
@@ -71,9 +65,6 @@ export class TypeScriptBuilder {
 
   private _typescriptVersion!: string;
   private _typescriptParsedVersion!: SemVer;
-
-  private _capabilities!: ICompilerCapabilities;
-  private _useSolutionBuilder!: boolean;
 
   private _tool?: ITypeScriptTool;
 
@@ -101,54 +92,6 @@ export class TypeScriptBuilder {
         );
       }
       this._typescriptParsedVersion = parsedVersion;
-
-      // Detect what features this compiler supports.  Note that manually comparing major/minor numbers
-      // loosens the matching to accept prereleases such as "3.6.0-dev.20190530"
-      this._capabilities = {
-        incrementalProgram: false,
-        solutionBuilder: this._typescriptParsedVersion.major >= 3,
-      };
-
-      if (
-        this._typescriptParsedVersion.major > 3 ||
-        (this._typescriptParsedVersion.major === 3 &&
-          this._typescriptParsedVersion.minor >= 6)
-      ) {
-        this._capabilities.incrementalProgram = true;
-      }
-
-      this._useSolutionBuilder = !!this._configuration.buildProjectReferences;
-      if (this._useSolutionBuilder && !this._capabilities.solutionBuilder) {
-        throw new Error(
-          `Building project references requires TypeScript@>=3.0, but the current version is ${this._typescriptVersion}`
-        );
-      }
-
-      if (
-        this._typescriptParsedVersion.major <
-          OLDEST_SUPPORTED_TS_MAJOR_VERSION ||
-        (this._typescriptParsedVersion.major ===
-          OLDEST_SUPPORTED_TS_MAJOR_VERSION &&
-          this._typescriptParsedVersion.minor <
-            OLDEST_SUPPORTED_TS_MINOR_VERSION)
-      ) {
-        this._typescriptTerminal.writeLine(
-          `The TypeScript compiler version ${this._typescriptVersion} is very old` +
-            ` and has not been tested with Heft; it may not work correctly.`
-        );
-      } else if (
-        this._typescriptParsedVersion.major >
-          NEWEST_SUPPORTED_TS_MAJOR_VERSION ||
-        (this._typescriptParsedVersion.major ===
-          NEWEST_SUPPORTED_TS_MAJOR_VERSION &&
-          this._typescriptParsedVersion.minor >
-            NEWEST_SUPPORTED_TS_MINOR_VERSION)
-      ) {
-        this._typescriptTerminal.writeLine(
-          `The TypeScript compiler version ${this._typescriptVersion} is newer than the latest version that was tested with Heft (${NEWEST_SUPPORTED_TS_MAJOR_VERSION}.${NEWEST_SUPPORTED_TS_MINOR_VERSION}); 
-          it may not work correctly.`
-        );
-      }
 
       const ts: ExtendedTypeScript = require(this._configuration
         .typeScriptToolPath);
@@ -235,19 +178,17 @@ export class TypeScriptBuilder {
       ts.getConfigFileParsingDiagnostics(tsconfig)
     );
 
-    const outputs = getOutputOptions(ts, tsconfig, this._configuration.output);
-
-    console.log(outputs);
-
-    const emit = getOutputEmit(ts, program, outputs);
-
-    const emitResult: TTypescript.EmitResult = emit(
-      undefined,
-      ts.sys.writeFile,
-      undefined,
-      undefined,
-      undefined
+    const outputs = getOutputOptions(
+      ts,
+      this._configuration.buildFolderPath,
+      tsconfig,
+      this._configuration.output!,
+      this._typescriptLogger
     );
+
+    const emit = getEmitForOutput(ts, program, outputs);
+
+    emit(undefined, ts.sys.writeFile, undefined, undefined, undefined);
   }
 
   private _readTsconfig(ts: ExtendedTypeScript): TTypescript.ParsedCommandLine {

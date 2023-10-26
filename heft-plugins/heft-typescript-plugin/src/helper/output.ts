@@ -1,4 +1,7 @@
+import { isAbsolute, resolve } from "path";
 import type TTypescript from "typescript";
+import { Path } from "@rushstack/node-core-library";
+import type { IScopedLogger } from "@rushstack/heft";
 import type { ExtendedTypeScript } from "../types/typescript";
 import { isPlainObject, isArray } from "./is";
 
@@ -18,6 +21,7 @@ export interface IOutputOptions {
 }
 
 export type IEmitOutputOptions = IOutputOptions & {
+  outDir: string;
   extension: string;
   module: TTypescript.ModuleKind;
 };
@@ -52,7 +56,7 @@ export function getOverrideWriteFile(
   };
 }
 
-export function getOutputEmit(
+export function getEmitForOutput(
   ts: ExtendedTypeScript,
   program: TTypescript.Program,
   outputs: IEmitOutputOptions[]
@@ -84,7 +88,7 @@ export function getOutputEmit(
       const kindCompilerOptions: TTypescript.CompilerOptions = {
         ...ordinalGetCompilerOptions(),
         module: output.module,
-        outDir: output.dir,
+        outDir: output.outDir,
         declaration: false,
         declarationMap: false,
       };
@@ -156,6 +160,7 @@ export function getFileExtension(
 
 export function normalizeOutputOptions(
   ts: ExtendedTypeScript,
+  project: string,
   output: IOutputOptions
 ): IEmitOutputOptions {
   if ((output.format && !output.dir) || (!output.format && output.dir)) {
@@ -172,15 +177,25 @@ export function normalizeOutputOptions(
 
   let moduleKind = output.module as TTypescript.ModuleKind;
 
-  if (!moduleKind && output.format) {
+  if (!moduleKind) {
     moduleKind = getModuleKind(ts, output.format);
   }
 
   const extension = output.extension ?? getFileExtension(ts, moduleKind);
 
+  let outDir: string = output.dir;
+
+  if (!isAbsolute(outDir)) {
+    outDir = resolve(project, outDir);
+  }
+
+  outDir = Path.convertToSlashes(outDir);
+  outDir = outDir.replace(/\/*$/, "/");
+
   const { dir, format } = output;
 
   return {
+    outDir,
     dir,
     format,
     extension,
@@ -190,27 +205,86 @@ export function normalizeOutputOptions(
 
 export function getOutputOptions(
   ts: ExtendedTypeScript,
+  project: string,
   tsconfig: TTypescript.ParsedCommandLine,
-  outputs: IOutputOptions
+  outputs: IOutputOptions,
+  scopedLogger: IScopedLogger
 ): IEmitOutputOptions[];
 
 export function getOutputOptions(
   ts: ExtendedTypeScript,
+  project: string,
   tsconfig: TTypescript.ParsedCommandLine,
-  outputs: IOutputOptions[]
+  outputs: IOutputOptions[],
+  scopedLogger: IScopedLogger
 ): IEmitOutputOptions[];
 
 export function getOutputOptions(
   ts: ExtendedTypeScript,
+  project: string,
   tsconfig: TTypescript.ParsedCommandLine,
-  outputs?: unknown
-) {
+  outputs: IOutputOptions[],
+  scopedLogger: IScopedLogger
+): IEmitOutputOptions[];
+
+export function getOutputOptions(
+  ts: ExtendedTypeScript,
+  project: string,
+  tsconfig: TTypescript.ParsedCommandLine,
+  outputs: unknown,
+  scopedLogger: IScopedLogger
+): IEmitOutputOptions[] | undefined {
   if (isArray<IOutputOptions>(outputs) && outputs.length) {
-    return outputs.map((output) => normalizeOutputOptions(ts, output));
+    const moduleKindsToEmit: IEmitOutputOptions[] = [];
+
+    for (let output of outputs) {
+      let message: string | undefined;
+
+      const emitOutputOptions = normalizeOutputOptions(ts, project, output);
+
+      const { outDir, extension } = emitOutputOptions;
+
+      for (const existingModuleKindToEmit of moduleKindsToEmit) {
+        if (existingModuleKindToEmit.outDir === outDir) {
+          if (existingModuleKindToEmit?.extension === extension) {
+            message =
+              `Unable to output two different module kinds with the same ` +
+              `module extension (${extension || ".js"})  ` +
+              `to the same folder ("${outDir}").`;
+          }
+        } else {
+          let parentDir: string | undefined;
+          let childDir: string | undefined;
+
+          if (outDir.startsWith(existingModuleKindToEmit.outDir)) {
+            parentDir = outDir;
+            childDir = existingModuleKindToEmit.outDir;
+          } else if (existingModuleKindToEmit.outDir.startsWith(outDir)) {
+            parentDir = existingModuleKindToEmit.outDir;
+            childDir = outDir;
+          }
+
+          if (parentDir) {
+            message =
+              "Unable to output two different module kinds to nested folders " +
+              `("${parentDir}" and "${childDir}").`;
+          }
+        }
+
+        if (message) {
+          scopedLogger.emitError(new Error(message));
+          return undefined;
+        }
+      }
+
+      moduleKindsToEmit.push(emitOutputOptions);
+    }
+
+    return moduleKindsToEmit;
   }
 
   if (isPlainObject<IOutputOptions>(outputs)) {
-    return [normalizeOutputOptions(ts, outputs)];
+    return [normalizeOutputOptions(ts, project, outputs)];
   }
 
   if (
@@ -229,7 +303,7 @@ export function getOutputOptions(
   }
 
   return [
-    normalizeOutputOptions(ts, {
+    normalizeOutputOptions(ts, project, {
       dir: tsconfig.options.outDir,
       module: tsconfig.options.module,
     } as IOutputOptions),
