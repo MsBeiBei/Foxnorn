@@ -37,6 +37,7 @@ export function getOverrideWriteFile(
   }
 
   const replacementExtension: string = `${jsExtensionOverride}$1`;
+  
   return (
     fileName: string,
     text: string,
@@ -234,7 +235,7 @@ export function getOutputOptions(
   outputs: unknown,
   scopedLogger: IScopedLogger
 ): IEmitOutputOptions[] | undefined {
-  if (isArray<IOutputOptions>(outputs) && outputs.length) {
+  if (isArray<IOutputOptions[]>(outputs) && outputs.length) {
     const moduleKindsToEmit: IEmitOutputOptions[] = [];
 
     for (let output of outputs) {

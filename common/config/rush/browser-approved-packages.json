@@ -55,6 +55,14 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "lodash-es",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
+      "name": "ramda",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
       "name": "semver",
       "allowedCategories": [ "heft-plugins" ]
     },

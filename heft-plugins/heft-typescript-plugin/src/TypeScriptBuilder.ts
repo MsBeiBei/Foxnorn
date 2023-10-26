@@ -178,6 +178,9 @@ export class TypeScriptBuilder {
       ts.getConfigFileParsingDiagnostics(tsconfig)
     );
 
+    console.log(program.getSyntacticDiagnostics(),121);
+
+
     const outputs = getOutputOptions(
       ts,
       this._configuration.buildFolderPath,
@@ -185,6 +188,8 @@ export class TypeScriptBuilder {
       this._configuration.output!,
       this._typescriptLogger
     );
+
+    
 
     const emit = getEmitForOutput(ts, program, outputs);
 

@@ -1,10 +1,7 @@
 {
   "$schema": "../../../heft-plugins/heft-typescript-plugin/lib/schemas/typescript.schema.json",
-  "output": [{
+  "output": {
     "dir": "esm",
     "format": "commonjs"
-  },{
-    "dir": "cc",
-    "format": "esm"
-  }]
+  }
 }
