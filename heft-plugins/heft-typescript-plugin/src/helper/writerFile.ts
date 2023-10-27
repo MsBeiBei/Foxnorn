@@ -1,4 +1,4 @@
-import type { TTypescript } from "./compile";
+import type { TTypescript } from "../types/typescript";
 
 const JS_EXTENSION_REGEX: RegExp = /\.js(\.map)?$/;
 

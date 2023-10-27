@@ -2,6 +2,6 @@
   "$schema": "../../../heft-plugins/heft-typescript-plugin/lib/schemas/typescript.schema.json",
   "output": {
     "dir": "esm",
-    "format": "commonjs"
+    "format": "cjs"
   }
 }

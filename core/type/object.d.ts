@@ -9,7 +9,7 @@ declare type Writable<T> = {
 };
 
 declare type RequiredProperties<T, K extends keyof T> = Omit<T, K> &
-  Record<Pick<T, K>>;
+  Required<Pick<T, K>>;
 
 declare type PartialProperties<T, K extends keyof T> = Omit<T, K> &
   Partial<Pick<T, K>>;

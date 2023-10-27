@@ -7,7 +7,9 @@
     "url": "https://github.com/MsBeiBei/Foxnorn.git",
     "directory": "core/type"
   },
-  "type": "module",
-  "types": "index.d.ts",
+  "scripts": {
+    "build": ""
+  },
+  "type": "commonjs",
   "license": "MIT"
 }

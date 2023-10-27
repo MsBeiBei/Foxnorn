@@ -1,5 +1,7 @@
 import type TTypescript from "typescript";
 
+export { TTypescript };
+
 export type ExtendedTypeScript = typeof TTypescript & {
   performance: {
     mark(name: string): void;

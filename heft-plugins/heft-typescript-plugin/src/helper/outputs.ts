@@ -1,8 +1,8 @@
 import { ModuleKind } from "typescript";
-import { isAbsolute, resolve } from "path";
+import { resolve } from "path";
 import { Path } from "@rushstack/node-core-library";
 import { isPlainObject, isArray } from "@foxnorn/shared";
-import type { TTypescript } from "./compile";
+import type { TTypescript } from "../types/typescript";
 
 export type ExtensionType = ".cjs" | ".mjs" | ".js";
 
@@ -17,8 +17,8 @@ export type ModuleFormat =
 export interface OutputOptions {
   dir: string;
   format: ModuleFormat;
-  module?: ModuleKind | undefined;
-  extension?: ExtensionType | undefined;
+  module?: ModuleKind;
+  extension?: ExtensionType;
 }
 
 export function getModuleKind(format: ModuleFormat): TTypescript.ModuleKind {
@@ -47,24 +47,26 @@ export function getModuleKind(format: ModuleFormat): TTypescript.ModuleKind {
   }
 }
 
-export function normalizeOutputOptions(
-  output: PartialProperties<OutputOptions, "format">,
+export function getOutDir(...paths: string[]) {
+  return Path.convertToSlashes(resolve(...paths)).replace(/\/*$/, "/"); // Ensure the path ends with a slash.
+}
+
+export function normalizeOutputOptions<T extends OutputOptions>(
+  output: T,
+  tsconfig: TTypescript.ParsedCommandLine,
   project: string
-): RequiredProperties<OutputOptions, "module"> {
+): RequiredProperties<T, "module"> {
   let moduleKind = output.module as ModuleKind;
 
   if (!moduleKind) {
     moduleKind = getModuleKind(output.format as ModuleFormat);
   }
 
-  let outDir: string = output.dir;
-
-  if (!isAbsolute(outDir)) {
-    outDir = resolve(project, outDir);
-  }
-
-  outDir = Path.convertToSlashes(outDir);
-  outDir = outDir.replace(/\/*$/, "/");
+  let outDir: string = getOutDir(
+    project,
+    tsconfig.options.outDir ?? ".",
+    output.dir
+  );
 
   return {
     ...output,
@@ -73,47 +75,51 @@ export function normalizeOutputOptions(
   };
 }
 
-export function getEmitOptionsByOutputs(
-  outputs: Omit<OutputOptions, "module">[],
+export function getOutputsForEmit<T extends OutputOptions>(
+  outputs: T | T[] | undefined,
   tsconfig: TTypescript.ParsedCommandLine,
   project: string
-): RequiredProperties<OutputOptions, "module">[];
-
-export function getEmitOptionsByOutputs(
-  outputs: Omit<OutputOptions, "module">,
-  tsconfig: TTypescript.ParsedCommandLine,
-  project: string
-): RequiredProperties<OutputOptions, "module">[];
-
-export function getEmitOptionsByOutputs(
-  outputs: undefined,
-  tsconfig: TTypescript.ParsedCommandLine,
-  project: string
-): RequiredProperties<OutputOptions, "module">[];
-
-export function getEmitOptionsByOutputs(
-  outputs: unknown,
-  tsconfig: TTypescript.ParsedCommandLine,
-  project: string
-): RequiredProperties<OutputOptions, "module">[] {
-  if (isPlainObject<Omit<OutputOptions, "module">>(outputs)) {
-    return [normalizeOutputOptions(outputs, project)];
+): RequiredProperties<T, "module">[] {
+  if (isPlainObject<T>(outputs)) {
+    return [normalizeOutputOptions(outputs, tsconfig, project)];
   }
 
-  if (isArray<Omit<OutputOptions, "module">[]>(outputs)) {
-    const moduleKindsToEmit: RequiredProperties<OutputOptions, "module">[] = [];
+  if (isArray<T[]>(outputs)) {
+    const moduleKindsToEmit: RequiredProperties<T, "module">[] = [];
 
     for (const output of outputs) {
-      const options = normalizeOutputOptions(output, project);
+      const options = normalizeOutputOptions(output, tsconfig, project);
 
       for (const existingModuleKindToEmit of moduleKindsToEmit) {
         if (options.dir === existingModuleKindToEmit.dir) {
           if (options.extension === options.extension) {
+            throw new Error(
+              `Unable to output two different module kinds with the ` +
+                `same module extension (${options.extension || ".js"}) to ` +
+                `the same folder ("${options.dir}").`
+            );
           }
         } else {
+          if (options.dir.startsWith(existingModuleKindToEmit.dir)) {
+            throw new Error(
+              `Unable to output two different module kinds to nested folders ` +
+                `("${existingModuleKindToEmit.dir}" and "${options.dir}").`
+            );
+          }
+
+          if (options.dir.endsWith(existingModuleKindToEmit.dir)) {
+            throw new Error(
+              `Unable to output two different module kinds to nested folders ` +
+                `("${options.dir}" and "${existingModuleKindToEmit.dir}").`
+            );
+          }
         }
       }
+
+      moduleKindsToEmit.push(options);
     }
+
+    return moduleKindsToEmit;
   }
 
   if (
@@ -144,7 +150,8 @@ export function getEmitOptionsByOutputs(
       {
         module: tsconfig.options.module,
         dir: tsconfig.options.outDir,
-      },
+      } as T,
+      tsconfig,
       project
     ),
   ];

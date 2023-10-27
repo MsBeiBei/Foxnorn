@@ -9,7 +9,8 @@ import {
 } from "@rushstack/node-core-library";
 import type { PerformanceMeasure } from "./types/performance";
 import type { ExtendedTypeScript } from "./types/typescript";
-import { getEmitForOutput, getOutputOptions } from "./helper/output";
+import { getEmitForOutput } from "./helper/emit";
+import { getOutputsForEmit } from "./helper/outputs";
 import type { ITypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
 
 export interface ITypeScriptBuilderConfiguration
@@ -178,18 +179,11 @@ export class TypeScriptBuilder {
       ts.getConfigFileParsingDiagnostics(tsconfig)
     );
 
-    console.log(program.getSyntacticDiagnostics(),121);
-
-
-    const outputs = getOutputOptions(
-      ts,
-      this._configuration.buildFolderPath,
+    const outputs = getOutputsForEmit(
+      this._configuration.output,
       tsconfig,
-      this._configuration.output!,
-      this._typescriptLogger
+      this._configuration.buildFolderPath
     );
-
-    
 
     const emit = getEmitForOutput(ts, program, outputs);
 
