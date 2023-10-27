@@ -19,8 +19,16 @@
       "allowedCategories": [ "libraries", "playground" ]
     },
     {
+      "name": "@foxnorn/shared",
+      "allowedCategories": [ "heft-plugins" ]
+    },
+    {
       "name": "@foxnorn/tsconfig",
-      "allowedCategories": [ "heft-plugins", "libraries", "playground", "rush-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
+    },
+    {
+      "name": "@foxnorn/type",
+      "allowedCategories": [ "heft-plugins", "internal" ]
     },
     {
       "name": "@microsoft/rush-lib",

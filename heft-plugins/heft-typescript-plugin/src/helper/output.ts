@@ -3,7 +3,6 @@ import type TTypescript from "typescript";
 import { Path } from "@rushstack/node-core-library";
 import type { IScopedLogger } from "@rushstack/heft";
 import type { ExtendedTypeScript } from "../types/typescript";
-import { isPlainObject, isArray } from "./is";
 
 export type InternalModuleFormat = "amd" | "cjs" | "es" | "system" | "umd";
 
@@ -37,7 +36,7 @@ export function getOverrideWriteFile(
   }
 
   const replacementExtension: string = `${jsExtensionOverride}$1`;
-  
+
   return (
     fileName: string,
     text: string,

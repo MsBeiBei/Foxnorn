@@ -16,20 +16,21 @@ export interface IStaticAssetsCopyConfiguration {
 
 export interface ITypeScriptConfigurationJson {
   /**
-   * Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the "project" argument for the 'tsc' and 'tslint' command line tools.
+   * Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.
+   * Equivalent to the "project" argument for the 'tsc' and 'tslint' command line tools.
    *
    * The default value is "./tsconfig.json".
    */
   project?: string;
 
   /**
-   * Specify the format of the emitted file. If not provided, the module kind configured in tsconfig will be emitted by default. 
+   * Specify the format of the emitted file. If not provided, the module kind configured in tsconfig will be emitted by default.
    * Note that this option only applies to the main tsconfig.json configuration.
    */
   output?: IOutputOptions[];
 
   /**
-   * Configures additional file types that should be copied into the TypeScript compiler's emit folders, 
+   * Configures additional file types that should be copied into the TypeScript compiler's emit folders,
    * for example so that these files can be resolved by import statements.
    */
   copyStaticAssets?: IStaticAssetsCopyConfiguration;

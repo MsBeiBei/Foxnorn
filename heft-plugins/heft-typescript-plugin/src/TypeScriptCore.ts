@@ -1,4 +1,5 @@
 import type TTypescript from "typescript";
+import type { ITerminal } from "@rushstack/node-core-library";
 
 export type ExtendedTypeScript = typeof TTypescript & {
   performance: {
@@ -13,10 +14,18 @@ export type ExtendedTypeScript = typeof TTypescript & {
 
 export class DiagnosticCore {
   private diagnostics: TTypescript.Diagnostic[] = [];
-
-  
 }
 
 export class TypeScriptCore {
-  constructor(private readonly ts: ExtendedTypeScript) {}
+  constructor(
+    private readonly ts: ExtendedTypeScript,
+    private readonly project: string,
+    private readonly terminal: ITerminal
+  ) {}
+
+  public async compile() {}
+
+  public async compileIncremental() {}
+
+  public async compileWatch() {}
 }

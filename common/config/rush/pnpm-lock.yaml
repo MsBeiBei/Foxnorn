@@ -8,6 +8,23 @@ importers:
 
   .: {}
 
+  ../../core/shared:
+    devDependencies:
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@foxnorn/type':
+        specifier: workspace:*
+        version: link:../type
+      tslib:
+        specifier: ~2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
+  ../../core/type: {}
+
   ../../heft-plugins/heft-typescript-plugin:
     dependencies:
       '@rushstack/heft-config-file':
@@ -23,9 +40,15 @@ importers:
       '@foxnorn/heft-node-rig':
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
+      '@foxnorn/shared':
+        specifier: workspace:*
+        version: link:../../core/shared
       '@foxnorn/tsconfig':
         specifier: workspace:*
         version: link:../../internal/tsconfig
+      '@foxnorn/type':
+        specifier: workspace:*
+        version: link:../../core/type
       '@rushstack/heft':
         specifier: ~0.59.0
         version: 0.59.0(@types/node@20.6.1)

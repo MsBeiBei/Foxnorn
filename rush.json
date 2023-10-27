@@ -77,6 +77,18 @@
       "projectFolder": "internal/tsconfig",
       "reviewCategory": "internal",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/type",
+      "projectFolder": "core/type",
+      "reviewCategory": "internal",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/shared",
+      "projectFolder": "core/shared",
+      "reviewCategory": "internal",
+      "shouldPublish": true
     }
   ]
 }
