@@ -19,14 +19,13 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
   ): void {
     taskSession.hooks.run.tapPromise(PLUGIN_NAME, async () => {
 
-      taskSession.logger.terminal.writeLine('asdasddsaas')
 
-      // const builder: TypeScriptBuilder | undefined =
-      //   await this._getTypeScriptBuilderAsync(taskSession, heftConfiguration);
+      const builder: TypeScriptBuilder | undefined =
+        await this._getTypeScriptBuilderAsync(taskSession, heftConfiguration);
 
-      // if (builder) {
-      //   await builder.invokeAsync();
-      // }
+      if (builder) {
+        await builder.invokeAsync();
+      }
     });
   }
 

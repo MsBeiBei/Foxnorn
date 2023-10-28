@@ -1,7 +1,24 @@
 {
-  "$schema": "../../../heft-plugins/heft-typescript-plugin/lib/schemas/typescript.schema.json",
-  "output": {
-    "dir": "esm",
-    "format": "cjs"
-  }
+  "additionalModuleKindsToEmit": [
+    {
+      "outFolderName": "umd",
+      "moduleKind": "umd"
+    },
+    {
+      "outFolderName": "cjs",
+      "moduleKind": "commonjs"
+    },
+    {
+      "outFolderName": "amd",
+      "moduleKind": "amd"
+    },
+    {
+      "outFolderName": "system",
+      "moduleKind": "system"
+    },
+    {
+      "outFolderName": "es",
+      "moduleKind": "esnext"
+    }
+  ]
 }

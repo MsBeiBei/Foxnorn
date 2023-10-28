@@ -12,7 +12,7 @@
   },
   "type": "commonjs",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "lib/index.js",
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
     "typescript": "~5.2.2",

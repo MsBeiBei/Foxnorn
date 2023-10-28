@@ -1,5 +1,5 @@
 import type { ExtendedTypeScript, TTypescript } from "../types/typescript";
-import { type OutputOptions } from "./outputs";
+import type { OutputOptions } from "./outputs";
 import { getOverrideWriteFile } from "./writerFile";
 
 export function getEmitForOutput(
@@ -39,8 +39,10 @@ export function getEmitForOutput(
         declarationMap: false,
       };
 
+
       program.getCompilerOptions = () => kindCompilerOptions;
-      const emitResult: TTypescript.EmitResult = originalEmit(
+
+      const emitResult: TTypescript.EmitResult =originalEmit(
         targetSourceFile,
         writeFile && getOverrideWriteFile(writeFile, output.extension),
         cancellationToken,

@@ -22,7 +22,7 @@ export interface OutputOptions {
 }
 
 export function getModuleKind(format: ModuleFormat): TTypescript.ModuleKind {
-  switch (format) {
+  switch (format.toLowerCase()) {
     case "es":
     case "esm": {
       return ModuleKind.ESNext;
@@ -75,7 +75,7 @@ export function normalizeOutputOptions<T extends OutputOptions>(
   };
 }
 
-export function getOutputsForEmit<T extends OutputOptions>(
+export function getOutputsForEmit<T extends OutputOptions = OutputOptions>(
   outputs: T | T[] | undefined,
   tsconfig: TTypescript.ParsedCommandLine,
   project: string
@@ -89,6 +89,7 @@ export function getOutputsForEmit<T extends OutputOptions>(
 
     for (const output of outputs) {
       const options = normalizeOutputOptions(output, tsconfig, project);
+
 
       for (const existingModuleKindToEmit of moduleKindsToEmit) {
         if (options.dir === existingModuleKindToEmit.dir) {
