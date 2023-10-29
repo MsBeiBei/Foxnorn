@@ -1,24 +1,25 @@
 {
-  "additionalModuleKindsToEmit": [
+  "$schema": "../../../heft-plugins/heft-typescript-plugin/lib/schemas/typescript.schema.json",
+  "output": [
     {
-      "outFolderName": "umd",
-      "moduleKind": "umd"
+      "dir": "umd",
+      "format": "umd"
     },
     {
-      "outFolderName": "cjs",
-      "moduleKind": "commonjs"
+      "dir": "cjs",
+      "format": "cjs"
     },
     {
-      "outFolderName": "amd",
-      "moduleKind": "amd"
+      "dir": "amd",
+      "format": "amd"
     },
     {
-      "outFolderName": "system",
-      "moduleKind": "system"
+      "dir": "system",
+      "format": "system"
     },
     {
-      "outFolderName": "es",
-      "moduleKind": "esnext"
+      "dir": "esm",
+      "format": "esm"
     }
   ]
 }

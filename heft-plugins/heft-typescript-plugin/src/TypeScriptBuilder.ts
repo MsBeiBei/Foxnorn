@@ -67,6 +67,8 @@ export class TypeScriptBuilder {
   private _typescriptVersion!: string;
   private _typescriptParsedVersion!: SemVer;
 
+  private _capabilities!: ICompilerCapabilities;
+
   private _tool?: ITypeScriptTool;
 
   public constructor(configuration: ITypeScriptBuilderConfiguration) {
@@ -93,6 +95,19 @@ export class TypeScriptBuilder {
         );
       }
       this._typescriptParsedVersion = parsedVersion;
+
+      this._capabilities = {
+        incrementalProgram: false,
+        solutionBuilder: this._typescriptParsedVersion.major >= 3,
+      };
+
+      if (
+        this._typescriptParsedVersion.major > 3 ||
+        (this._typescriptParsedVersion.major === 3 &&
+          this._typescriptParsedVersion.minor >= 6)
+      ) {
+        this._capabilities.incrementalProgram = true;
+      }
 
       const ts: ExtendedTypeScript = require(this._configuration
         .typeScriptToolPath);
@@ -190,6 +205,10 @@ export class TypeScriptBuilder {
     emit(undefined, ts.sys.writeFile, undefined, undefined, undefined);
   }
 
+  public async compileIncremental() {}
+
+  public async compileWatch() {}
+
   private _readTsconfig(ts: ExtendedTypeScript): TTypescript.ParsedCommandLine {
     const readResult: ReturnType<typeof ts.readConfigFile> = ts.readConfigFile(
       this._configuration.tsconfigPath,
@@ -213,5 +232,18 @@ export class TypeScriptBuilder {
       );
 
     return tsconfig;
+  }
+
+  private _queueTranspileInWorker() {}
+
+  private _createProgram() {
+    return (
+      rootNames: readonly string[] | undefined,
+      options: TTypescript.CompilerOptions | undefined,
+      host?: TTypescript.CompilerHost,
+      oldProgram?: TTypescript.EmitAndSemanticDiagnosticsBuilderProgram,
+      configFileParsingDiagnostics?: readonly TTypescript.Diagnostic[],
+      projectReferences?: readonly TTypescript.ProjectReference[]
+    ) => {};
   }
 }

@@ -30,6 +30,9 @@ export function getEmitForOutput(
     const diagnostics: TTypescript.Diagnostic[] = [];
     let emitSkipped: boolean = false;
 
+    const originalCompilerOptions: TTypescript.CompilerOptions =
+      program.getCompilerOptions();
+
     for (const output of outputs) {
       const kindCompilerOptions: TTypescript.CompilerOptions = {
         ...ordinalGetCompilerOptions(),
@@ -39,10 +42,13 @@ export function getEmitForOutput(
         declarationMap: false,
       };
 
-
       program.getCompilerOptions = () => kindCompilerOptions;
+      
+      // Need to mutate the compiler options for the `module` field specifically, because emitWorker() captures
+      // options in the closure and passes it to `ts.getTransformers()`
+      originalCompilerOptions.module = output.module;
 
-      const emitResult: TTypescript.EmitResult =originalEmit(
+      const emitResult: TTypescript.EmitResult = originalEmit(
         targetSourceFile,
         writeFile && getOverrideWriteFile(writeFile, output.extension),
         cancellationToken,

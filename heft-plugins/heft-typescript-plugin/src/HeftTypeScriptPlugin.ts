@@ -27,7 +27,7 @@ export interface ITypeScriptConfigurationJson {
    * Specify the format of the emitted file. If not provided, the module kind configured in tsconfig will be emitted by default.
    * Note that this option only applies to the main tsconfig.json configuration.
    */
-  output?: OutputOptions[] | OutputOptions | undefined;
+  output?: OutputOptions[] | OutputOptions;
 
   /**
    * Configures additional file types that should be copied into the TypeScript compiler's emit folders,
