@@ -8,13 +8,13 @@ import type {
 } from "@rushstack/heft";
 import type { OutputOptions } from "./helper/outputs";
 
-export interface IStaticAssetsCopyConfiguration {
+export interface StaticAssetsCopyConfiguration {
   fileExtensions: string[];
   excludeGlobs: string[];
   includeGlobs: string[];
 }
 
-export interface ITypeScriptConfigurationJson {
+export interface TypeScriptConfigurationJson {
   /**
    * Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.
    * Equivalent to the "project" argument for the 'tsc' and 'tslint' command line tools.
@@ -30,19 +30,30 @@ export interface ITypeScriptConfigurationJson {
   output?: OutputOptions[] | OutputOptions;
 
   /**
+   * If true, enable behavior analogous to the \"tsc --build\" command. Will build projects referenced by the main project.
+   * Note that this will effectively enable \"noEmitOnError\".
+   */
+  reference?: boolean;
+
+  /**
+   * If true, and the tsconfig has \"isolatedModules\": true, then transpilation will happen in parallel in a worker thread.
+   */
+  worker?: boolean;
+
+  /**
    * Configures additional file types that should be copied into the TypeScript compiler's emit folders,
    * for example so that these files can be resolved by import statements.
    */
-  copyStaticAssets?: IStaticAssetsCopyConfiguration;
+  copyStaticAssets?: StaticAssetsCopyConfiguration;
 }
 
 let typeScriptConfigurationFilePromiseCache: Map<
   string,
-  Promise<ITypeScriptConfigurationJson | undefined>
+  Promise<TypeScriptConfigurationJson | undefined>
 > = new Map();
 
 let typeScriptConfigurationFileLoader:
-  | ConfigurationFile<ITypeScriptConfigurationJson>
+  | ConfigurationFile<TypeScriptConfigurationJson>
   | undefined;
 
 export interface ITsconfigJson {}
@@ -66,11 +77,11 @@ export abstract class HeftTypeScriptPlugin<TOptions = void>
   protected async loadTypeScriptConfigurationFileAsync(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration
-  ): Promise<ITypeScriptConfigurationJson | undefined> {
+  ): Promise<TypeScriptConfigurationJson | undefined> {
     const buildFolderPath: string = heftConfiguration.buildFolderPath;
 
     let typescriptConfigurationFilePromise:
-      | Promise<ITypeScriptConfigurationJson | undefined>
+      | Promise<TypeScriptConfigurationJson | undefined>
       | undefined =
       typeScriptConfigurationFilePromiseCache.get(buildFolderPath);
 
@@ -85,7 +96,7 @@ export abstract class HeftTypeScriptPlugin<TOptions = void>
       );
 
       typeScriptConfigurationFileLoader =
-        new ConfigurationFile<ITypeScriptConfigurationJson>({
+        new ConfigurationFile<TypeScriptConfigurationJson>({
           projectRelativeFilePath: "config/typescript.json",
           jsonSchemaPath: typeScriptSchemaPath,
         });
@@ -110,7 +121,7 @@ export abstract class HeftTypeScriptPlugin<TOptions = void>
   protected async loadTsconfigFileAsync(
     taskSession: IHeftTaskSession,
     heftConfiguration: HeftConfiguration,
-    typeScriptConfigurationJson?: ITypeScriptConfigurationJson
+    typeScriptConfigurationJson?: TypeScriptConfigurationJson
   ): Promise<ITsconfigJson | undefined> {
     const buildFolderPath: string = heftConfiguration.buildFolderPath;
 
@@ -161,7 +172,7 @@ export abstract class HeftTypeScriptPlugin<TOptions = void>
 
   protected getTsconfigFilePath(
     heftConfiguration: HeftConfiguration,
-    typeScriptConfigurationJson?: ITypeScriptConfigurationJson
+    typeScriptConfigurationJson?: TypeScriptConfigurationJson
   ): string {
     return Path.convertToSlashes(
       resolve(

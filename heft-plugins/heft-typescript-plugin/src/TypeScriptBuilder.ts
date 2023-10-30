@@ -1,6 +1,6 @@
 import { join, dirname } from "path";
+import { Worker } from "worker_threads";
 import { parse, type SemVer } from "semver";
-import type TTypescript from "typescript";
 import type { IScopedLogger } from "@rushstack/heft";
 import {
   JsonFile,
@@ -8,13 +8,29 @@ import {
   type ITerminal,
 } from "@rushstack/node-core-library";
 import type { PerformanceMeasure } from "./types/performance";
-import type { ExtendedTypeScript } from "./types/typescript";
+import type { ExtendedTypeScript, TTypescript } from "./types/typescript";
+import type {
+  TypeScriptWorkerData,
+  TranspilationResponseMessage,
+} from "./types/worker";
 import { getEmitForOutput } from "./helper/emit";
 import { getOutputsForEmit } from "./helper/outputs";
-import type { ITypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
+import type { TypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
 
-export interface ITypeScriptBuilderConfiguration
-  extends ITypeScriptConfigurationJson {
+export type SolutionBuilderWithWatchHost =
+  TTypescript.SolutionBuilderWithWatchHost<TTypescript.EmitAndSemanticDiagnosticsBuilderProgram>;
+export type SolutionBuilderHost =
+  TTypescript.SolutionBuilderHost<TTypescript.EmitAndSemanticDiagnosticsBuilderProgram>;
+export type WatchCompilerHost =
+  TTypescript.WatchCompilerHostOfFilesAndCompilerOptions<TTypescript.EmitAndSemanticDiagnosticsBuilderProgram>;
+
+export type CreateProgram =
+  TTypescript.CreateProgram<TTypescript.EmitAndSemanticDiagnosticsBuilderProgram>;
+export type WatchProgram =
+  TTypescript.WatchOfFilesAndCompilerOptions<TTypescript.EmitAndSemanticDiagnosticsBuilderProgram>;
+
+export interface TypeScriptBuilderConfiguration
+  extends TypeScriptConfigurationJson {
   /**
    * Project build folder path. This is the folder containing the project's package.json file.
    */
@@ -37,49 +53,32 @@ export interface ITypeScriptBuilderConfiguration
   scopedLogger: IScopedLogger;
 }
 
-export interface ICompilerCapabilities {
-  /**
-   * Support for incremental compilation via `ts.createIncrementalProgram()`.
-   * Introduced with TypeScript 3.6.
-   */
-  incrementalProgram: boolean;
-
-  /**
-   * Support for composite projects via `ts.createSolutionBuilder()`.
-   * Introduced with TypeScript 3.0.
-   */
-  solutionBuilder: boolean;
-}
-
-export interface ITypeScriptTool {
+export interface TypeScriptTool {
   ts: ExtendedTypeScript;
   system: TTypescript.System;
   diagnostics: TTypescript.Diagnostic[];
-  measureTsPerformance: PerformanceMeasure;
+  measurePerformance: PerformanceMeasure;
   reportDiagnostic: TTypescript.DiagnosticReporter;
 }
 
 export class TypeScriptBuilder {
-  private readonly _configuration: ITypeScriptBuilderConfiguration;
-  private readonly _typescriptLogger: IScopedLogger;
-  private readonly _typescriptTerminal: ITerminal;
+  private readonly _configuration: TypeScriptBuilderConfiguration;
+  private readonly _scopedLogger: IScopedLogger;
+  private readonly _terminal: ITerminal;
 
   private _typescriptVersion!: string;
   private _typescriptParsedVersion!: SemVer;
 
-  private _capabilities!: ICompilerCapabilities;
+  private _tool?: TypeScriptTool;
 
-  private _tool?: ITypeScriptTool;
-
-  public constructor(configuration: ITypeScriptBuilderConfiguration) {
+  public constructor(configuration: TypeScriptBuilderConfiguration) {
     this._configuration = configuration;
-    this._typescriptLogger = configuration.scopedLogger;
-    this._typescriptTerminal = configuration.scopedLogger.terminal;
+    this._scopedLogger = configuration.scopedLogger;
+    this._terminal = configuration.scopedLogger.terminal;
   }
 
   public async invokeAsync() {
     if (!this._tool) {
-      // Determine the compiler version
       const packageJsonPath: string = join(
         this._configuration.typeScriptToolPath,
         "package.json"
@@ -96,25 +95,12 @@ export class TypeScriptBuilder {
       }
       this._typescriptParsedVersion = parsedVersion;
 
-      this._capabilities = {
-        incrementalProgram: false,
-        solutionBuilder: this._typescriptParsedVersion.major >= 3,
-      };
-
-      if (
-        this._typescriptParsedVersion.major > 3 ||
-        (this._typescriptParsedVersion.major === 3 &&
-          this._typescriptParsedVersion.minor >= 6)
-      ) {
-        this._capabilities.incrementalProgram = true;
-      }
-
       const ts: ExtendedTypeScript = require(this._configuration
         .typeScriptToolPath);
 
       ts.performance.enable();
 
-      const measureTsPerformance = <T extends object | void>(
+      const measurePerformance = <T extends object | void>(
         measureName: string,
         fn: () => T
       ): T & {
@@ -135,9 +121,7 @@ export class TypeScriptBuilder {
         };
       };
 
-      this._typescriptTerminal.writeLine(
-        `Using TypeScript version ${ts.version}`
-      );
+      this._terminal.writeLine(`Using TypeScript version ${ts.version}`);
 
       const diagnostics: TTypescript.Diagnostic[] = [];
 
@@ -148,7 +132,7 @@ export class TypeScriptBuilder {
 
       this._tool = {
         ts,
-        measureTsPerformance,
+        measurePerformance,
         system,
         diagnostics,
         reportDiagnostic: (diagnostic: TTypescript.Diagnostic) => {
@@ -162,13 +146,13 @@ export class TypeScriptBuilder {
     performance.disable();
     performance.enable();
 
-    await this.compile(this._tool);
+    await this.compileAsync(this._tool);
   }
 
-  public async compile(tool: ITypeScriptTool) {
-    const { ts, measureTsPerformance } = tool;
+  public async compileAsync(tool: TypeScriptTool) {
+    const { ts, measurePerformance } = tool;
 
-    const { duration, tsconfig, host } = measureTsPerformance(
+    const { duration, tsconfig, host, outputs } = measurePerformance(
       "Configure",
       () => {
         const tsconfig: TTypescript.ParsedCommandLine = this._readTsconfig(ts);
@@ -177,14 +161,21 @@ export class TypeScriptBuilder {
           tsconfig.options
         );
 
+        const outputs = getOutputsForEmit(
+          this._configuration.output,
+          tsconfig,
+          this._configuration.buildFolderPath
+        );
+
         return {
           tsconfig,
           host,
+          outputs,
         };
       }
     );
 
-    this._typescriptTerminal.writeVerboseLine(`Configure: ${duration}ms`);
+    this._terminal.writeVerboseLine(`Configure: ${duration}ms`);
 
     const program: TTypescript.Program = ts.createProgram(
       tsconfig.fileNames,
@@ -194,20 +185,43 @@ export class TypeScriptBuilder {
       ts.getConfigFileParsingDiagnostics(tsconfig)
     );
 
-    const outputs = getOutputsForEmit(
-      this._configuration.output,
-      tsconfig,
-      this._configuration.buildFolderPath
-    );
-
     const emit = getEmitForOutput(ts, program, outputs);
 
     emit(undefined, ts.sys.writeFile, undefined, undefined, undefined);
   }
 
-  public async compileIncremental() {}
+  public async compileWatchAsync() {}
 
-  public async compileWatch() {}
+  public async compileSolutionAsync() {}
+
+  
+
+  private _createTranspileWorker() {
+    const workerData: TypeScriptWorkerData = {
+      typeScriptToolPath: this._configuration.typeScriptToolPath,
+    };
+
+    const worker = new Worker(require.resolve("./helper/worker.js"), {
+      workerData,
+    });
+
+    worker.on("message", (response: TranspilationResponseMessage) => {
+      const { requestId, type, result } = response;
+
+      if (type === "failed") {
+      } else {
+        this._terminal.writeErrorLine(
+          `Unexpected worker resolution for request with id ${requestId}`
+        );
+      }
+    });
+
+    worker.once("exit", () => {});
+
+    worker.once("error", (error: Error) => {});
+  }
+
+  private _cleanTranspileWorker() {}
 
   private _readTsconfig(ts: ExtendedTypeScript): TTypescript.ParsedCommandLine {
     const readResult: ReturnType<typeof ts.readConfigFile> = ts.readConfigFile(
@@ -232,18 +246,5 @@ export class TypeScriptBuilder {
       );
 
     return tsconfig;
-  }
-
-  private _queueTranspileInWorker() {}
-
-  private _createProgram() {
-    return (
-      rootNames: readonly string[] | undefined,
-      options: TTypescript.CompilerOptions | undefined,
-      host?: TTypescript.CompilerHost,
-      oldProgram?: TTypescript.EmitAndSemanticDiagnosticsBuilderProgram,
-      configFileParsingDiagnostics?: readonly TTypescript.Diagnostic[],
-      projectReferences?: readonly TTypescript.ProjectReference[]
-    ) => {};
   }
 }

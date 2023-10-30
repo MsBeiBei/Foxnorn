@@ -58,6 +58,14 @@
                 }
             ]
         },
+        "reference": {
+            "description": "If true, enable behavior analogous to the \"tsc --build\" command. Will build projects referenced by the main project. Note that this will effectively enable \"noEmitOnError\".",
+            "type": "boolean"
+        },
+        "worker": {
+            "description": "If true, and the tsconfig has \"isolatedModules\": true, then transpilation will happen in parallel in a worker thread.",
+            "type": "boolean"
+        },
         "copyStaticAssets": {
             "description": "Configures additional file types that should be copied into the TypeScript compiler's emit folders, for example so that these files can be resolved by import statements.",
             "type": "object",

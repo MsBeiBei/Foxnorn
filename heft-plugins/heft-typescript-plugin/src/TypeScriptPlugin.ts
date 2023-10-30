@@ -2,12 +2,12 @@ import type { HeftConfiguration, IHeftTaskSession } from "@rushstack/heft";
 import { type ITerminal } from "@rushstack/node-core-library";
 import {
   HeftTypeScriptPlugin,
-  type ITypeScriptConfigurationJson,
+  type TypeScriptConfigurationJson,
   type ITsconfigJson,
 } from "./HeftTypeScriptPlugin";
 import {
   TypeScriptBuilder,
-  type ITypeScriptBuilderConfiguration,
+  type TypeScriptBuilderConfiguration,
 } from "./TypeScriptBuilder";
 
 export const PLUGIN_NAME: "typescript-plugin" = "typescript-plugin";
@@ -18,8 +18,6 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
     heftConfiguration: HeftConfiguration
   ): void {
     taskSession.hooks.run.tapPromise(PLUGIN_NAME, async () => {
-
-
       const builder: TypeScriptBuilder | undefined =
         await this._getTypeScriptBuilderAsync(taskSession, heftConfiguration);
 
@@ -35,12 +33,11 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
   ): Promise<TypeScriptBuilder | undefined> {
     const terminal: ITerminal = taskSession.logger.terminal;
 
-    const typeScriptConfigurationJson:
-      | ITypeScriptConfigurationJson
-      | undefined = await this.loadTypeScriptConfigurationFileAsync(
-      taskSession,
-      heftConfiguration
-    );
+    const typeScriptConfigurationJson: TypeScriptConfigurationJson | undefined =
+      await this.loadTypeScriptConfigurationFileAsync(
+        taskSession,
+        heftConfiguration
+      );
 
     const tsconfigJson: ITsconfigJson | undefined =
       await this.loadTsconfigFileAsync(
@@ -59,7 +56,7 @@ export default class TypeScriptPlugin extends HeftTypeScriptPlugin {
         terminal
       );
 
-    const typeScriptBuilderConfiguration: ITypeScriptBuilderConfiguration = {
+    const typeScriptBuilderConfiguration: TypeScriptBuilderConfiguration = {
       typeScriptToolPath: typeScriptToolPath,
       tsconfigPath: this.getTsconfigFilePath(
         heftConfiguration,
