@@ -1,4 +1,5 @@
 import type { TTypescript } from "./typescript";
+import type { OutputOptions } from "../helper/outputs";
 
 export interface TypeScriptWorkerData {
   typeScriptToolPath: string;
@@ -10,6 +11,7 @@ export interface TranspilationRequestMessage {
   requestId: number;
   options: TTypescript.CompilerOptions;
   sourceFiles: Map<string, string>;
+  output: RequiredProperties<OutputOptions, "module">[];
 }
 
 export interface TranspilationResponseMessage<

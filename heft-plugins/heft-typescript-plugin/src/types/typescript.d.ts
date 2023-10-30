@@ -11,4 +11,8 @@ export type ExtendedTypeScript = typeof TTypescript & {
     getDuration(name: string): number;
     getCount(name: string): number;
   };
+  transpileOptionValueCompilerOptions: TTypescript.CommandLineOption[];
+  getNewLineCharacter(
+    compilerOptions: TTypescript.CompilerOptions | TTypescript.PrinterOptions
+  ): string;
 };

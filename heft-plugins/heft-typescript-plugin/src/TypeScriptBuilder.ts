@@ -194,7 +194,59 @@ export class TypeScriptBuilder {
 
   public async compileSolutionAsync() {}
 
-  
+  private _readTsconfig(ts: ExtendedTypeScript): TTypescript.ParsedCommandLine {
+    const readResult: ReturnType<typeof ts.readConfigFile> = ts.readConfigFile(
+      this._configuration.tsconfigPath,
+      ts.sys.readFile
+    );
+
+    const basePath: string = dirname(this._configuration.tsconfigPath);
+
+    const tsconfig: TTypescript.ParsedCommandLine =
+      ts.parseJsonConfigFileContent(
+        readResult.config,
+        {
+          fileExists: ts.sys.fileExists,
+          readFile: ts.sys.readFile,
+          readDirectory: ts.sys.readDirectory,
+          useCaseSensitiveFileNames: true,
+        },
+        basePath,
+        undefined,
+        this._configuration.tsconfigPath
+      );
+
+    return tsconfig;
+  }
+
+  private _createProgram(ts: ExtendedTypeScript) {
+    return (
+      rootNames: readonly string[] | undefined,
+      options: TTypescript.CompilerOptions | undefined,
+      host?: TTypescript.CompilerHost,
+      oldProgram?: TTypescript.EmitAndSemanticDiagnosticsBuilderProgram,
+      configFileParsingDiagnostics?: readonly TTypescript.Diagnostic[],
+      projectReferences?: readonly TTypescript.ProjectReference[] | undefined
+    ): TTypescript.EmitAndSemanticDiagnosticsBuilderProgram => {
+      const program: TTypescript.EmitAndSemanticDiagnosticsBuilderProgram =
+        ts.createEmitAndSemanticDiagnosticsBuilderProgram(
+          rootNames,
+          options,
+          host,
+          oldProgram,
+          configFileParsingDiagnostics,
+          projectReferences
+        );
+
+      const isolatedModules: boolean =
+        !!this._configuration.worker && !!options?.isolatedModules;
+
+      if (isolatedModules) {
+      }
+
+      return program;
+    };
+  }
 
   private _createTranspileWorker() {
     const workerData: TypeScriptWorkerData = {
@@ -222,29 +274,4 @@ export class TypeScriptBuilder {
   }
 
   private _cleanTranspileWorker() {}
-
-  private _readTsconfig(ts: ExtendedTypeScript): TTypescript.ParsedCommandLine {
-    const readResult: ReturnType<typeof ts.readConfigFile> = ts.readConfigFile(
-      this._configuration.tsconfigPath,
-      ts.sys.readFile
-    );
-
-    const basePath: string = dirname(this._configuration.tsconfigPath);
-
-    const tsconfig: TTypescript.ParsedCommandLine =
-      ts.parseJsonConfigFileContent(
-        readResult.config,
-        {
-          fileExists: ts.sys.fileExists,
-          readFile: ts.sys.readFile,
-          readDirectory: ts.sys.readDirectory,
-          useCaseSensitiveFileNames: true,
-        },
-        basePath,
-        undefined,
-        this._configuration.tsconfigPath
-      );
-
-    return tsconfig;
-  }
 }

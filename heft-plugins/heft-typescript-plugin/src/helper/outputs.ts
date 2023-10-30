@@ -90,7 +90,6 @@ export function getOutputsForEmit<T extends OutputOptions = OutputOptions>(
     for (const output of outputs) {
       const options = normalizeOutputOptions(output, tsconfig, project);
 
-
       for (const existingModuleKindToEmit of moduleKindsToEmit) {
         if (options.dir === existingModuleKindToEmit.dir) {
           if (options.extension === options.extension) {
