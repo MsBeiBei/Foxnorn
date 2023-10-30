@@ -1,3 +1,5 @@
+import type { OutputOptions } from "./helper/outputs";
+
 import { join, dirname } from "path";
 import { Worker } from "worker_threads";
 import { parse, type SemVer } from "semver";
@@ -13,8 +15,8 @@ import type {
   TypeScriptWorkerData,
   TranspilationResponseMessage,
 } from "./types/worker";
-import { getEmitForOutput } from "./helper/emit";
-import { getOutputsForEmit } from "./helper/outputs";
+import { createEmit } from "./helper/emit";
+import { getStandardOutputsOptions } from "./helper/outputs";
 import type { TypeScriptConfigurationJson } from "./HeftTypeScriptPlugin";
 
 export type SolutionBuilderWithWatchHost =
@@ -57,7 +59,7 @@ export interface TypeScriptTool {
   ts: ExtendedTypeScript;
   system: TTypescript.System;
   diagnostics: TTypescript.Diagnostic[];
-  measurePerformance: PerformanceMeasure;
+  createMeasuring: PerformanceMeasure;
   reportDiagnostic: TTypescript.DiagnosticReporter;
 }
 
@@ -100,7 +102,7 @@ export class TypeScriptBuilder {
 
       ts.performance.enable();
 
-      const measurePerformance = <T extends object | void>(
+      const createMeasuring = <T extends object | void>(
         measureName: string,
         fn: () => T
       ): T & {
@@ -132,7 +134,7 @@ export class TypeScriptBuilder {
 
       this._tool = {
         ts,
-        measurePerformance,
+        createMeasuring,
         system,
         diagnostics,
         reportDiagnostic: (diagnostic: TTypescript.Diagnostic) => {
@@ -150,32 +152,35 @@ export class TypeScriptBuilder {
   }
 
   public async compileAsync(tool: TypeScriptTool) {
-    const { ts, measurePerformance } = tool;
+    const { ts, createMeasuring } = tool;
 
-    const { duration, tsconfig, host, outputs } = measurePerformance(
-      "Configure",
-      () => {
-        const tsconfig: TTypescript.ParsedCommandLine = this._readTsconfig(ts);
+    const {
+      duration: configureDurationMs,
+      tsconfig,
+      host,
+      outputs,
+    } = createMeasuring("Configure", () => {
+      const _tsconfig: TTypescript.ParsedCommandLine = this._readTsconfig(ts);
 
-        const host: TTypescript.CompilerHost = ts.createCompilerHost(
-          tsconfig.options
-        );
+      const _host: TTypescript.CompilerHost = ts.createCompilerHost(
+        tsconfig.options
+      );
 
-        const outputs = getOutputsForEmit(
+      const _outputs: RequiredProperties<OutputOptions, "module">[] =
+        getStandardOutputsOptions(
           this._configuration.output,
           tsconfig,
           this._configuration.buildFolderPath
         );
 
-        return {
-          tsconfig,
-          host,
-          outputs,
-        };
-      }
-    );
+      return {
+        tsconfig: _tsconfig,
+        host: _host,
+        outputs: _outputs,
+      };
+    });
 
-    this._terminal.writeVerboseLine(`Configure: ${duration}ms`);
+    this._terminal.writeVerboseLine(`Configure: ${configureDurationMs}ms`);
 
     const program: TTypescript.Program = ts.createProgram(
       tsconfig.fileNames,
@@ -185,9 +190,31 @@ export class TypeScriptBuilder {
       ts.getConfigFileParsingDiagnostics(tsconfig)
     );
 
-    const emit = getEmitForOutput(ts, program, outputs);
+    const { diagnostics: diagnosticsDurationMs } = createMeasuring(
+      "Analyze",
+      () => {
+        const _diagnostics: TTypescript.Diagnostic[] = [
+          ...program.getConfigFileParsingDiagnostics(),
+          ...program.getOptionsDiagnostics(),
+          ...program.getSyntacticDiagnostics(),
+          ...program.getGlobalDiagnostics(),
+          ...program.getSemanticDiagnostics(),
+        ];
+
+        return {
+          diagnostics: _diagnostics,
+        };
+      }
+    );
+
+    this._terminal.writeVerboseLine(`Analyze: ${diagnosticsDurationMs}ms`);
+
+    const emit = createEmit(ts, program, outputs);
 
     emit(undefined, ts.sys.writeFile, undefined, undefined, undefined);
+
+    ts.performance.disable();
+    ts.performance.enable();
   }
 
   public async compileWatchAsync() {}

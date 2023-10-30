@@ -4,7 +4,7 @@ import type {
   TranspilationResponseMessage,
   TypeScriptWorkerData,
 } from "../types/worker";
-import { getEmitForOutput } from "./emit";
+import { createEmit } from "./emit";
 import type { ExtendedTypeScript, TTypescript } from "../types/typescript";
 
 const typedWorkerData: TypeScriptWorkerData = workerData;
@@ -74,7 +74,7 @@ function runTranspiler(
     compilerHost
   );
 
-  const emit = getEmitForOutput(ts, program, output);
+  const emit = createEmit(ts, program, output);
 
   const result: TTypescript.EmitResult = emit(
     undefined,

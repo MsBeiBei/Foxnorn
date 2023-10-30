@@ -2,7 +2,7 @@ import type { ExtendedTypeScript, TTypescript } from "../types/typescript";
 import type { OutputOptions } from "./outputs";
 import { getOverrideWriteFile } from "./writerFile";
 
-export function getEmitForOutput(
+export function createEmit(
   ts: ExtendedTypeScript,
   program: TTypescript.Program,
   outputs: RequiredProperties<OutputOptions, "module">[]

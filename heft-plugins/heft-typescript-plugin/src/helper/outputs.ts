@@ -75,7 +75,7 @@ export function normalizeOutputOptions<T extends OutputOptions>(
   };
 }
 
-export function getOutputsForEmit<T extends OutputOptions = OutputOptions>(
+export function getStandardOutputsOptions<T extends OutputOptions = OutputOptions>(
   outputs: T | T[] | undefined,
   tsconfig: TTypescript.ParsedCommandLine,
   project: string
