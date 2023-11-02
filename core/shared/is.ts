@@ -1,22 +1,47 @@
-export const isString = <T extends string>(val: unknown): val is T =>
-  typeof val === "string";
+import { is } from "./core/is";
+import { type } from "./core/type";
 
-export const isBoolean = <T extends boolean>(val: unknown): val is T =>
-  typeof val === "boolean";
+export function isString<T extends string>(input: unknown): input is T {
+  return is(String, input);
+}
 
-export const isNumber = <T extends number>(val: unknown): val is T =>
-  typeof val === "number";
+export function isBoolean<T extends boolean>(input: unknown): input is T {
+  return is(String, input);
+}
+export function isNumber<T extends number>(input: unknown): input is T {
+  return is(Number, input);
+}
+export function isObject<T extends object>(input: unknown): input is T {
+  return is(Object, input);
+}
+export function isArray<T extends any[]>(input: unknown): input is T {
+  return is(Array, input);
+}
+export function isFunction<T extends Fn>(input: unknown): input is T {
+  return is(Function, input);
+}
 
-export const isPlainObject = <T extends Record<string, any>>(
-  val: unknown
-): val is T => Object.prototype.toString.call(val) === "[object Object]";
+export function isNil(input: unknown): input is null | undefined {
+  return input === undefined || input === null;
+}
 
-export const isObject = <T extends Record<string, any>>(
-  val: unknown
-): val is T => typeof val === "object" && val !== null;
+export function isNaN(input: unknown): boolean {
+  return Number.isNaN(input);
+}
 
-export const isFunction = <T extends Function>(val: unknown): val is T =>
-  typeof val === "function";
+export function isEmpty(input: unknown): boolean {
+  const inputType = type(input);
 
-export const isArray = <T extends Array<any>>(val: unknown): val is T =>
-  Array.isArray(val);
+  if (["Undefined", "NaN", "Number", "Null"].includes(inputType)) return false;
+
+  if (!input) return true;
+
+  if (isObject(input)) {
+    return Object.keys(input).length === 0;
+  }
+  if (isArray(input)) {
+    return input.length === 0;
+  }
+
+  return false;
+}

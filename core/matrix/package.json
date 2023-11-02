@@ -1,0 +1,14 @@
+{
+  "name": "@foxnorn/matrix",
+  "version": "1.0.0",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MsBeiBei/Foxnorn.git",
+    "directory": "core/matrix"
+  },
+  "scripts": {
+    "build": ""
+  },
+  "license": "MIT"
+}
