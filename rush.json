@@ -90,6 +90,11 @@
       "reviewCategory": "internal",
       "shouldPublish": true
     },
- 
+    {
+      "packageName": "@foxnorn/matrix",
+      "projectFolder": "core/matrix",
+      "reviewCategory": "internal",
+      "shouldPublish": true
+    }
   ]
 }

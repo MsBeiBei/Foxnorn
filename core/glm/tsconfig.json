@@ -1,0 +1,15 @@
+{
+  "extends": "@foxnorn/tsconfig/node.next.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "lib",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "declarationDir": "lib/types",
+    "types": [
+      "@foxnorn/type"
+    ]
+  }
+}

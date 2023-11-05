@@ -10,5 +10,11 @@
   "scripts": {
     "build": ""
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "~5.2.2",
+    "@types/node": "~20.6.1",
+    "@foxnorn/type": "workspace:*",
+    "@foxnorn/tsconfig": "workspace:*"
+  }
 }

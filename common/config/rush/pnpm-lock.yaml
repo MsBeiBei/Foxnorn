@@ -8,14 +8,22 @@ importers:
 
   .: {}
 
+  ../../core/matrix:
+    devDependencies:
+      '@foxnorn/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@foxnorn/type':
+        specifier: workspace:*
+        version: link:../type
+      '@types/node':
+        specifier: ~20.6.1
+        version: 20.6.1
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
+
   ../../core/shared:
-    dependencies:
-      '@types/lodash-es':
-        specifier: ~4.17.10
-        version: 4.17.10
-      lodash-es:
-        specifier: ~4.17.21
-        version: 4.17.21
     devDependencies:
       '@foxnorn/tsconfig':
         specifier: workspace:*
@@ -996,14 +1004,9 @@ packages:
   /@types/argparse@1.0.38:
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
 
-  /@types/lodash-es@4.17.10:
-    resolution: {integrity: sha512-YJP+w/2khSBwbUSFdGsSqmDvmnN3cCKoPOL7Zjle6s30ZtemkkqhjVfFqGwPN7ASil5VyjE2GtyU/yqYY6mC0A==}
-    dependencies:
-      '@types/lodash': 4.14.198
-    dev: false
-
   /@types/lodash@4.14.198:
     resolution: {integrity: sha512-trNJ/vtMZYMLhfN45uLq4ShQSw0/S7xCTLLVM+WM1rmFpba/VS42jVUgaO3w/NOLiWR/09lnYk0yMaA/atdIsg==}
+    dev: true
 
   /@types/minimatch@3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
@@ -2549,10 +2552,6 @@ packages:
     dependencies:
       p-locate: 5.0.0
     dev: true
-
-  /lodash-es@4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
 
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
