@@ -10,9 +10,10 @@
   "scripts": {
     "build": "tsc"
   },
-  "type": "commonjs",
   "license": "MIT",
   "main": "lib/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/type/index.d.ts",
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
     "typescript": "~5.2.2",

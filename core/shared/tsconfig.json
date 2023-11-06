@@ -2,7 +2,9 @@
   "extends": "@foxnorn/tsconfig/node.next.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "lib",
+    "module": "ESNext",
+    "moduleResolution":"Bundler",
+    "outDir": "lib/esm",
     "lib": [
       "DOM",
       "ESNext"

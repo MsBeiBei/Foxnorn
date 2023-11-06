@@ -20,7 +20,7 @@
     },
     {
       "name": "@foxnorn/shared",
-      "allowedCategories": [ "heft-plugins" ]
+      "allowedCategories": [ "heft-plugins", "internal" ]
     },
     {
       "name": "@foxnorn/tsconfig",
@@ -63,12 +63,28 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "@vitejs/plugin-vue",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "@vitejs/plugin-vue-jsx",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "less",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "lodash-es",
       "allowedCategories": [ "heft-plugins", "internal" ]
     },
     {
       "name": "ramda",
       "allowedCategories": [ "heft-plugins" ]
+    },
+    {
+      "name": "rollup",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "semver",
@@ -89,6 +105,18 @@
     {
       "name": "typescript",
       "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
+    },
+    {
+      "name": "vite",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "vue-tsc",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "yargs",

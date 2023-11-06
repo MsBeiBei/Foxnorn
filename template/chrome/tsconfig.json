@@ -1,0 +1,10 @@
+{
+  "extends": "@foxnorn/tsconfig/vue.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": [
+      "chrome",
+      "@foxnorn/type"
+    ]
+  }
+}

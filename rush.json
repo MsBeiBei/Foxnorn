@@ -95,6 +95,12 @@
       "projectFolder": "core/glm",
       "reviewCategory": "internal",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/chrome",
+      "projectFolder": "template/chrome",
+      "reviewCategory": "internal",
+      "shouldPublish": true
     }
   ]
 }
