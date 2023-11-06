@@ -7,11 +7,11 @@ export type Vector<D extends number> = FixedLengthArray<number, D>;
  * @param b Second append vector.
  * @returns Sum of vectors 'a' and 'b'.
  */
-export function add<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => a[idx] + b[idx]) as V;
+export function add<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => a[idx] + b[idx]) as L;
 }
 
 /**
@@ -21,12 +21,13 @@ export function add<D extends number, V extends Vector<D> = Vector<D>>(
  * @param b Second append vector.
  * @returns Vector result of subtraction.
  */
-export function subtract<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => a[idx] - b[idx]) as V;
+export function subtract<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => a[idx] - b[idx]) as L;
 }
+
 
 /**
  * Multiplies two vector's.
@@ -35,11 +36,11 @@ export function subtract<D extends number, V extends Vector<D> = Vector<D>>(
  * @param b Second append vector.
  * @returns Vector result of multiplication.
  */
-export function multiply<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => a[idx] * b[idx]) as V;
+export function multiply<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => a[idx] * b[idx]) as L;
 }
 
 /**
@@ -49,11 +50,11 @@ export function multiply<D extends number, V extends Vector<D> = Vector<D>>(
  * @param b Second append vector.
  * @returns Vector result of division.
  */
-export function divide<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => a[idx] / b[idx]) as V;
+export function divide<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => a[idx] / b[idx]) as L;
 }
 
 /**
@@ -63,9 +64,9 @@ export function divide<D extends number, V extends Vector<D> = Vector<D>>(
  * @param b Second append vector.
  * @returns Dot product of vectors 'a' and 'b'.
  */
-export function dot<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
+export function dot<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
 ): number {
   return a.reduce(
     (result: number, _: number, idx: number) => (result += a[idx] * b[idx]),
@@ -80,66 +81,57 @@ export function dot<D extends number, V extends Vector<D> = Vector<D>>(
  * @param b Amount to scale the vector by.
  * @returns Vector result of scaling.
  */
-export function scale<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
+export function scale<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
   b: number
-): V {
-  return a.map((_: number, idx: number) => a[idx] * b) as V;
+): L {
+  return a.map((_: number, idx: number) => a[idx] * b) as L;
 }
 
-export function min<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => Math.max(a[idx], b[idx])) as V;
+
+
+export function min<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => Math.max(a[idx], b[idx])) as L;
 }
 
-export function max<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => Math.min(a[idx], b[idx])) as V;
+export function max<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L,
+  b: L
+): L {
+  return a.map((_: number, idx: number) => Math.min(a[idx], b[idx])) as L;
 }
 
-export function round<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
-): V {
-  return a.map((_: number, idx: number) => Math.round(a[idx])) as V;
+export function round<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L
+): L {
+  return a.map((_: number, idx: number) => Math.round(a[idx])) as L;
 }
 
-export function ceil<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
-): V {
-  return a.map((_: number, idx: number) => Math.ceil(a[idx])) as V;
+export function ceil<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L
+): L {
+  return a.map((_: number, idx: number) => Math.ceil(a[idx])) as L;
 }
 
-export function floor<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
-): V {
-  return a.map((_: number, idx: number) => Math.floor(a[idx])) as V;
+export function floor<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L
+): L {
+  return a.map((_: number, idx: number) => Math.floor(a[idx])) as L;
 }
 
-export function clone<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
-): V {
-  return a.map((_: number, idx: number) => a[idx]) as V;
+
+
+export function zero<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L
+): L {
+  return a.map(() => 0.0) as L;
 }
 
-export function copy<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  b: V
-): V {
-  return a.map((_: number, idx: number) => b[idx]) as V;
-}
-
-export function zero<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
-): V {
-  return a.map(() => 0.0) as V;
-}
-
-export function str<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V
+export function str<D extends number, L extends Vector<D> = Vector<D>>(
+  a: L
 ): string {
   return a.reduce(
     (result: string, _: number, idx: number) => (result += `, ${a[idx]}`),
@@ -147,16 +139,4 @@ export function str<D extends number, V extends Vector<D> = Vector<D>>(
   );
 }
 
-export function set<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  ...b: V
-): V {
-  return a.map((_: number, idx: number) => b[idx]) as V;
-}
 
-export function at<D extends number, V extends Vector<D> = Vector<D>>(
-  a: V,
-  idx: number
-): number {
-  return a[idx];
-}

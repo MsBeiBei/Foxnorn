@@ -1,21 +1,20 @@
+import { type Vector } from "./vector";
+
 export type Matrix<D extends number> = FixedLengthArray<number, D>;
 
-export function create() {}
+/**
+ * Returns the identity matrix for an NxN matrix.
+ *
+ * @param n Size of the matrix to create.
+ * @returns NxN identity matrix.
+ */
+export function identity<D extends number>(n: D): Matrix<D> {
+  const matrix = new Array<number>(n * n);
 
-export function clone() {}
-
-export function copy() {}
-
-export function identity<D extends number>(dimession: D): Matrix<D> {
-  const matrix = new Array();
-
-  for (let row = 0; row < dimession; row++) {
-    let rows = [];
-    for (let col = 0; col < dimession; col++) {
-      rows[col] = row === col ? 1 : 0;
+  for (let row = 0; row < n; row++) {
+    for (let col = 0; col < n; col++) {
+      matrix[n * col + row] = row === col ? 1 : 0;
     }
-
-    matrix.push(...rows);
   }
 
   return matrix as Matrix<D>;
