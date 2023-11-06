@@ -1,11 +1,11 @@
 {
-  "name": "@foxnorn/matrix",
+  "name": "@foxnorn/glm",
   "version": "1.0.0",
   "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "directory": "core/matrix"
+    "directory": "core/glm"
   },
   "scripts": {
     "build": ""

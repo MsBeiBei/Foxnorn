@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  ../../core/matrix:
+  ../../core/glm:
     devDependencies:
       '@foxnorn/tsconfig':
         specifier: workspace:*
