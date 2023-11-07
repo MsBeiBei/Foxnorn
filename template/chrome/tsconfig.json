@@ -3,8 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "types": [
+      "node",
       "chrome",
       "@foxnorn/type"
-    ]
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "#/*": [
+        "types/*"
+      ]
+    }
   }
 }

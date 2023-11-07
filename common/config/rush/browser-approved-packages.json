@@ -3,6 +3,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@crxjs/vite-plugin",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "@foxnorn/heft-lib",
       "allowedCategories": [ "heft-plugins" ]
     },
@@ -71,6 +75,14 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "@vueuse/core",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "dayjs",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "less",
       "allowedCategories": [ "internal" ]
     },
@@ -116,6 +128,10 @@
     },
     {
       "name": "vue-tsc",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "ws",
       "allowedCategories": [ "internal" ]
     },
     {

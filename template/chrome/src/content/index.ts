@@ -1,5 +1,8 @@
 import { createApp } from "vue";
+import { MessageInternal } from "@/utilties/message/internal";
 import Content from "./Content.vue";
+
+new MessageInternal("content");
 
 const root = document.createElement("div");
 root.id = "chrome-extension-vue-vite-root";

@@ -1,1 +1,0 @@
-import{o as a,c as n,a as t}from"../assets/js/vue.js";import{_ as c}from"../assets/js/_plugin-vue_export-helper.js";const p={},r={class:"aaa"};function _(o,e){return a(),n("div",r,"11")}const s=c(p,[["render",_],["__scopeId","data-v-a9afea6e"]]);function i(){const o=document.querySelector("#app-container");if(!o)throw new Error("Can not find #app-container");t(s).mount(o)}i();

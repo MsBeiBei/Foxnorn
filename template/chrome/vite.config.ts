@@ -1,11 +1,5 @@
 import { defineConfig } from "vite";
-import {
-  CONTENT_PATH,
-  PUBLIC_DIR,
-  OUT_DIR,
-  POPUP_PATH,
-  SRC_DIR,
-} from "./build/constants";
+import { PUBLIC_DIR, OUT_DIR, SRC_DIR,TYPES_DIR } from "./build/constants";
 import { createPlugins } from "./build/plugins";
 
 export default defineConfig(({ mode }) => {
@@ -15,6 +9,13 @@ export default defineConfig(({ mode }) => {
   return {
     root: SRC_DIR,
     public: PUBLIC_DIR,
+    resolve: {
+      extensions: [".ts", ".tsx", ".json"],
+      alias: {
+        "@": SRC_DIR,
+        "#": TYPES_DIR,
+      },
+    },
     plugins: createPlugins(),
     esbuild: {
       drop: isProd ? ["console", "debugger"] : [],
@@ -29,17 +30,13 @@ export default defineConfig(({ mode }) => {
       minify: isProd,
       reportCompressedSize: isProd,
       rollupOptions: {
-        input: {
-          content: CONTENT_PATH,
-          popup: POPUP_PATH,
-        },
         output: {
           entryFileNames: "[name]/index.js",
-          chunkFileNames: !isDev
-            ? "assets/js/[name].js"
-            : "assets/js/[name].[hash].js",
+          chunkFileNames: "assets/js/[name].[hash].js",
+          assetFileNames: `assets/[ext]/[name].[hash].[ext]`,
           manualChunks: {
             vue: ["vue"],
+            vueuse: ["@vueuse/core"],
           },
         },
       },

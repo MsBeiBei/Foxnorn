@@ -2,14 +2,12 @@ import { createApp } from "vue";
 import Popup from "./Popup.vue";
 
 function bootstrap() {
-  const appContainer = document.querySelector("#app-container");
-  if (!appContainer) {
+  const popupContainer = document.querySelector("#popup-container");
+  if (!popupContainer) {
     throw new Error("Can not find #app-container");
   }
   const popup = createApp(Popup);
-  popup.mount(appContainer);
-
-  
+  popup.mount(popupContainer);
 }
 
 bootstrap();

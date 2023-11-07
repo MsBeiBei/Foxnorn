@@ -77,3 +77,4 @@ common/autoinstallers/*/.npmrc
 lib
 
 temp
+dist

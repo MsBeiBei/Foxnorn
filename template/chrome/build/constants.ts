@@ -8,6 +8,7 @@ export const CWD = process.cwd();
 export const SRC_DIR = resolve("src");
 export const PUBLIC_DIR = resolve("public");
 export const OUT_DIR = resolve("dist");
+export const TYPES_DIR = resolve("types");
 
 export const ESLINT_EXTENSIONS = [
   ".vue",
