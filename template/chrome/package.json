@@ -26,11 +26,13 @@
     "less": "~4.2.0",
     "@vitejs/plugin-vue-jsx": "~3.0.2",
     "@vitejs/plugin-vue": "~4.4.0",
-    "@crxjs/vite-plugin": "~2.0.0-beta.21"
+    "@crxjs/vite-plugin": "~2.0.0-beta.21",
+    "@types/uuid": "~9.0.6"
   },
   "dependencies": {
     "vue": "~3.3.7",
     "dayjs": "~1.11.10",
-    "@vueuse/core": "~10.5.0"
+    "uuid": "~9.0.1",
+    "axios": "~1.6.0"
   }
 }

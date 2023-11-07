@@ -18,9 +18,7 @@ export class MessageCenter {
     chrome.runtime.onConnect.addListener((port) => {
       port.onDisconnect.addListener(() => {});
 
-      port.onMessage.addListener(() => {
-        console.log(222);
-      });
+      port.onMessage.addListener(() => {});
     });
   }
 

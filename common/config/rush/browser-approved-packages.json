@@ -79,6 +79,10 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "axios",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "dayjs",
       "allowedCategories": [ "internal" ]
     },
@@ -117,6 +121,10 @@
     {
       "name": "typescript",
       "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
+    },
+    {
+      "name": "uuid",
+      "allowedCategories": [ "internal" ]
     },
     {
       "name": "vite",

@@ -7,17 +7,23 @@ export default defineManifest({
   version: packageJson.version,
   description: packageJson.description,
   permissions: [
+    "tabs",
+    "scripting",
+    "activeTab",
     "storage",
-    "background",
+    "browserAction",
     "webRequest",
     "activeTab",
-    "scripting",
+    "identity",
+    "background",
+    "<all_urls>",
   ],
   icons: {
     16: "assets/img/mspbots_transparent_16.png",
     48: "assets/img/mspbots_transparent_48.png",
     128: "assets/img/mspbots_transparent_128.png",
   },
+  host_permissions: ["*://*/*"],
   background: {
     service_worker: "background/index.ts",
     type: "module",
@@ -33,8 +39,11 @@ export default defineManifest({
     {
       all_frames: true,
       matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      run_at: "document_start",
+      run_at: "document_end",
       js: ["content/index.ts"],
     },
   ],
+  sandbox: {
+    pages: ["sandbox/index.html"],
+  },
 });

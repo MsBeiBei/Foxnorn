@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { PUBLIC_DIR, OUT_DIR, SRC_DIR,TYPES_DIR } from "./build/constants";
+import { PUBLIC_DIR, OUT_DIR, SRC_DIR, TYPES_DIR } from "./build/constants";
 import { createPlugins } from "./build/plugins";
 
 export default defineConfig(({ mode }) => {
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       drop: isProd ? ["console", "debugger"] : [],
     },
     optimizeDeps: {
-      include: ["vue", "@vueuse/core"],
+      include: ["vue"],
     },
     build: {
       emptyOutDir: true,
@@ -36,7 +36,6 @@ export default defineConfig(({ mode }) => {
           assetFileNames: `assets/[ext]/[name].[hash].[ext]`,
           manualChunks: {
             vue: ["vue"],
-            vueuse: ["@vueuse/core"],
           },
         },
       },

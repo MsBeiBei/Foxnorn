@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Options</title>
+    <title>Document</title>
 </head>
 
 <body>
-    <div id="options-container"></div>
-    <script type="module" src="./index.tsx"></script>
+    <script>
+        console.log("这是来自sandbox的chrome");
+        eval('console.log("sandbox")');
+    </script>
 </body>
 
 </html>
