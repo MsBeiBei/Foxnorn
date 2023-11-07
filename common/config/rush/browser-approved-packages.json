@@ -87,6 +87,14 @@
       "allowedCategories": [ "internal" ]
     },
     {
+      "name": "dexie",
+      "allowedCategories": [ "internal" ]
+    },
+    {
+      "name": "eval5",
+      "allowedCategories": [ "internal" ]
+    },
+    {
       "name": "less",
       "allowedCategories": [ "internal" ]
     },
