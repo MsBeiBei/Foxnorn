@@ -28,7 +28,6 @@ export function subtract<D extends number, L extends Vector<D> = Vector<D>>(
   return a.map((_: number, idx: number) => a[idx] - b[idx]) as L;
 }
 
-
 /**
  * Multiplies two vector's.
  *
@@ -88,8 +87,6 @@ export function scale<D extends number, L extends Vector<D> = Vector<D>>(
   return a.map((_: number, idx: number) => a[idx] * b) as L;
 }
 
-
-
 export function min<D extends number, L extends Vector<D> = Vector<D>>(
   a: L,
   b: L
@@ -122,8 +119,6 @@ export function floor<D extends number, L extends Vector<D> = Vector<D>>(
   return a.map((_: number, idx: number) => Math.floor(a[idx])) as L;
 }
 
-
-
 export function zero<D extends number, L extends Vector<D> = Vector<D>>(
   a: L
 ): L {
@@ -138,5 +133,3 @@ export function str<D extends number, L extends Vector<D> = Vector<D>>(
     `vector${a.length}`
   );
 }
-
-

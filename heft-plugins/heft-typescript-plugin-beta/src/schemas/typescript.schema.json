@@ -1,0 +1,91 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Heft TypeScript Plugin Options Configuration",
+    "description": "This schema describes the \"options\" field that can be specified in heft.json when loading \"@foxnorn/heft-typescript-plugin\".",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "outputOptions": {
+            "type": "object",
+            "properties": {
+                "dir": {
+                    "description": "Override \"outDir\" field in tsconfig.json",
+                    "type": "string",
+                    "pattern": "[^\\\\\\/]"
+                },
+                "format": {
+                    "description": "Override \"module\" field in tsconfig.json",
+                    "type": "string",
+                    "enum": [
+                        "cjs",
+                        "amd",
+                        "umd",
+                        "esm",
+                        "system"
+                    ]
+                }
+            },
+            "required": [
+                "dir",
+                "format"
+            ]
+        }
+    },
+    "properties": {
+        "$schema": {
+            "description": "Part of the JSON Schema standard, this optional keyword declares the URL of the schema that the file conforms to. Editors may download the schema and use it to perform syntax highlighting.",
+            "type": "string"
+        },
+        "extends": {
+            "description": "Optionally specifies another JSON config file that this file extends from.  This provides a way for standard settings to be shared across multiple projects.",
+            "type": "string"
+        },
+        "project": {
+            "description": "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'. Equivalent to the \"project\" argument for the 'tsc' and 'tslint' command line tools. The default value is \"./tsconfig.json\".",
+            "type": "string"
+        },
+        "output": {
+            "description": "Specify the format of the emitted file. If not provided, the module kind configured in tsconfig will be emitted by default. Note that this option only applies to the main tsconfig.json configuration.",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/outputOptions"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/outputOptions"
+                    }
+                }
+            ]
+        },
+        "reference": {
+            "description": "If true, enable behavior analogous to the \"tsc --build\" command. Will build projects referenced by the main project. Note that this will effectively enable \"noEmitOnError\".",
+            "type": "boolean"
+        },
+        "worker": {
+            "description": "If true, and the tsconfig has \"isolatedModules\": true, then transpilation will happen in parallel in a worker thread.",
+            "type": "boolean"
+        },
+        "copyStaticAssets": {
+            "description": "Configures additional file types that should be copied into the TypeScript compiler's emit folders, for example so that these files can be resolved by import statements.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "exclude": {
+                    "description": "Files that should be explicitly excluded. This takes precedence over matching files in \"include\".",
+                    "type": [
+                        "string",
+                        "array"
+                    ]
+                },
+                "include": {
+                    "description": "Limit files to certain files.",
+                    "type": [
+                        "string",
+                        "array"
+                    ]
+                }
+            }
+        }
+    }
+}

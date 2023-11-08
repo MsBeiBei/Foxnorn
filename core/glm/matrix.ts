@@ -1,5 +1,3 @@
-import { type Vector } from "./vector";
-
 export type Matrix<D extends number> = FixedLengthArray<number, D>;
 
 /**
