@@ -5,7 +5,7 @@ export function useTimeout(callback) {
     const clearTimeout = () => {
         if (timeoutID) {
             window.clearTimeout(timeoutID)
-            timeoutID = null
+            timeoutID = undefined
         }
     }
 
