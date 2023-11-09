@@ -23,7 +23,7 @@ export default {
       default: "visible",
     },
   },
-  mounted() {},
+
   render(h) {
     const { element, top, left, height, width, visibility } = this;
 
