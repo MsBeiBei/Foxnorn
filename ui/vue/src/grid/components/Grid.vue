@@ -11,7 +11,7 @@ export default {
   data() {
     return {};
   },
-
+  
   render() {
     const cells = [];
     for (let rowIndex = 0; rowIndex <= 10; rowIndex++) {

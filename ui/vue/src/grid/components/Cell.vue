@@ -3,6 +3,7 @@ import { isRTLDocument, toPx } from "../utilties/web";
 
 export default {
   name: "Cell",
+  inheritAttrs: false,
   props: {
     element: {
       type: String,
