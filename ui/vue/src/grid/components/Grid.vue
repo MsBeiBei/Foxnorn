@@ -1,5 +1,4 @@
 <script>
-import { Store } from "../model/store";
 import { genKey } from "../utilties/key";
 import Cell from "./Cell.vue";
 
@@ -14,12 +13,10 @@ export default {
       store: null,
     };
   },
-  created() {
-    this.store = new Store();
-  },
+  created() {},
+  mounted() {},
+  beforeDestroy() {},
   render() {
-    const { store } = this;
-
     const cells = [];
     for (let rowIndex = 0; rowIndex <= 10; rowIndex++) {
       for (let colIndex = 0; colIndex <= 10; colIndex++) {
@@ -28,7 +25,6 @@ export default {
             key={genKey(rowIndex, colIndex)}
             rowIndex={rowIndex}
             colIndex={colIndex}
-            width={store.getWidth()}
           >
             {genKey(rowIndex, colIndex)}
           </Cell>
@@ -42,6 +38,7 @@ export default {
       </div>
     );
   },
+  methods: {},
 };
 </script>
 

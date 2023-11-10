@@ -1,5 +1,5 @@
 <script>
-import { isRTLDocument, toPx } from "../utilties/web";
+import { isRTLDocument } from "../utilties/web";
 
 export default {
   name: "Cell",
@@ -23,7 +23,8 @@ export default {
       default: "visible",
     },
   },
-
+  mounted() {},
+  beforeDestroy() {},
   render(h) {
     const { element, top, left, height, width, visibility } = this;
 
@@ -35,8 +36,8 @@ export default {
           top: top,
           [isRTLDocument() ? "right" : "left"]: left,
           visibility: visibility,
-          minHeight: toPx(height),
-          minWidth: toPx(width),
+          minHeight: height,
+          minWidth: width,
         },
       },
       this.$slots.default
