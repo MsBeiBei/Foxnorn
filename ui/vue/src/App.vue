@@ -1,6 +1,6 @@
 <template>
   <div style="width: 500px; height: 600px; border: 1px solid red">
-    <Grid :viewData="viewData" :rowSize="rowSize" :colSize="colSize" />
+    <Grid :data="data" />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
       show: false,
       rowSize: 26,
       colSize: 4,
-      viewData: [
+      data: [
         [0, 1, 2, 3, 4, 5],
         ["A", "B", "C", "D", "E", "F"],
         [true, false, true, false, true, false],

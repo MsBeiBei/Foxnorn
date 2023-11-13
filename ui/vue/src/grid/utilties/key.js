@@ -1,1 +1,1 @@
-export const genKey = (rowIndex, colIndex) => `${rowIndex}-${colIndex}`;
+export const genKey = (part) => (...args) => part + '-' + args.join('-')

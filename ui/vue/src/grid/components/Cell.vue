@@ -5,12 +5,13 @@ export default {
   name: "Cell",
   inheritAttrs: false,
   props: {
-    element: {
+    id: String,
+    tag: {
       type: String,
-      default: "div",
+      default: "td",
     },
-    rowIndex: Number,
-    colIndex: Number,
+    ridx: Number,
+    cidx: Number,
     top: Number,
     left: Number,
     height: Number,
@@ -23,15 +24,22 @@ export default {
       default: "visible",
     },
   },
-  mounted() {},
-  beforeDestroy() {},
   render(h) {
-    const { element, top, left, height, width, visibility } = this;
+    const { tag, top, left, height, width, visibility } = this;
+
+    const useCellAttrs = () => {
+      return {
+        role: "gridcell",
+        tabindex: -1,
+        ...this.$attrs,
+      };
+    };
 
     return h(
-      element,
+      tag,
       {
         class: ["msp-grid-cell"],
+        attrs: useCellAttrs(),
         style: {
           top: top,
           [isRTLDocument() ? "right" : "left"]: left,
