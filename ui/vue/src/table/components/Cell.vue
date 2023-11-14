@@ -26,15 +26,10 @@ export default {
   },
   mounted() {
     const { resizer } = this.$parent;
+    const el = this.$el;
 
     if (this.resizer) {
-      const el = this.$el;
-      this.stop = resizer.observeItem(el);
-    }
-  },
-  beforeDestroy() {
-    if (this.stop) {
-      this.stop();
+      resizer.observeItem(el);
     }
   },
   render(h) {

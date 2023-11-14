@@ -5,6 +5,7 @@ export function useScrollEffect() {
 
     const onScroll = (event) => {
         event.stopPropagation()
+        console.log(223)
     }
 
     const onMousedown = () => {
@@ -19,27 +20,23 @@ export function useScrollEffect() {
         onScroll(event)
     }
 
-    const register = () => {
-        root.addEventListener("mousedown", onMousedown)
-        root.addEventListener("scroll", onScroll, { passive: true, })
-        root.addEventListener("mousewheel", onMousewheel)
-
-        return () => {
-            root.removeEventListener("mousedown", onMousedown)
-            root.removeEventListener("scroll", onScroll)
-            root.removeEventListener("scroll", onMousewheel)
-        }
-    }
 
     const observe = (target) => {
         root = target
 
-        const stop = register()
+        root.addEventListener("mousedown", onMousedown)
+        root.addEventListener("scroll", onScroll, { passive: true, })
+        root.addEventListener("mousewheel", onMousewheel)
+    }
 
-        return stop
+    const destroy = () => {
+        root.removeEventListener("mousedown", onMousedown)
+        root.removeEventListener("scroll", onScroll)
+        root.removeEventListener("scroll", onMousewheel)
     }
 
     return {
-        observe
+        observe,
+        destroy
     }
 }

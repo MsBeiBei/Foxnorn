@@ -1,46 +1,70 @@
 <script>
-import Viewport from "./components/Viewport.vue";
+import { useResizeEffect } from "./hooks/useResizeEffect";
+import { useScrollEffect } from "./hooks/useScrollEffect";
+import { Table } from "./model/table";
 import Row from "./components/Row.vue";
 import Cell from "./components/Cell.vue";
-import { useStoreEffect } from "./hooks/useStoreEffect";
-import { useResizeEffect } from "./hooks/useResizeEffect";
 
 export default {
   name: "Table",
+  inheritAttrs: false,
   components: {
-    Viewport,
     Row,
     Cell,
   },
-  data() {
-    return {
-      hs: null,
-      ws: null,
-      resizer: null,
-    };
+  computed: {
+    width() {
+      return this.table.getVirtualWidth() + "px";
+    },
+    height() {
+      return this.table.getVirtualHeight() + "px";
+    },
   },
   created() {
-    this.hs = useStoreEffect();
-    this.ws = useStoreEffect();
-    this.resizer = useResizeEffect();
+    this.table = new Table();
+    this.scroller = useScrollEffect(this.table);
+    this.resizer = useResizeEffect(this.table);
   },
-  mounted(){
-    console.log(23232)
-  },
-  beforeDestroy() {
-    if (this.stop) {
-      this.stop();
+  mounted() {
+    const el = this.$el;
+
+    if (this.scroller) {
+      this.scroller.observe(el);
+    }
+    
+    if (this.resizer) {
+      this.resizer.observeRoot(el);
     }
   },
   render() {
+    const { width, height } = this;
+
     return (
-      <Viewport class="fox-grid" ref="grid" role="table">
-        <Cell />
-      </Viewport>
+      <div class="fox-table fox-layout-normal" ref="table" role="table">
+        <div
+          class="fox-virtual-panel"
+          ref="panel"
+          style={{ width, height }}
+        ></div>
+
+        <div class="fox-table-clip"></div>
+      </div>
     );
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.fox-table {
+  overflow: auto;
+  position: relative;
+}
+
+.fox-virtual-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
 </style>

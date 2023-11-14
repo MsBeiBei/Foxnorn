@@ -1,16 +1,18 @@
 const rootObserveOpts = { box: "border-box" };
 
-export function useResizeEffect() {
+export function useResizeEffect(model) {
     let root
     const mountedIndexes = new WeakMap()
 
     const getResizeObserver = () => {
         return new ResizeObserver((entries) => {
-            for (const { target, contentRect } of entries) {
+            for (const { target } of entries) {
                 if (!(target).offsetParent) continue;
 
                 if (target === root) {
-                    console.log(contentRect)
+                    model.updateViewport()
+                } else {
+                    model.draw()
                 }
             }
         })

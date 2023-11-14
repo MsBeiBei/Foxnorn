@@ -25,6 +25,7 @@ export default {
     return h(
       tag,
       {
+        class: ["fox-row"],
         attrs: useRowAttrs(),
       },
       this.$slots.default
