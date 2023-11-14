@@ -1,6 +1,5 @@
+import { isBrowser } from './constants'
 import { once } from './core'
-
-export const isBrowser = typeof window !== "undefined";
 
 export const computeStyle = (e) => window.getComputedStyle(e);
 

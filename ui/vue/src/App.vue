@@ -1,16 +1,16 @@
 <template>
   <div style="width: 500px; height: 600px; border: 1px solid red">
-    <Grid :data="data" />
+    <Table :data="data" />
   </div>
 </template>
 
 <script>
-import Grid from "./grid";
+import Table from "./table";
 
 export default {
   name: "App",
   components: {
-    Grid,
+    Table,
   },
   data() {
     return {

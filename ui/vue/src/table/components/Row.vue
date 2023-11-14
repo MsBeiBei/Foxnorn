@@ -6,7 +6,7 @@ export default {
     id: String,
     tag: {
       type: String,
-      default: "tr",
+      default: "div",
     },
     idx: Number,
   },

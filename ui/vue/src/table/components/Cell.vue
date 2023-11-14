@@ -8,7 +8,7 @@ export default {
     id: String,
     tag: {
       type: String,
-      default: "td",
+      default: "div",
     },
     ridx: Number,
     cidx: Number,
@@ -29,7 +29,7 @@ export default {
 
     const useCellAttrs = () => {
       return {
-        role: "gridcell",
+        role: "tablecell",
         tabindex: -1,
         ...this.$attrs,
       };
@@ -38,7 +38,7 @@ export default {
     return h(
       tag,
       {
-        class: ["msp-grid-cell"],
+        class: ["fox-cell"],
         attrs: useCellAttrs(),
         style: {
           top: top,
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.msp-grid-cell {
+.fox-cell {
   display: grid;
   margin: 0;
   padding: 0;
