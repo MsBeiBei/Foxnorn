@@ -1,11 +1,19 @@
 const rootObserveOpts = { box: "border-box" };
 
 export function useResizeEffect() {
-    let root = undefined
-    const cells = new WeakMap()
+    let root
+    const mountedIndexes = new WeakMap()
 
     const getResizeObserver = () => {
+        return new ResizeObserver((entries) => {
+            for (const { target, contentRect } of entries) {
+                if (!(target).offsetParent) continue;
 
+                if (target === root) {
+                    console.log(contentRect)
+                }
+            }
+        })
     }
 
     const observeRoot = (target) => {
@@ -22,11 +30,11 @@ export function useResizeEffect() {
 
     const observeItem = (target, ridx, cidx) => {
         const observer = getResizeObserver();
-        cells.set(target, [ridx, cidx])
+        mountedIndexes.set(target, [ridx, cidx])
         observer.observe(target);
 
         return () => {
-            cells.delete(target);
+            mountedIndexes.delete(target);
             observer.unobserve(target);
         }
     }

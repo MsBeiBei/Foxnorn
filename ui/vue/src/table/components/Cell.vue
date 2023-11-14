@@ -24,6 +24,19 @@ export default {
       default: "visible",
     },
   },
+  mounted() {
+    const { resizer } = this.$parent;
+
+    if (this.resizer) {
+      const el = this.$el;
+      this.stop = resizer.observeItem(el);
+    }
+  },
+  beforeDestroy() {
+    if (this.stop) {
+      this.stop();
+    }
+  },
   render(h) {
     const { tag, top, left, height, width, visibility } = this;
 

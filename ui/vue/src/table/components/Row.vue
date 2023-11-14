@@ -15,7 +15,7 @@ export default {
 
     const useRowAttrs = () => {
       return {
-        role: "row",
+        role: "tablerow",
         rowIndex: idx,
         rowId: id ?? idx,
         ...this.$attrs,
