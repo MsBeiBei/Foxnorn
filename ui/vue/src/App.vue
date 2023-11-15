@@ -1,6 +1,6 @@
 <template>
   <div style="width: 500px; height: 600px; border: 1px solid red">
-    <Table :data="data" />
+    <Table :data="data" :ncols="1000" :nrows="2000000000" />
   </div>
 </template>
 
@@ -12,6 +12,7 @@ export default {
   components: {
     Table,
   },
+
   data() {
     return {
       show: false,

@@ -1,15 +1,13 @@
-import { DEFAULT_SIZE } from '../utilties/constants'
-
 export class Store {
-    _auto = []
+    auto = []
 
-    _override = []
+    override = []
 
-    _indices = []
+    indices = []
 
-    constructor(length, size, virtual) {
-        this._length = length ?? 0
-        this._defaultSize = size ?? DEFAULT_SIZE
-        this._virtual = virtual ? true : false
+    length = 0
+
+    update_size(idx, size) {
+        this.indices[idx] = size
     }
 }

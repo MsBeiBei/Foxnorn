@@ -1,9 +1,7 @@
 <script>
-import { useResizeEffect } from "./hooks/useResizeEffect";
-import { useScrollEffect } from "./hooks/useScrollEffect";
-import { Table } from "./model/table";
 import Row from "./components/Row.vue";
 import Cell from "./components/Cell.vue";
+import { Table } from "./model/table";
 
 export default {
   name: "Table",
@@ -12,42 +10,31 @@ export default {
     Row,
     Cell,
   },
-  computed: {
-    width() {
-      return this.table.getVirtualWidth() + "px";
-    },
-    height() {
-      return this.table.getVirtualHeight() + "px";
+  props: {
+    ncols: Number,
+    nrows: Number,
+    mode: {
+      type: String,
+      validator(value) {
+        return ["both", "vertical", "horizontal", "none"].includes(value);
+      },
+      default: "both",
     },
   },
   created() {
-    this.table = new Table();
-    this.scroller = useScrollEffect(this.table);
-    this.resizer = useResizeEffect(this.table);
-  },
-  mounted() {
-    const el = this.$el;
-
-    if (this.scroller) {
-      this.scroller.observe(el);
-    }
-    
-    if (this.resizer) {
-      this.resizer.observeRoot(el);
-    }
+    this.model = new Table();
   },
   render() {
-    const { width, height } = this;
-
     return (
-      <div class="fox-table fox-layout-normal" ref="table" role="table">
-        <div
-          class="fox-virtual-panel"
-          ref="panel"
-          style={{ width, height }}
-        ></div>
+      <div
+        class="fox-table fox-layout-normal"
+        ref="table"
+        role="table"
+        tabindex="0"
+      >
+        <div class="fox-virtual-panel" ref="panel"></div>
 
-        <div class="fox-table-clip"></div>
+        <div class="fox-scroll-table-clip" ref="clip"></div>
       </div>
     );
   },
@@ -66,5 +53,12 @@ export default {
   left: 0;
   right: 0;
   pointer-events: none;
+}
+
+.fox-scroll-table-clip {
+  position: sticky;
+  contain: strict;
+  width: 100%;
+  height: 100%;
 }
 </style>

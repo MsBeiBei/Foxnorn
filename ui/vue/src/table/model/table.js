@@ -1,17 +1,21 @@
-import { useStoreEffect } from '../hooks/useStoreEffect'
+import { Store } from './store'
 
 export class Table {
     constructor() {
-        this._hs = useStoreEffect()
-        this._ws = useStoreEffect()
+        this._ws = new Store()
+        this._hs = new Store()
     }
 
-    getVirtualWidth() {
-        return 600
+    get ncols() {
+        return this._ws.length
     }
 
-    getVirtualHeight() {
-        return 600
+    get nrows() {
+        return this._hs.length
     }
 
+
+    autosize(){
+
+    }
 }

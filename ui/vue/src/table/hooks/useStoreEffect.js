@@ -1,9 +1,9 @@
 import { Store } from '../model/store'
 
-export function useStoreEffect(options) {
-    const { count, size, isVirtual } = options ?? {}
+export function useStoreEffect(options = {}) {
+    const { count, size, virtual = true } = options
 
-    const store = new Store(count, size, isVirtual)
+    const store = new Store(count, size)
 
     const getStartIndex = () => {
         let startIndex = 0;
@@ -19,7 +19,7 @@ export function useStoreEffect(options) {
     }
 
     const getComputeRange = () => {
-        if (!isVirtual) {
+        if (!virtual) {
             return { startIndex: 0, endIndex: Infinity };
         }
 
@@ -36,8 +36,6 @@ export function useStoreEffect(options) {
     }
 
     return {
-        store,
-
         getComputeRange,
         getVirtualSize,
         getViewportSize
