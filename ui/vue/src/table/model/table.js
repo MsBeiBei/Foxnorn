@@ -10,12 +10,61 @@ export class Table {
         return this._ws.length
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
     get nrows() {
         return this._hs.length
     }
 
+ 
 
-    autosize(){
+    autosize() {
 
     }
 }
