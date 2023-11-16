@@ -16,16 +16,21 @@ export default {
     width: Number,
   },
   mounted() {
-    const el = this.$el;
-    if (this.root.resizer && el) {
-      const { ridx, cidx } = this;
-
-      this.destroy = this.root.resizer.observeItem(el, ridx, cidx);
+    if (typeof ResizeObserver !== "undefined") {
+      this.observer = new ResizeObserver(() => {
+        const { ridx, cidx } = this;
+        this.root.updateCell(ridx, cidx, [
+          this.$el.offsetWidth,
+          this.$el.offsetHeight,
+        ]);
+      });
+      this.observer.observe(this.$el);
     }
   },
   beforeDestroy() {
-    if (this.destroy) {
-      this.destroy();
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
     }
   },
   render(h) {

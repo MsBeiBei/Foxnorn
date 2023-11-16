@@ -5,22 +5,19 @@
     tabindex="0"
     @scroll.stop.passive="onScroll"
   >
-
     <div class="fox-virtual-panel" ref="panel" :style="{ width, height }"></div>
     <div class="fox-scroll-table-clip" ref="clip">
-      <table>
+      <table border="1">
         <tbody>
           <Row tag="tr" v-for="(cells, ridx) in data" :key="ridx">
             <Cell
               tag="td"
               :ridx="ridx"
               :cidx="cidx"
-              :width="model.fetch_cell_width(cidx)"
-              :height="model.fetch_cell_width(ridx)"
               v-for="(cell, cidx) in cells"
               :key="ridx + cidx"
             >
-              {{ cell * 300 }}
+              {{ cell * 600 }}
             </Cell>
           </Row>
         </tbody>
@@ -31,24 +28,28 @@
 <script>
 import Cell from "./components/Cell.vue";
 import Row from "./components/Row.vue";
-import { useResizeEffect } from "./hooks/useResizeEffect";
-import { Table } from "./model/table";
 
 export default {
   name: "Table",
   inheritAttrs: false,
-  components: {
-    Cell,
-    Row,
-  },
   provide() {
     return {
       root: this,
     };
   },
+  components: {
+    Cell,
+    Row,
+  },
   props: {
-    ncols: Number,
-    nrows: Number,
+    nrows: {
+      type: Number,
+      default: 0,
+    },
+    ncols: {
+      type: Number,
+      default: 0,
+    },
     mode: {
       type: String,
       validator(value) {
@@ -59,52 +60,99 @@ export default {
     render: {
       type: Function,
       default: () => [],
-      required: true,
     },
   },
   data() {
     return {
-      model: null,
+      csizes: { auto: [], override: [], indices: [] },
+      rsizes: { auto: [], override: [], indices: [] },
+      viewport: { width: 0, height: 0 },
+      offset: { top: 0, left: 0 },
     };
   },
   computed: {
     width() {
-      return this.model.width + "px";
+      const { csizes, ncols } = this;
+      return (
+        csizes.indices.reduce(
+          (x, y) => x + y,
+          (ncols - csizes.indices.length) * 60
+        ) + "px"
+      );
     },
     height() {
-      return this.model.height + "px";
+      const { rsizes, nrows } = this;
+      return (
+        rsizes.indices.reduce(
+          (x, y) => x + y,
+          (nrows - rsizes.indices.length) * 60
+        ) + "px"
+      );
+    },
+    data(){
+      return this.render(this.range)
     },
     range() {
-      return this.model.range;
+      return this.getViewportRange();
     },
-    data() {
-      return this.render(this.range) ?? [];
-    },
+  },
+  mounted() {
+    const el = this.$el;
+    this.viewport = { width: el.clientWidth, height: el.clientHeight };
+    this.getViewportRange();
   },
   methods: {
     onScroll(event) {
-      this.model.offset = {
+      this.offset = {
         top: event.target.scrollTop,
         left: event.target.scrollLeft,
       };
+      this.getViewportRange();
     },
-  },
-  created() {
-    const { ncols, nrows } = this;
-    this.model = new Table(ncols, nrows);
-    this.resizer = useResizeEffect(this.model);
-  },
-  mounted() {
-    const root = this.$refs.root;
 
-    if (this.resizer) {
-      this.stopObserve = this.resizer.observeRoot(root);
-    }
-  },
-  beforeDestroy() {
-    if (this.stopObserve) {
-      this.stopObserve();
-    }
+    getViewportRange() {
+      const { nrows, ncols, csizes, rsizes } = this;
+      const { width, height } = this.viewport;
+      const { top, left } = this.offset;
+      const [startRow, endRow] = this.getRange(nrows, height, top, rsizes);
+      const [startCol, endCol] = this.getRange(ncols, width, left, csizes);
+
+      return {
+        startCol,
+        endCol,
+        startRow,
+        endRow,
+      };
+    },
+
+    getRange(length, viewport, offset, sizes) {
+      const startIndex = this.getStartIndex(offset, sizes);
+   
+      const visItems = Math.min(length, Math.ceil(viewport / 60));
+      let endIndex = startIndex + visItems + 1;
+      return [startIndex, endIndex];
+    },
+
+    getStartIndex(offset, sizes) {
+      let startIndex = 0;
+      let offsetSize = 0;
+      let diff = 0;
+
+      while (offsetSize < offset) {
+        const new_val = sizes.indices[startIndex];
+        diff = offset - offsetSize;
+        startIndex += 1;
+        offsetSize += new_val !== undefined ? new_val : 60;
+      }
+
+      startIndex += diff / (sizes.indices[startIndex] || 60);
+      return Math.max(0, Math.ceil(startIndex - 1));
+    },
+
+    updateCell(ridx, cidx, [width, height]) {
+      this.$set(this.rsizes, ridx, height);
+      this.$set(this.csizes, cidx, width);
+    },
   },
 };
 </script>

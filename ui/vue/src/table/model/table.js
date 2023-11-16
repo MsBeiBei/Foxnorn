@@ -1,11 +1,8 @@
 import { ACTION_VIEWPORT_RESIZE, BROWSER_MAX_HEIGHT, ACTION_ITEM_RESIZE, ACTION_SCROLL } from '../utilties/constants'
-import { Store } from './store'
 
 export class Table {
-    constructor(ncols, nrows) {
-        this._ws = new Store(ncols)
-        this._hs = new Store(nrows)
-
+    constructor() {
+        this._cells = []
     }
 
     get width() {
