@@ -1,11 +1,12 @@
-import { IS_SAFARI } from '../utilties/constants'
+import { IS_SAFARI, ACTION_SCROLL } from '../utilties/constants'
 
-export function useScrollEffect() {
+export function useScrollEffect(model) {
     let root
 
     const onScroll = (event) => {
-        event.stopPropagation()
-        console.log(223)
+        event.stopPropagation();
+        model._ws.update(ACTION_SCROLL, event.target.scrollLeft)
+        model._hs.update(ACTION_SCROLL, event.target.scrollTop)
     }
 
     const onMousedown = () => {
@@ -27,13 +28,17 @@ export function useScrollEffect() {
         root.addEventListener("mousedown", onMousedown)
         root.addEventListener("scroll", onScroll, { passive: true, })
         root.addEventListener("mousewheel", onMousewheel)
+
+
     }
+
 
     const destroy = () => {
         root.removeEventListener("mousedown", onMousedown)
         root.removeEventListener("scroll", onScroll)
         root.removeEventListener("scroll", onMousewheel)
     }
+
 
     return {
         observe,

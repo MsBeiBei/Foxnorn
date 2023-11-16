@@ -1,15 +1,13 @@
 <script>
 import Row from "./components/Row.vue";
 import Cell from "./components/Cell.vue";
+import { useScrollEffect } from "./hooks/useScrollEffect";
 import { Table } from "./model/table";
 
 export default {
   name: "Table",
   inheritAttrs: false,
-  components: {
-    Row,
-    Cell,
-  },
+
   props: {
     ncols: Number,
     nrows: Number,
@@ -21,44 +19,78 @@ export default {
       default: "both",
     },
   },
+  data() {
+    return {
+      model: null,
+    };
+  },
+  computed: {
+    width() {
+      return this.model.width + "px";
+    },
+    height() {
+      return this.model.height + "px";
+    },
+    range() {
+      return this.model.range;
+    },
+  },
   created() {
-    this.model = new Table();
+    const { ncols, nrows } = this;
+    this.model = new Table(ncols, nrows);
+    this.observer = useScrollEffect(this.model);
+  },
+  mounted() {
+    const root = this.$refs.root;
+    const clip = this.$refs.clip;
+    this.model.viewport = {
+      clientWidth: clip.clientWidth,
+      clientHeight: clip.clientHeight,
+    };
+
+    this.observer.observe(root);
+  },
+  beforeDestroy() {
+    this.observer.destroy();
   },
   render() {
-    return (
-      <div
-        class="fox-table fox-layout-normal"
-        ref="table"
-        role="table"
-        tabindex="0"
-      >
-        <div class="fox-virtual-panel" ref="panel"></div>
+    const { width, height, range } = this;
 
-        <div class="fox-scroll-table-clip" ref="clip"></div>
+    const rows = [];
+
+    for (let rowIndex = range.startRow; rowIndex <= range.endRow; rowIndex++) {
+      let cells = [];
+
+      for (
+        let colIndex = range.startCol;
+        colIndex <= range.endCol;
+        colIndex++
+      ) {
+        cells.push(
+          <Cell tag="td">
+            {rowIndex} * {colIndex}
+          </Cell>
+        );
+      }
+
+      rows.push(<Row tag="tr">{cells}</Row>);
+    }
+
+    return (
+      <div class="fox-table fox-layout-normal" ref="root" tabindex="0">
+        <div
+          class="fox-virtual-panel"
+          ref="panel"
+          style={{ width, height }}
+        ></div>
+
+        <div class="fox-scroll-table-clip" ref="clip">
+          <table border="1">
+            <tbody>{rows}</tbody>
+          </table>
+        </div>
       </div>
     );
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.fox-table {
-  overflow: auto;
-  position: relative;
-}
-
-.fox-virtual-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-}
-
-.fox-scroll-table-clip {
-  position: sticky;
-  contain: strict;
-  width: 100%;
-  height: 100%;
-}
-</style>

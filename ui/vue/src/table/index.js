@@ -1,3 +1,5 @@
+import "./styles/index.scss"
+
 import Table from './index.vue'
 
 Table.install = (vue) => {

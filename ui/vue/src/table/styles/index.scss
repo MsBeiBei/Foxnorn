@@ -1,0 +1,39 @@
+:root {
+    --fox-row-heihgt: calc(var(--fox-grid-size) * 7);
+}
+
+.fox-table {
+    overflow: auto;
+    position: relative;
+
+    table {
+        position: absolute;
+        overflow: hidden;
+        outline: none;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+.fox-row {
+    height: var(--fox-row-heihgt);
+}
+
+.fox-virtual-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.fox-scroll-table-clip {
+    position: sticky;
+    contain: strict;
+    overflow-anchor: none;
+    width: 100%;
+    height: 100%;
+
+}

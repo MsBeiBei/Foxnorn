@@ -1,6 +1,6 @@
 <template>
   <div style="width: 500px; height: 600px; border: 1px solid red">
-    <Table :data="data" :ncols="1000" :nrows="2000000000" />
+    <Table :data="data" :ncols="1000" :nrows="200000000000" />
   </div>
 </template>
 
@@ -15,9 +15,6 @@ export default {
 
   data() {
     return {
-      show: false,
-      rowSize: 26,
-      colSize: 4,
       data: [
         [0, 1, 2, 3, 4, 5],
         ["A", "B", "C", "D", "E", "F"],

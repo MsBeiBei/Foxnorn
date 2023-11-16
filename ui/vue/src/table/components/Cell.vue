@@ -37,7 +37,6 @@ export default {
 
     const useCellAttrs = () => {
       return {
-        role: "tablecell",
         tabindex: -1,
         ...this.$attrs,
       };
@@ -61,12 +60,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.fox-cell {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-}
-</style>
