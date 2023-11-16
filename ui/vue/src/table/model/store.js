@@ -1,7 +1,11 @@
 import { ACTION_ITEM_RESIZE, ACTION_VIEWPORT_RESIZE, ACTION_ITEMS_LENGTH_RESIZE, ACTION_SCROLL } from '../utilties/constants'
 
 export class Store {
-    _cache_sizes = { auto: [], override: [], indices: [] }
+    _indices = []
+
+    _override = []
+
+    _auto = []
 
     _viewport_size = 0
 
@@ -19,23 +23,23 @@ export class Store {
         let diff = 0;
 
         while (offset_size < this._scroll_offset) {
-            const new_val = this._cache_sizes.indices[start_index + scroll_index_offset]
+            const new_val = this._indices[start_index + scroll_index_offset]
             diff = this._scroll_offset - offset_size;
             start_index += 1;
             offset_size += new_val !== undefined ? new_val : 60;
         }
 
-        start_index += diff / (this._cache_sizes.indices[start_index + scroll_index_offset - 1] || 60);
-        return Math.max(0, start_index - 1);
+        start_index += diff / (this._indices[start_index + scroll_index_offset - 1] || 60);
+        return Math.max(0, Math.ceil(start_index - 1));
     }
 
 
 
     _calc_scrollable_size() {
         // const scroll_index_offset = 0;
-        let virtual_size = this._cache_sizes.indices.reduce((x, y) => x + y, 0);
+        let virtual_size = this._indices.reduce((x, y) => x + y, 0);
 
-        virtual_size += (this._length - this._cache_sizes.indices.length) * 60
+        virtual_size += (this._length - this._indices.length) * 60
 
         return virtual_size;
     }
@@ -44,7 +48,7 @@ export class Store {
         switch (type) {
             case ACTION_ITEM_RESIZE: {
                 const [idx, size] = payload
-                this._cache_sizes.indices[idx] = size
+                this._indices[idx] = size
                 break;
             }
 
@@ -67,7 +71,7 @@ export class Store {
 
     fetch_virtual_size() {
         if (!this._virtual) {
-            return this._cache_sizes.indices.reduce((x, y) => x + y, 0)
+            return this._indices.reduce((x, y) => x + y, 0)
         }
 
         const virtual_size = this._calc_scrollable_size();

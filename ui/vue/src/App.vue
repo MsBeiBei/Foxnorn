@@ -1,6 +1,6 @@
 <template>
   <div style="width: 500px; height: 600px; border: 1px solid red">
-    <Table :data="data" :ncols="1000" :nrows="200000000000" />
+    <Table :render="render" :ncols="1000" :nrows="200000000000" />
   </div>
 </template>
 
@@ -15,11 +15,10 @@ export default {
 
   data() {
     return {
-      data: [
-        [0, 1, 2, 3, 4, 5],
-        ["A", "B", "C", "D", "E", "F"],
-        [true, false, true, false, true, false],
-      ],
+      render: ({ startCol, endCol, startRow, endRow }) =>
+        Array.from(Array(endRow - startRow).keys()).map((ridx) =>
+          Array.from(Array(endCol - startCol).keys()).map(cidx => new Intl.NumberFormat("en-us").format(ridx + cidx))
+        ),
     };
   },
 };

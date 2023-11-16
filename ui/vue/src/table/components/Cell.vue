@@ -1,39 +1,35 @@
 <script>
-import { isRTLDocument } from "../utilties/web";
-
 export default {
   name: "Cell",
   inheritAttrs: false,
+  inject: ["root"],
   props: {
-    id: String,
     tag: {
       type: String,
       default: "div",
     },
+
     ridx: Number,
     cidx: Number,
-    top: Number,
-    left: Number,
+
     height: Number,
     width: Number,
-    visibility: {
-      type: String,
-      validator(value) {
-        return ["hidden", "visible"].includes(value);
-      },
-      default: "visible",
-    },
   },
   mounted() {
-    const { resizer } = this.$parent;
     const el = this.$el;
+    if (this.root.resizer && el) {
+      const { ridx, cidx } = this;
 
-    if (this.resizer) {
-      resizer.observeItem(el);
+      this.destroy = this.root.resizer.observeItem(el, ridx, cidx);
+    }
+  },
+  beforeDestroy() {
+    if (this.destroy) {
+      this.destroy();
     }
   },
   render(h) {
-    const { tag, top, left, height, width, visibility } = this;
+    const { tag, height, width } = this;
 
     const useCellAttrs = () => {
       return {
@@ -48,9 +44,6 @@ export default {
         class: ["fox-cell"],
         attrs: useCellAttrs(),
         style: {
-          top: top,
-          [isRTLDocument() ? "right" : "left"]: left,
-          visibility: visibility,
           minHeight: height,
           minWidth: width,
         },

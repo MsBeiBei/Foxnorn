@@ -1,13 +1,51 @@
+<template>
+  <div
+    class="fox-table fox-layout-normal"
+    ref="root"
+    tabindex="0"
+    @scroll.stop.passive="onScroll"
+  >
+
+    <div class="fox-virtual-panel" ref="panel" :style="{ width, height }"></div>
+    <div class="fox-scroll-table-clip" ref="clip">
+      <table>
+        <tbody>
+          <Row tag="tr" v-for="(cells, ridx) in data" :key="ridx">
+            <Cell
+              tag="td"
+              :ridx="ridx"
+              :cidx="cidx"
+              :width="model.fetch_cell_width(cidx)"
+              :height="model.fetch_cell_width(ridx)"
+              v-for="(cell, cidx) in cells"
+              :key="ridx + cidx"
+            >
+              {{ cell * 300 }}
+            </Cell>
+          </Row>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
 <script>
-import Row from "./components/Row.vue";
 import Cell from "./components/Cell.vue";
-import { useScrollEffect } from "./hooks/useScrollEffect";
+import Row from "./components/Row.vue";
+import { useResizeEffect } from "./hooks/useResizeEffect";
 import { Table } from "./model/table";
 
 export default {
   name: "Table",
   inheritAttrs: false,
-
+  components: {
+    Cell,
+    Row,
+  },
+  provide() {
+    return {
+      root: this,
+    };
+  },
   props: {
     ncols: Number,
     nrows: Number,
@@ -17,6 +55,11 @@ export default {
         return ["both", "vertical", "horizontal", "none"].includes(value);
       },
       default: "both",
+    },
+    render: {
+      type: Function,
+      default: () => [],
+      required: true,
     },
   },
   data() {
@@ -34,63 +77,34 @@ export default {
     range() {
       return this.model.range;
     },
+    data() {
+      return this.render(this.range) ?? [];
+    },
+  },
+  methods: {
+    onScroll(event) {
+      this.model.offset = {
+        top: event.target.scrollTop,
+        left: event.target.scrollLeft,
+      };
+    },
   },
   created() {
     const { ncols, nrows } = this;
     this.model = new Table(ncols, nrows);
-    this.observer = useScrollEffect(this.model);
+    this.resizer = useResizeEffect(this.model);
   },
   mounted() {
     const root = this.$refs.root;
-    const clip = this.$refs.clip;
-    this.model.viewport = {
-      clientWidth: clip.clientWidth,
-      clientHeight: clip.clientHeight,
-    };
 
-    this.observer.observe(root);
+    if (this.resizer) {
+      this.stopObserve = this.resizer.observeRoot(root);
+    }
   },
   beforeDestroy() {
-    this.observer.destroy();
-  },
-  render() {
-    const { width, height, range } = this;
-
-    const rows = [];
-
-    for (let rowIndex = range.startRow; rowIndex <= range.endRow; rowIndex++) {
-      let cells = [];
-
-      for (
-        let colIndex = range.startCol;
-        colIndex <= range.endCol;
-        colIndex++
-      ) {
-        cells.push(
-          <Cell tag="td">
-            {rowIndex} * {colIndex}
-          </Cell>
-        );
-      }
-
-      rows.push(<Row tag="tr">{cells}</Row>);
+    if (this.stopObserve) {
+      this.stopObserve();
     }
-
-    return (
-      <div class="fox-table fox-layout-normal" ref="root" tabindex="0">
-        <div
-          class="fox-virtual-panel"
-          ref="panel"
-          style={{ width, height }}
-        ></div>
-
-        <div class="fox-scroll-table-clip" ref="clip">
-          <table border="1">
-            <tbody>{rows}</tbody>
-          </table>
-        </div>
-      </div>
-    );
   },
 };
 </script>
