@@ -1817,8 +1817,8 @@ export default {
 
   data() {
     return {
-      render({ startCol, endCol, startRow, endRow }) {
-        console.log(startCol, endCol, startRow, endRow);
+      render(range) {
+        const { startCol, endCol, startRow, endRow } = range ?? {};
         return a
           .slice(startRow, endRow)
           .map((row) => row.slice(startCol, endCol));

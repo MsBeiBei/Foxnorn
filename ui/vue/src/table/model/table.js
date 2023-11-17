@@ -1,51 +1,48 @@
-import { ACTION_VIEWPORT_RESIZE, BROWSER_MAX_HEIGHT, ACTION_ITEM_RESIZE, ACTION_SCROLL } from '../utilties/constants'
+import { ACTION_VIEWPORT_RESIZE, ACTION_ITEM_RESIZE, ACTION_SCROLL } from '../utilties/constants'
+import { Store } from './store'
 
 export class Table {
-    constructor() {
-        this._cells = []
-    }
+    constructor({ ncols, nrows }, callback = () => { }) {
+        this._ws = new Store(ncols)
+        this._hs = new Store(nrows)
 
-    get width() {
-        return this._ws.fetch_virtual_size()
-    }
-
-    get height() {
-        return Math.min(BROWSER_MAX_HEIGHT, this._hs.fetch_virtual_size())
+        this._callback = callback
     }
 
     set viewport({ clientWidth, clientHeight }) {
         this._ws.update(ACTION_VIEWPORT_RESIZE, clientWidth)
         this._hs.update(ACTION_VIEWPORT_RESIZE, clientHeight)
+
+        this._callback(this.fetch_range())
     }
 
     set cell({ ridx, cidx, width, height }) {
         this._ws.update(ACTION_ITEM_RESIZE, [cidx, width])
         this._hs.update(ACTION_ITEM_RESIZE, [ridx, height])
 
+        this._callback(this.fetch_range())
     }
 
     set offset({ top, left }) {
         this._ws.update(ACTION_SCROLL, left)
         this._hs.update(ACTION_SCROLL, top)
+
+        this._callback(this.fetch_range())
     }
 
-    get range() {
-        JSON.stringify(this._ws._indices)
-        const { start_index: startCol, end_index: endCol } = this._ws.fetch_visible_range()
-        const { start_index: startRow, end_index: endRow } = this._hs.fetch_visible_range()
-        return {
-            startCol,
-            endCol,
-            startRow,
-            endRow
-        }
-    }
+    fetch_range() {
+        const range = Object.create(null)
 
-    fetch_cell_width(cidx) {
-        return this._ws._indices[cidx]
-    }
+        const [startCol, endCol] = this._ws._calc_range()
+        const [startRow, endRow] = this._hs._calc_range()
 
-    fetch_cell_height(ridx) {
-        return this._hs._indices[ridx]
+        range.startCol = startCol
+        range.endCol = endCol
+        range.startRow = startRow
+        range.endRow = endRow
+
+        console.log(this)
+
+        return range
     }
 }

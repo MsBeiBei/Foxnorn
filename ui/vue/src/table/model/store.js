@@ -1,4 +1,5 @@
 import { ACTION_ITEM_RESIZE, ACTION_VIEWPORT_RESIZE, ACTION_ITEMS_LENGTH_RESIZE, ACTION_SCROLL } from '../utilties/constants'
+import { clamp } from '../utilties/core'
 
 export class Store {
     _indices = []
@@ -7,41 +8,37 @@ export class Store {
 
     _auto = []
 
+    _offset_size = 0
+
     _viewport_size = 0
 
-    _scroll_offset = 0
-
-    constructor(length = 0, virtual = true) {
+    constructor(length = 0, size = 60, virtual = true) {
         this._length = length
+        this._default_size = size
         this._virtual = virtual ? true : false
     }
 
-    _calc_start_index() {
-        const scroll_index_offset = 0;
-        let start_index = 0;
-        let offset_size = 0;
-        let diff = 0;
-
-        while (offset_size < this._scroll_offset) {
-            const new_val = this._indices[start_index + scroll_index_offset]
-            diff = this._scroll_offset - offset_size;
-            start_index += 1;
-            offset_size += new_val !== undefined ? new_val : 60;
-        }
-
-        start_index += diff / (this._indices[start_index + scroll_index_offset - 1] || 60);
-        return Math.max(0, Math.ceil(start_index - 1));
+    _fecth_size(idx) {
+        const size = this._indices[idx];
+        return size !== undefined ? size : this._default_size;
     }
 
+    _find_index(offset = 0) {
+        let idx = 0;
+        let sizes = 0;
 
+        while (sizes < offset && idx < this._length) {
+            idx += 1;
+            sizes += this._fecth_size(idx)
+        }
 
-    _calc_scrollable_size() {
-        // const scroll_index_offset = 0;
-        let virtual_size = this._indices.reduce((x, y) => x + y, 0);
+        return clamp(idx, 0, this._length - 1);
+    }
 
-        virtual_size += (this._length - this._indices.length) * 60
+    _calc_range() {
+        const start = this._find_index(this._offset_size)
 
-        return virtual_size;
+        return [start, this._find_index(this._offset_size + this._viewport_size)]
     }
 
     update(type, payload) {
@@ -63,32 +60,9 @@ export class Store {
             }
 
             case ACTION_SCROLL: {
-                this._scroll_offset = payload
+                this._offset_size = payload
                 break;
             }
         }
-    }
-
-    fetch_virtual_size() {
-        if (!this._virtual) {
-            return this._indices.reduce((x, y) => x + y, 0)
-        }
-
-        const virtual_size = this._calc_scrollable_size();
-        if (virtual_size !== 0) {
-            return this._viewport_size + virtual_size + 2
-        }
-        return 1
-    }
-
-    fetch_visible_range() {
-        if (!this._virtual) {
-            return { start_index: 0, end_index: Infinity };
-        }
-
-        const start_index = this._calc_start_index()
-        const vis_items = Math.min(this._length, Math.ceil(this._viewport_size / 60));
-        let end_index = start_index + vis_items + 1;
-        return { start_index, end_index };
     }
 }

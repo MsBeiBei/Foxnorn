@@ -15,22 +15,17 @@ export default {
     height: Number,
     width: Number,
   },
+
   mounted() {
-    if (typeof ResizeObserver !== "undefined") {
-      this.observer = new ResizeObserver(() => {
-        const { ridx, cidx } = this;
-        this.root.updateCell(ridx, cidx, [
-          this.$el.offsetWidth,
-          this.$el.offsetHeight,
-        ]);
-      });
-      this.observer.observe(this.$el);
+    if (this.root.resizer) {
+      const el = this.$el;
+
+      this.destroyObserve = this.root.resizer.observeRoot(el);
     }
   },
   beforeDestroy() {
-    if (this.observer) {
-      this.observer.disconnect();
-      this.observer = null;
+    if (this.destroyObserve) {
+      this.destroyObserve();
     }
   },
   render(h) {
