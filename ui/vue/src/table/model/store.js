@@ -8,37 +8,39 @@ export class Store {
 
     _auto = []
 
-    _offset_size = 0
+    _offsetSize = 0
 
-    _viewport_size = 0
+    _viewportSize = 0
 
-    constructor(length = 0, size = 60, virtual = true) {
+    constructor(length = 0, size = 60, isVirtual = true) {
         this._length = length
-        this._default_size = size
-        this._virtual = virtual ? true : false
+        this._defaultSize = size
+        this._isVirtual = isVirtual ? true : false
     }
 
-    _fecth_size(idx) {
+    _getSize(idx) {
         const size = this._indices[idx];
-        return size !== undefined ? size : this._default_size;
+        return size !== undefined ? size : this._defaultSize;
     }
 
-    _find_index(offset = 0) {
+    _findIndex(offset = 0) {
         let idx = 0;
         let sizes = 0;
-
         while (sizes < offset && idx < this._length) {
             idx += 1;
-            sizes += this._fecth_size(idx)
+            sizes += this._getSize(idx)
         }
 
         return clamp(idx, 0, this._length - 1);
     }
 
-    _calc_range() {
-        const start = this._find_index(this._offset_size)
+    getSizes() {
+        return this._length * this._defaultSize
+    }
 
-        return [start, this._find_index(this._offset_size + this._viewport_size)]
+    getRange() {
+        const start = this._findIndex(this._offsetSize)
+        return [start, this._findIndex(this._offsetSize + this._viewportSize)]
     }
 
     update(type, payload) {
@@ -50,7 +52,7 @@ export class Store {
             }
 
             case ACTION_VIEWPORT_RESIZE: {
-                this._viewport_size = this._virtual ? payload : Infinity
+                this._viewportSize = this._isVirtual ? payload : Infinity
                 break;
             }
 
@@ -60,7 +62,7 @@ export class Store {
             }
 
             case ACTION_SCROLL: {
-                this._offset_size = payload
+                this._offsetSize = payload
                 break;
             }
         }

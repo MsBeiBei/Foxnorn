@@ -28,8 +28,6 @@
 <script>
 import Cell from "./components/Cell.vue";
 import Row from "./components/Row.vue";
-import { useResizeEffect } from "./hooks/useResizeEffect";
-import { Table } from "./model/table";
 
 export default {
   name: "Table",
@@ -59,16 +57,6 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      range: null,
-    };
-  },
-  computed: {
-    data() {
-      return this.render(this.range);
-    },
-  },
   methods: {
     onScroll(event) {
       this.model.offset = {
@@ -76,24 +64,6 @@ export default {
         left: event.target.scrollLeft,
       };
     },
-  },
-  created() {
-    const { ncols, nrows } = this;
-    this.model = new Table({ ncols, nrows }, (range) => {
-      this.range = range;
-    });
-    this.resizer = useResizeEffect(this.model);
-  },
-  mounted() {
-    if (this.resizer) {
-      const el = this.$el;
-      this.destroyObserve = this.resizer.observeRoot(el);
-    }
-  },
-  beforeDestroy() {
-    if (this.destroy) {
-      this.destroyObserve();
-    }
   },
 };
 </script>

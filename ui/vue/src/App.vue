@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 470px; height: 600px; border: 1px solid red">
+  <div style="width: 470px; height: 300px; border: 1px solid red">
     <Table :render="render" :ncols="500" :nrows="100000" />
   </div>
 </template>
