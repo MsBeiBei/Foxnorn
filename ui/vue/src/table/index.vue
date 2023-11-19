@@ -14,7 +14,7 @@
       }"
     ></div>
     <div class="fox-scroll-table-clip" ref="clip">
-      <table>
+      <table border="1">
         <tbody>
           <Row tag="tr" v-for="(cells, ridx) in data" :key="ridx">
             <Cell
@@ -83,30 +83,13 @@ export default {
         left: event.target.scrollLeft,
       };
     },
-
-    updateViewport() {
-      const clip = this.$refs.clip;
-      this.table.viewport = {
-        width: clip.clientWidth,
-        height: clip.clientHeight,
-      };
-    },
-
-    updateCellSize(cell) {
-      this.table.cell = cell;
-    },
-
-    update(range, virtualSize) {
-      this.range = range;
-      this.virtualSize = virtualSize;
-    },
   },
   created() {
     const { ncols, nrows } = this;
-    this.table = new Table({ ncols, nrows }, this.update);
-  },
-  mounted() {
-    this.updateViewport();
+    this.table = new Table({ ncols, nrows }, (range, size) => {
+      this.range = range;
+      this.virtualSize = size;
+    });
   },
 };
 </script>

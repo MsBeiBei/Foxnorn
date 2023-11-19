@@ -7,28 +7,29 @@ export class Table {
         this._hs = new Store(nrows)
 
         this._range = null
-        this._virtualSizes = { width: 0, height: 0 }
+        this._sizes = { width: 0, height: 0 }
         this._callback = callback
     }
 
-    set viewport({ width, height }) {
+    set viewport([width, height]) {
         this._ws.update(ACTION_VIEWPORT_RESIZE, width)
         this._hs.update(ACTION_VIEWPORT_RESIZE, height)
 
         this._range = this._getRange()
-        this._virtualSizes = this._getVirtualSizes()
+        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._virtualSizes,)
+        this._callback(this._range, this._sizes,)
     }
+
 
     set cell({ ridx, cidx, width, height }) {
         this._ws.update(ACTION_ITEM_RESIZE, [cidx, width])
         this._hs.update(ACTION_ITEM_RESIZE, [ridx, height])
 
         this._range = this._getRange()
-        this._virtualSizes = this._getVirtualSizes()
+        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._virtualSizes)
+        this._callback(this._range, this._sizes)
     }
 
     set offset({ top, left }) {
@@ -36,9 +37,9 @@ export class Table {
         this._hs.update(ACTION_SCROLL, top)
 
         this._range = this._getRange()
-        this._virtualSizes = this._getVirtualSizes()
+        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._virtualSizes)
+        this._callback(this._range, this._sizes)
     }
 
 
@@ -56,10 +57,9 @@ export class Table {
         return range
     }
 
-    _getVirtualSizes() {
-        const width = this._ws._getSizes()
-        const height = this._hs._getSizes()
-
+    _getSizes() {
+        const width = this._ws.getSizes()
+        const height = this._hs.getSizes()
         return { width, height }
     }
 }
