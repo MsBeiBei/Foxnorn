@@ -6,38 +6,43 @@ export class Table {
         this._ws = new Store(ncols)
         this._hs = new Store(nrows)
 
+        this._range = null
+        this._virtualSizes = { width: 0, height: 0 }
         this._callback = callback
     }
 
-    set viewport({ clientWidth, clientHeight }) {
-        this._ws.update(ACTION_VIEWPORT_RESIZE, clientWidth)
-        this._hs.update(ACTION_VIEWPORT_RESIZE, clientHeight)
+    set viewport({ width, height }) {
+        this._ws.update(ACTION_VIEWPORT_RESIZE, width)
+        this._hs.update(ACTION_VIEWPORT_RESIZE, height)
 
-        this._callback(this.getViewportRange())
+        this._range = this._getRange()
+        this._virtualSizes = this._getVirtualSizes()
+
+        this._callback(this._range, this._virtualSizes,)
     }
 
     set cell({ ridx, cidx, width, height }) {
         this._ws.update(ACTION_ITEM_RESIZE, [cidx, width])
         this._hs.update(ACTION_ITEM_RESIZE, [ridx, height])
 
-        this._callback(this.getViewportRange())
+        this._range = this._getRange()
+        this._virtualSizes = this._getVirtualSizes()
+
+        this._callback(this._range, this._virtualSizes)
     }
 
     set offset({ top, left }) {
         this._ws.update(ACTION_SCROLL, left)
         this._hs.update(ACTION_SCROLL, top)
-        this._callback(this.getViewportRange())
+
+        this._range = this._getRange()
+        this._virtualSizes = this._getVirtualSizes()
+
+        this._callback(this._range, this._virtualSizes)
     }
 
-    get width() {
-        return this._ws.getSizes()
-    }
 
-    get height() {
-        return this._hs.getSizes()
-    }
-
-    getViewportRange() {
+    _getRange() {
         const range = Object.create(null)
 
         const [startCol, endCol] = this._ws.getRange()
@@ -48,8 +53,13 @@ export class Table {
         range.startRow = startRow
         range.endRow = endRow
 
-        console.log(startRow, endRow, this)
-
         return range
+    }
+
+    _getVirtualSizes() {
+        const width = this._ws._getSizes()
+        const height = this._hs._getSizes()
+
+        return { width, height }
     }
 }

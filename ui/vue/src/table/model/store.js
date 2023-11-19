@@ -12,13 +12,13 @@ export class Store {
 
     _viewportSize = 0
 
-    constructor(length = 0, size = 60, isVirtual = true) {
+    constructor(length = 0, size = 60, virtual = true) {
         this._length = length
         this._defaultSize = size
-        this._isVirtual = isVirtual ? true : false
+        this._isVirtual = virtual ? true : false
     }
 
-    _getSize(idx) {
+    _getSize(idx = 0) {
         const size = this._indices[idx];
         return size !== undefined ? size : this._defaultSize;
     }
@@ -34,8 +34,8 @@ export class Store {
         return clamp(idx, 0, this._length - 1);
     }
 
-    getSizes() {
-        return this._length * this._defaultSize
+    _getSizes() {
+        return this._length * this._getSize(0)
     }
 
     getRange() {

@@ -11,7 +11,16 @@ export default {
     ridx: Number,
     cidx: Number,
   },
-
+  mounted() {
+    const { ridx, cidx } = this;
+    const el = this.$el;
+    this.root.updateCellSize({
+      ridx,
+      cidx,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+    });
+  },
   render(h) {
     const { tag } = this;
 

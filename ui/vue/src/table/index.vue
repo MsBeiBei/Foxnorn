@@ -5,7 +5,14 @@
     tabindex="0"
     @scroll.stop.passive="onScroll"
   >
-    <div class="fox-virtual-panel" ref="panel"></div>
+    <div
+      class="fox-virtual-panel"
+      ref="panel"
+      :style="{
+        width: virtualSize.width + 'px',
+        height: virtualSize.height + 'px',
+      }"
+    ></div>
     <div class="fox-scroll-table-clip" ref="clip">
       <table>
         <tbody>
@@ -28,6 +35,7 @@
 <script>
 import Cell from "./components/Cell.vue";
 import Row from "./components/Row.vue";
+import { Table } from "./model/table";
 
 export default {
   name: "Table",
@@ -57,13 +65,48 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      range: null,
+      virtualSize: { width: 0, height: 0 },
+    };
+  },
+  computed: {
+    data() {
+      return this.range ? this.render(this.range) : [];
+    },
+  },
   methods: {
     onScroll(event) {
-      this.model.offset = {
+      this.table.offset = {
         top: event.target.scrollTop,
         left: event.target.scrollLeft,
       };
     },
+
+    updateViewport() {
+      const clip = this.$refs.clip;
+      this.table.viewport = {
+        width: clip.clientWidth,
+        height: clip.clientHeight,
+      };
+    },
+
+    updateCellSize(cell) {
+      this.table.cell = cell;
+    },
+
+    update(range, virtualSize) {
+      this.range = range;
+      this.virtualSize = virtualSize;
+    },
+  },
+  created() {
+    const { ncols, nrows } = this;
+    this.table = new Table({ ncols, nrows }, this.update);
+  },
+  mounted() {
+    this.updateViewport();
   },
 };
 </script>
