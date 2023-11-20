@@ -14,21 +14,16 @@
       }"
     ></div>
     <div class="fox-scroll-table-clip" ref="clip">
-      <table border="1">
-        <tbody>
-          <Row tag="tr" v-for="(cells, ridx) in data" :key="ridx">
-            <Cell
-              tag="td"
-              :ridx="ridx"
-              :cidx="cidx"
-              v-for="(cell, cidx) in cells"
-              :key="ridx + cidx"
-            >
-              {{ cell * 300 }}
-            </Cell>
-          </Row>
-        </tbody>
-      </table>
+      <Row v-for="(cells, ridx) in data" :key="ridx">
+        <Cell
+          :ridx="ridx"
+          :cidx="cidx"
+          v-for="(cell, cidx) in cells"
+          :key="ridx + cidx"
+        >
+          {{ cell * 30000 }}
+        </Cell>
+      </Row>
     </div>
   </div>
 </template>
@@ -68,7 +63,7 @@ export default {
   data() {
     return {
       range: null,
-      virtualSize: { width: 0, height: 0 },
+      virtualSize: { width: 20000000, height: 10000 },
     };
   },
   computed: {
@@ -83,13 +78,26 @@ export default {
         left: event.target.scrollLeft,
       };
     },
+
+    updateViewport() {
+      const clip = this.$refs.clip;
+      this.table.viewport = [clip.clientWidth, clip.clientHeight];
+    },
+
+    saveSize(cell) {
+      this.table.cell = cell;
+    },
   },
   created() {
     const { ncols, nrows } = this;
-    this.table = new Table({ ncols, nrows }, (range, size) => {
+    this.table = new Table({ ncols, nrows }, (range) => {
       this.range = range;
-      this.virtualSize = size;
     });
+
+    console.log(this.table);
+  },
+  mounted() {
+    this.updateViewport();
   },
 };
 </script>

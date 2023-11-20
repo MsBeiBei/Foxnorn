@@ -1,4 +1,4 @@
-import { ACTION_ITEM_RESIZE, ACTION_VIEWPORT_RESIZE, ACTION_ITEMS_LENGTH_RESIZE, ACTION_SCROLL } from '../utilties/constants'
+import { ACTION_ITEM_RESIZE, ACTION_VIEWPORT_RESIZE, ACTION_ITEMS_LENGTH, ACTION_SCROLL } from '../utilties/constants'
 import { clamp } from '../utilties/core'
 
 export class Store {
@@ -8,55 +8,40 @@ export class Store {
 
     _auto = []
 
-    _offsetSize = 0
+    _offset = 0
 
-    _viewportSize = 0
+    _viewport = 0
 
     constructor(length = 0, size = 60, virtual = true) {
         this._length = length
-        this._defaultSize = size
-        this._isVirtual = virtual ? true : false
-    }
-
-    _fetchSize(idx = 0) {
-        const size = this._indices[idx];
-        return size !== undefined ? size : this._defaultSize;
-    }
-
-    _findIndex(offset = 0, type = true) {
-        let idx = 0;
-        let offsetSize = 0;
-        while (offsetSize < offset && idx < this._length) {
-            console.log(this._fetchSize(idx))
-            offsetSize += type ? this._fetchSize(idx) : this._defaultSize
-            idx += 1;
-        }
-
-        return clamp(idx, 0, this._length - 1);
-    }
-
-    _maxScrollIndex() {
-        let width = 0;
-        let maxScrollIndex = this._length;
-        while (width < this._viewportSize && maxScrollIndex >= 0) {
-            width += this._fetchSize(maxScrollIndex);
-            maxScrollIndex--;
-        }
-
-        return Math.min(this._length - 1, maxScrollIndex + 1);
+        this._size = size
+        this._virtual = virtual ? true : false
     }
 
     getRange() {
-        const startIndex = this._findIndex(this._offsetSize, false);
+        const start = this._findIndex(this._offset);
 
-        return [startIndex, this._findIndex(this._viewportSize + this._offsetSize)];
+        return [start, this._findIndex(this._viewport, start)];
     }
 
-    getSizes() {
-        const maxScrollIndex = this._maxScrollIndex();
 
+    _getSize(idx = 0) {
+        const size = this._indices[idx];
+        return size !== undefined ? size : this._size;
+    }
 
-        return maxScrollIndex * this._defaultSize + this._viewportSize
+    _findIndex(offset = 0, idx = 0) {
+        let size = 0;
+        let diff = 0
+
+        while (size < offset) {
+            diff = offset - size
+            size += this._getSize(idx)
+            idx += 1;
+        }
+
+        idx += diff / this._getSize(idx - 1);
+        return clamp(idx - 1, 0, this._length - 1);
     }
 
     update(type, payload) {
@@ -68,17 +53,17 @@ export class Store {
             }
 
             case ACTION_VIEWPORT_RESIZE: {
-                this._viewportSize = payload
+                this._viewport = payload
                 break;
             }
 
-            case ACTION_ITEMS_LENGTH_RESIZE: {
+            case ACTION_ITEMS_LENGTH: {
                 this._length = payload
                 break;
             }
 
             case ACTION_SCROLL: {
-                this._offsetSize = payload
+                this._offset = payload
                 break;
             }
         }

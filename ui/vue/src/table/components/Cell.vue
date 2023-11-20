@@ -11,7 +11,16 @@ export default {
     ridx: Number,
     cidx: Number,
   },
-
+  mounted() {
+    const { ridx, cidx } = this;
+    const el = this.$el;
+    this.root.saveSize({
+      ridx,
+      cidx,
+      width: el.clientWidth,
+      height: el.clientHeight,
+    });
+  },
   render(h) {
     const { tag } = this;
 

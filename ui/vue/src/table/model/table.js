@@ -7,7 +7,6 @@ export class Table {
         this._hs = new Store(nrows)
 
         this._range = null
-        this._sizes = { width: 0, height: 0 }
         this._callback = callback
     }
 
@@ -16,9 +15,8 @@ export class Table {
         this._hs.update(ACTION_VIEWPORT_RESIZE, height)
 
         this._range = this._getRange()
-        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._sizes,)
+        this._callback(this._range)
     }
 
 
@@ -27,9 +25,8 @@ export class Table {
         this._hs.update(ACTION_ITEM_RESIZE, [ridx, height])
 
         this._range = this._getRange()
-        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._sizes)
+        this._callback(this._range)
     }
 
     set offset({ top, left }) {
@@ -37,9 +34,8 @@ export class Table {
         this._hs.update(ACTION_SCROLL, top)
 
         this._range = this._getRange()
-        this._sizes = this._getSizes()
 
-        this._callback(this._range, this._sizes)
+        this._callback(this._range)
     }
 
 
@@ -49,17 +45,13 @@ export class Table {
         const [startCol, endCol] = this._ws.getRange()
         const [startRow, endRow] = this._hs.getRange()
 
-        range.startCol = startCol
-        range.endCol = endCol
-        range.startRow = startRow
-        range.endRow = endRow
+        range.startCol = Math.floor(startCol)
+        range.endCol = Math.ceil(endCol)
+        range.startRow = Math.floor(startRow)
+        range.endRow = Math.ceil(endRow)
 
         return range
     }
 
-    _getSizes() {
-        const width = this._ws.getSizes()
-        const height = this._hs.getSizes()
-        return { width, height }
-    }
+
 }

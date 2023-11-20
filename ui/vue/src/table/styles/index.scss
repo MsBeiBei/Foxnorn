@@ -7,24 +7,13 @@
     --fox-table--clip-x: 0px;
     --fox-table--clip-y: 0px;
 
-    table {
-        position: absolute;
-        overflow: hidden;
-        outline: none;
-
-        tbody {
-            transform: translate(0, var(--fox-table--transform-y, 0px));
-
-            tr {
-                td {
-                    transform: translate(var(--fox-table--transform-x, 0px), 0);
-
-                    &:first-of-type {
-                        clip-path: polygon(var(--fox-table--clip-x, 0)0, var(--fox-table--clip-x, 0)100%, 100% 100%, 100% 0);
-                    }
-                }
-
-            }
+    .fox-row {
+        display: block;
+        white-space:nowrap;
+        .fox-cell {
+            display: inline-block;
+            min-height: 60px;
+            min-width: 60px;
         }
     }
 }

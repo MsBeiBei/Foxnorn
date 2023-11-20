@@ -13,6 +13,6 @@ export const ACTION_ITEM_RESIZE = 0
 
 export const ACTION_VIEWPORT_RESIZE = 1
 
-export const ACTION_ITEMS_LENGTH_RESIZE = 2
+export const ACTION_ITEMS_LENGTH = 2
 
 export const ACTION_SCROLL = 3
