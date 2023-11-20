@@ -1,6 +1,6 @@
 <template>
   <div style="width: 470px; height: 300px; border: 1px solid red">
-    <Table :render="render" :ncols="10000000" :nrows="10000" />
+    <Table :render="render" :ncols="100" :nrows="100000" />
   </div>
 </template>
 

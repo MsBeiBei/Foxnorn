@@ -1,32 +1,3 @@
-<template>
-  <div
-    class="fox-table fox-layout-normal"
-    ref="root"
-    tabindex="0"
-    @scroll.stop.passive="onScroll"
-  >
-    <div
-      class="fox-virtual-panel"
-      ref="panel"
-      :style="{
-        width: virtualSize.width + 'px',
-        height: virtualSize.height + 'px',
-      }"
-    ></div>
-    <div class="fox-scroll-table-clip" ref="clip">
-      <Row v-for="(cells, ridx) in data" :key="ridx">
-        <Cell
-          :ridx="ridx"
-          :cidx="cidx"
-          v-for="(cell, cidx) in cells"
-          :key="ridx + cidx"
-        >
-          {{ cell * 30000 }}
-        </Cell>
-      </Row>
-    </div>
-  </div>
-</template>
 <script>
 import Cell from "./components/Cell.vue";
 import Row from "./components/Row.vue";
@@ -62,15 +33,11 @@ export default {
   },
   data() {
     return {
-      range: null,
-      virtualSize: { width: 20000000, height: 10000 },
+      range: { startCol: 0, endCol: 0, startRow: 0, endRow: 0 },
+      size: { width: 0, height: 0 },
     };
   },
-  computed: {
-    data() {
-      return this.range ? this.render(this.range) : [];
-    },
-  },
+
   methods: {
     onScroll(event) {
       this.table.offset = {
@@ -90,14 +57,56 @@ export default {
   },
   created() {
     const { ncols, nrows } = this;
-    this.table = new Table({ ncols, nrows }, (range) => {
+    this.table = new Table({ ncols, nrows }, (range, size) => {
       this.range = range;
+      this.size = size;
     });
 
-    console.log(this.table);
+    console.log(this.table)
   },
   mounted() {
     this.updateViewport();
+  },
+  render() {
+    const { onScroll, size, range } = this;
+
+    let rows = [];
+
+    for (let rowIndex = range.startRow; rowIndex <= range.endRow; rowIndex++) {
+      let cells = [];
+      for (
+        let colIndex = range.startCol;
+        colIndex <= range.endCol;
+        colIndex++
+      ) {
+        cells.push(
+          <Cell ridx={rowIndex} cidx={colIndex} key={rowIndex + colIndex}>
+            {rowIndex}/{colIndex}
+          </Cell>
+        );
+      }
+
+      rows.push(<Row>{cells}</Row>);
+    }
+
+    return (
+      <div
+        class="fox-table fox-layout-normal"
+        ref="root"
+        tabindex="0"
+        onScroll={onScroll}
+      >
+        <div
+          class="fox-virtual-panel"
+          ref="panel"
+          style={{
+            width: size.width + "px",
+            height: size.height + "px",
+          }}
+        ></div>
+        <div class="fox-scroll-table-clip" ref="clip">{rows}</div>
+      </div>
+    );
   },
 };
 </script>

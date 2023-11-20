@@ -1,5 +1,5 @@
 import { ACTION_ITEM_RESIZE, ACTION_VIEWPORT_RESIZE, ACTION_ITEMS_LENGTH, ACTION_SCROLL } from '../utilties/constants'
-import { clamp } from '../utilties/core'
+import { clamp, min } from '../utilties/core'
 
 export class Store {
     _indices = []
@@ -30,6 +30,19 @@ export class Store {
         return size !== undefined ? size : this._size;
     }
 
+    _getSizes() {
+        let maxScrollIndex = this._getMaxScrollIndex()
+        let idx = 0
+        let size = 0
+
+        while (idx < maxScrollIndex) {
+            size += this._getSize(idx);
+            idx++
+        }
+
+        return size
+    }
+
     _findIndex(offset = 0, idx = 0) {
         let size = 0;
         let diff = 0
@@ -42,6 +55,19 @@ export class Store {
 
         idx += diff / this._getSize(idx - 1);
         return clamp(idx - 1, 0, this._length - 1);
+    }
+
+    _getMaxScrollIndex() {
+        if (!this._length) return 0
+
+        let size = 0
+        let maxScrollIndex = this._length;
+        while (size < this._viewport) {
+            maxScrollIndex--
+            size += this._getSize(maxScrollIndex)
+        }
+
+        return min(this._length - 1, maxScrollIndex + 1)
     }
 
     update(type, payload) {
