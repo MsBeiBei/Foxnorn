@@ -28,7 +28,8 @@
     "@types/node": "~20.6.1",
     "@types/semver": "~7.5.3",
     "@foxnorn/type": "workspace:*",
-    "@foxnorn/shared": "workspace:*"
+    "@foxnorn/shared": "workspace:*",
+    "tslib": "~2.6.2"
   },
   "peerDependencies": {
     "@rushstack/heft": "~0.59.0"
