@@ -17,7 +17,7 @@
     "build": ""
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.59.0",
+    "@rushstack/heft": "~0.63.2",
     "@rushstack/heft-typescript-plugin": "~0.2.0"
   }
 }

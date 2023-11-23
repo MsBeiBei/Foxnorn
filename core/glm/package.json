@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "~5.2.2",
+    "typescript": "~5.3.2",
     "@types/node": "~20.6.1",
     "@foxnorn/type": "workspace:*",
     "@foxnorn/tsconfig": "workspace:*"

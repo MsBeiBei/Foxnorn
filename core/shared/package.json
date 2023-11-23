@@ -16,7 +16,7 @@
   "types": "lib/type/index.d.ts",
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
-    "typescript": "~5.2.2",
+    "typescript": "~5.3.2",
     "@foxnorn/type": "workspace:*",
     "tslib": "~2.6.2"
   }

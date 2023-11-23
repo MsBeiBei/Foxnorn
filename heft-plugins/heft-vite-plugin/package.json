@@ -19,11 +19,11 @@
   "devDependencies": {
     "@foxnorn/tsconfig": "workspace:*",
     "@foxnorn/heft-node-rig": "workspace:*",
-    "@rushstack/heft": "~0.59.0",
-    "typescript": "~5.2.2",
+    "@rushstack/heft": "~0.63.2",
+    "typescript": "~5.3.2",
     "@types/node": "~20.6.1"
   },
   "peerDependencies": {
-    "@rushstack/heft": "~0.59.0"
+    "@rushstack/heft": "~0.63.2"
   }
 }
