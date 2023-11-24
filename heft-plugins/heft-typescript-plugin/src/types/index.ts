@@ -1,2 +1,2 @@
-export * from "./output";
+export * from "./schema";
 export * from "./typescript";
