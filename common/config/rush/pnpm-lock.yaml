@@ -8,6 +8,8 @@ importers:
 
   .: {}
 
+  ../../core/asic: {}
+
   ../../core/glm:
     devDependencies:
       '@foxnorn/tsconfig':

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
   "rushVersion": "5.111.0",
-  "pnpmVersion": "8.10.5",
+  "pnpmVersion": "8.11.0",
   "nodeSupportedVersionRange": "18.17.0",
   "projectFolderMinDepth": 2,
   "projectFolderMaxDepth": 2,
@@ -93,6 +93,18 @@
     {
       "packageName": "@foxnorn/glm",
       "projectFolder": "core/glm",
+      "reviewCategory": "internal",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/asic",
+      "projectFolder": "core/asic",
+      "reviewCategory": "internal",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/elements",
+      "projectFolder": "core/elements",
       "reviewCategory": "internal",
       "shouldPublish": true
     },
