@@ -11,5 +11,11 @@
     "build": ""
   },
   "type": "module",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@foxnorn/tsconfig": "workspace:*",
+    "typescript": "~5.3.2",
+    "@foxnorn/type": "workspace:*",
+    "tslib": "~2.6.2"
+  }
 }
