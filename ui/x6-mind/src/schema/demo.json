@@ -1,0 +1,40 @@
+{
+    "id": "",
+    "name": "",
+    "alias": "",
+    "lines": [
+        {
+            "id": "",
+            "source": {
+                "nodeId": ""
+            },
+            "target": {
+                "nodeId": "",
+                "portId": ""
+            }
+        },
+        {
+            "id": "",
+            "source": {
+                "nodeId": "",
+                "portId": ""
+            },
+            "target": {
+                "nodeId": "",
+                "portId": ""
+            }
+        }
+    ],
+    "nodes": [
+        {
+            "id": "",
+            "label": "",
+            "rect": {
+                "x": "",
+                "y": "",
+                "w": "",
+                "h": ""
+            }
+        }
+    ]
+}

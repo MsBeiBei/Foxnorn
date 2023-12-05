@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "allowArbitraryExtensions": false,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "ESNext",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "target": "ESNext",
+        "skipLibCheck": true,
+        "incremental": true,
+      
+        "removeComments": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "preserveWatchOutput": true,
+        "inlineSources": false,
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxImportSource": "vue",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "types": [
+            "vite/client",
+            "node"
+        ]
+    },
+    "vueCompilerOptions": {
+        "target": 3
+    },
+    "exclude": ["node_modules", "dist"]
+}
