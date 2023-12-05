@@ -8,15 +8,9 @@ export const state: State = [undefined];
 export const context = useContext<State>();
 
 export function useGraphContext() {
-  const useProvide = () => {
-    return context.useProvide(state);
-  };
+  const useProvide = context.useProvide(state)
 
-  const useInject = () => {
-    const [graph] = context.useInject();
-
-    return graph;
-  };
+  const useInject = context.useInject
 
   return {
     useProvide,

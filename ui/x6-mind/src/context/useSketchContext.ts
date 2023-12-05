@@ -1,5 +1,4 @@
-import { ref } from "vue";
-import { type Meta, type Node, type Link } from "@/typings/dsl";
+import {type Node, type Link } from "@/typings/dsl";
 import { useContext } from "@/hooks/useContext";
 
 export interface Snapshot {
@@ -31,13 +30,13 @@ export const state: State = {
 
 export const context = useContext<State>();
 
-export function useSchemaContext() {
-  const useProvide = () => {
-    return context.useProvide(state);
-  };
+export function useSketchContext() {
+  const useProvide = () => context.useProvide(state)
+
+  const useInject = context.useInject
 
   return {
     useProvide,
-
+    useInject
   };
 }
