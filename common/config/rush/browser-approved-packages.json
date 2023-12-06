@@ -28,7 +28,7 @@
     },
     {
       "name": "@foxnorn/tsconfig",
-      "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
+      "allowedCategories": [ "app", "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
     },
     {
       "name": "@foxnorn/type",
