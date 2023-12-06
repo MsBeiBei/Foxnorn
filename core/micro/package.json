@@ -1,8 +1,7 @@
 {
-  "name": "@foxnorn/asic",
+  "name": "@foxnorn/micro",
   "version": "1.0.0",
   "scripts": {
     "build": ""
-  },
-  "type": "module"
+  }
 }

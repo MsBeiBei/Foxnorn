@@ -35,6 +35,10 @@
       "allowedCategories": [ "heft-plugins", "internal" ]
     },
     {
+      "name": "@micro-zoe/micro-app",
+      "allowedCategories": [ "app" ]
+    },
+    {
       "name": "@microsoft/rush-lib",
       "allowedCategories": [ "heft-plugins", "playground", "rush-plugins" ]
     },
@@ -67,12 +71,20 @@
       "allowedCategories": [ "rush-plugins" ]
     },
     {
+      "name": "@vanilla-extract/css",
+      "allowedCategories": [ "app" ]
+    },
+    {
+      "name": "@vanilla-extract/vite-plugin",
+      "allowedCategories": [ "app" ]
+    },
+    {
       "name": "@vitejs/plugin-vue",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "app", "internal" ]
     },
     {
       "name": "@vitejs/plugin-vue-jsx",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "app", "internal" ]
     },
     {
       "name": "@vueuse/core",
@@ -128,7 +140,7 @@
     },
     {
       "name": "typescript",
-      "allowedCategories": [ "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
+      "allowedCategories": [ "app", "heft-plugins", "internal", "libraries", "playground", "rush-plugins" ]
     },
     {
       "name": "uuid",
@@ -136,15 +148,19 @@
     },
     {
       "name": "vite",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "app", "internal" ]
     },
     {
       "name": "vue",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "app", "internal" ]
+    },
+    {
+      "name": "vue-router",
+      "allowedCategories": [ "app" ]
     },
     {
       "name": "vue-tsc",
-      "allowedCategories": [ "internal" ]
+      "allowedCategories": [ "app", "internal" ]
     },
     {
       "name": "ws",

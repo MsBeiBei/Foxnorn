@@ -1,7 +1,6 @@
 {
   "name": "heft-typescript-plugin-demo",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "_phase:build": "heft run --only build -- --clean",
     "_phase:test": "heft run --only test -- --clean",
@@ -18,8 +17,8 @@
     "@foxnorn/tsconfig": "workspace:*",
     "@microsoft/rush-lib": "~5.106.0",
     "@rushstack/heft": "~0.63.2",
-    "@types/node": "~20.6.1",
+    "@types/node": "^20.10.3",
     "@types/yargs": "~17.0.24",
-    "typescript": "~5.3.2"
+    "typescript": "^5.3.2"
   }
 }

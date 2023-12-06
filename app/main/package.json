@@ -1,0 +1,24 @@
+{
+  "name": "@foxnorn/main",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vue-tsc && vite build"
+  },
+  "dependencies": {
+    "@micro-zoe/micro-app": "1.0.0-rc.2",
+    "vue": "^3.3.10",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.3",
+    "@vanilla-extract/css": "^1.14.0",
+    "@vanilla-extract/vite-plugin": "^3.9.2",
+    "@vitejs/plugin-vue": "^4.5.1",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.6",
+    "vue-tsc": "^1.8.25"
+  }
+}

@@ -1,13 +1,6 @@
 {
   "name": "@foxnorn/heft-typescript-plugin",
   "version": "1.0.0",
-  "private": false,
-  "description": "Heft plugin for TypeScript",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "directory": "heft-plugins/heft-typescript-plugin"
-  },
   "type": "commonjs",
   "scripts": {
     "_phase:build": "heft run --only build -- --clean",
@@ -24,8 +17,8 @@
     "@foxnorn/tsconfig": "workspace:*",
     "@foxnorn/heft-node-rig": "workspace:*",
     "@rushstack/heft": "~0.63.2",
-    "typescript": "~5.3.2",
-    "@types/node": "~20.6.1",
+    "typescript": "^5.3.2",
+    "@types/node": "^20.10.3",
     "@types/semver": "~7.5.3",
     "@foxnorn/type": "workspace:*",
     "@foxnorn/shared": "workspace:*",

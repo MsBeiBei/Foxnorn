@@ -1,15 +1,6 @@
 {
   "name": "@foxnorn/rush-sortpack-plugin",
   "version": "1.0.0",
-  "private": false,
-  "description": "Rush plugin for sort package.json file in the project",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "directory": "rush-plugins/rush-sortpack-plugin"
-  },
-  "license": "MIT",
-  "author": "foxnorn",
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
@@ -27,8 +18,8 @@
     "@foxnorn/tsconfig": "workspace:*",
     "@microsoft/rush-lib": "~5.106.0",
     "@rushstack/heft": "~0.63.2",
-    "@types/node": "~20.6.1",
-    "typescript": "~5.3.2",
+    "@types/node": "^20.10.3",
+    "typescript": "^5.3.2",
     "@types/yargs": "~17.0.24"
   }
 }

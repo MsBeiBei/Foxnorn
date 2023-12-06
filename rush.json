@@ -12,16 +12,12 @@
       "heft-plugins",
       "libraries",
       "internal",
-      "playground"
+      "playground",
+      "app"
     ],
     "ignoredNpmScopes": [
       "@types"
     ]
-  },
-  "repository": {
-    "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "defaultBranch": "main",
-    "defaultRemote": "origin"
   },
   "projects": [
     {
@@ -113,6 +109,18 @@
       "projectFolder": "template/chrome",
       "reviewCategory": "internal",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@foxnorn/main",
+      "projectFolder": "app/main",
+      "reviewCategory": "app",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@foxnorn/mind",
+      "projectFolder": "app/mind",
+      "reviewCategory": "app",
+      "shouldPublish": false
     }
   ]
 }

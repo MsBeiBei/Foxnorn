@@ -1,15 +1,6 @@
 {
   "name": "@foxnorn/heft-web-rig",
   "version": "1.0.0",
-  "private": false,
-  "description": "A rig package for web browser projects that build using Heft",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MsBeiBei/Foxnorn.git",
-    "directory": "rush-plugins/heft-web-rig"
-  },
-  "license": "MIT",
-  "author": "foxnorn",
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
