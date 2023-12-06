@@ -1,0 +1,25 @@
+{
+  "name": "@foxnorn/tsconfig",
+  "private": true,
+  "packageManager": "pnpm@8.11.0",
+  "type": "module",
+  "engines": {
+    "node": "18.17.0",
+    "pnpm": "8.11.0"
+  },
+  "main": "tsconfig.json",
+  "files": [
+    "base.json",
+    "node.cjs.json",
+    "node.esm.json",
+    "node.next.json",
+    "tsconfig.json",
+    "vite.json",
+    "vue.json",
+    "web.json"
+  ],
+  "scripts": {
+    "build": ""
+  },
+  "tsconfig": "tsconfig.json"
+}

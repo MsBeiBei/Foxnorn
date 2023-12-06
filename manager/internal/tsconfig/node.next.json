@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@foxnorn/tsconfig-node-next",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "verbatimModuleSyntax": false
+  }
+}

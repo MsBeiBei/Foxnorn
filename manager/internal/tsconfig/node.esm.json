@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@foxnorn/tsconfig-node-esm",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "types": ["node"]
+  }
+}

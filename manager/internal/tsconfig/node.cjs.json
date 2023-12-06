@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "@foxnorn/tsconfig-node-cjs",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "types": [
+      "node"
+    ],
+    "verbatimModuleSyntax": false
+  }
+}

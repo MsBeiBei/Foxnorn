@@ -1,0 +1,13 @@
+{
+  "name": "root",
+  "private": true,
+  "packageManager": "pnpm@8.11.0",
+  "engines": {
+    "node": "18.17.0",
+    "pnpm": "8.11.0"
+  },
+  "scripts": {
+    "start:all": "pnpm run -r start",
+    "build:all": "pnpm run -r build"
+  }
+}
