@@ -14,11 +14,15 @@ export interface Node {
   out?: Port[];
 }
 
+export interface PointData {
+  nodeId: string;
+  portId?: string;
+}
+
 export interface Link {
   id: string;
-  label?: string;
-  source: string;
-  target: string;
+  source: PointData;
+  target: PointData;
 }
 
 export interface Meta {
