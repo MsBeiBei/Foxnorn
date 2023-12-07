@@ -1,7 +1,6 @@
 {
   "name": "@foxnorn/type",
   "version": "1.0.0",
-  "private": false,
   "scripts": {
     "build": ""
   },

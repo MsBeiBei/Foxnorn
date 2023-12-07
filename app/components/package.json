@@ -1,0 +1,18 @@
+{
+    "name": "@app/components",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.ts",
+    "dependencies": {
+        "vue": "^3.3.10",
+        "naive-ui": "~2.35.0",
+        "vue-router": "^4.2.5"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.3",
+        "typescript": "^5.3.2",
+        "@foxnorn/tsconfig": "workspace:*",
+        "@app/types": "workspace:*",
+        "vite": "^5.0.6"
+    }
+}

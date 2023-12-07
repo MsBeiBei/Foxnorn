@@ -111,14 +111,38 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@foxnorn/main",
+      "packageName": "@app/main",
       "projectFolder": "app/main",
       "reviewCategory": "app",
       "shouldPublish": false
     },
     {
-      "packageName": "@foxnorn/mind",
+      "packageName": "@app/mind",
       "projectFolder": "app/mind",
+      "reviewCategory": "app",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@app/types",
+      "projectFolder": "app/types",
+      "reviewCategory": "app",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@app/langs",
+      "projectFolder": "app/langs",
+      "reviewCategory": "app",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@app/enums",
+      "projectFolder": "app/enums",
+      "reviewCategory": "app",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@app/components",
+      "projectFolder": "app/components",
       "reviewCategory": "app",
       "shouldPublish": false
     }

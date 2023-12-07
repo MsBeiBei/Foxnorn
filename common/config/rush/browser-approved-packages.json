@@ -3,6 +3,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@app/components",
+      "allowedCategories": [ "app" ]
+    },
+    {
+      "name": "@app/type",
+      "allowedCategories": [ "app" ]
+    },
+    {
+      "name": "@app/types",
+      "allowedCategories": [ "app" ]
+    },
+    {
       "name": "@crxjs/vite-plugin",
       "allowedCategories": [ "internal" ]
     },
@@ -113,6 +125,14 @@
     {
       "name": "lodash-es",
       "allowedCategories": [ "heft-plugins", "internal" ]
+    },
+    {
+      "name": "naive-ui",
+      "allowedCategories": [ "app" ]
+    },
+    {
+      "name": "pinia",
+      "allowedCategories": [ "app" ]
     },
     {
       "name": "ramda",

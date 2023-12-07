@@ -1,17 +1,10 @@
 {
   "extends": "@foxnorn/tsconfig/vue.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-    },
     "types": [
       "vite/client",
       "node",
       "naive-ui/volar",
-      "@app/types"
     ]
   },
   "include": [

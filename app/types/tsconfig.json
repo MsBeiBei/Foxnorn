@@ -1,0 +1,10 @@
+{
+  "extends": "@foxnorn/tsconfig/vue.json",
+  "compilerOptions": {
+    "types": [
+      "vite/client",
+      "node",
+      "naive-ui/volar"
+    ]
+  }
+}
